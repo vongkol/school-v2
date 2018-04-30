@@ -1,0 +1,1 @@
+[26-Aug-2017 08:49:26 UTC] PHP Fatal error:  Namespace declaration statement has to be the very first statement or after any declare call in the script in /home3/vongkol/cocd.vdoo.biz/app/Http/Controllers/TestController.php on line 5

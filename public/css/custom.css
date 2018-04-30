@@ -1,0 +1,77 @@
+@font-face
+{
+    font-family: khmerOs;
+    src: url("fonts/KhmerOS.ttf");
+}
+@font-face
+{
+    font-family: khmerOsMoul;
+    src: url("fonts/KhmerOSmuol.ttf");
+}
+@font-face{
+    font-family: tacteng;
+    src: url("fonts/TACTENG.TTF");
+}
+.kh{
+    font-family: khmerOsMoul;
+}
+.text-bold{
+    font-weight:bold;
+}
+/* table style */
+.tbl
+{
+    border: 1px solid #CCCCCC;
+    border-spacing: 0;
+    width: 100%;
+}
+.tbl thead tr th{
+    padding: 6px 8px;
+    border-bottom: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    background: #ebeff1;
+}
+.tbl thead tr th:last-child{
+    border-right: none;
+}
+.tbl tbody tr td{
+    padding: 8px 9px;
+    border-bottom: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    font-size: 11px;
+}
+.tbl tbody tr:nth-child(even)
+{
+    background: #f4f5f6;
+}
+.tbl tbody tr td:last-child{
+    border-right: none;
+    color: green;
+    font-weight:bold;
+}
+.tbl tbody tr:last-child td{
+    border-bottom: none;
+}
+.hide{
+    display: none;
+}
+body, p, h1, h2, h3, h4, h5, h6, th, td
+ul, li, span, div{
+    font-family:khmerOs;
+}
+.tbl1{
+    width: 100%;
+    border: 1px solid #000;
+    border-spacing: 0;
+}
+.tbl1 thead tr th:not(:last-child){
+    border-right: 1px solid #000;
+
+}
+.tbl1 tbody tr td
+{
+    border-right: 1px solid #000;
+    border-top: 1px solid #000;
+    padding-left: 7px;
+    font-size:12px;
+}
