@@ -19,6 +19,12 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <?php
+                            $pagex = @$_GET['page'];
+                            if(!$pagex)
+                            $pagex = 1;
+                            $i = 18 * ($pagex - 1) + 1;
+                        ?>
                         @php($i=1)
                         @foreach($positions as $position)
                             <tr>

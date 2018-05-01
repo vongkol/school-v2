@@ -11,7 +11,7 @@ class PositionController extends Controller
     public function index()
     {
         $data['positions'] = DB::table('positions')->where('active',1)
-        ->paginate(20);
+        ->paginate(18);
         return view('positions.index', $data);
     }
     public function create()
