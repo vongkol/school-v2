@@ -35,7 +35,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php $i=1;?>
+                        <?php
+                            $pagex = @$_GET['page'];
+                            if(!$pagex)
+                            $pagex = 1;
+                            $i = 18 * ($pagex - 1) + 1;
+                        ?>
                         @foreach($students as $st)
                             <tr>
                                 <td>{{$i++}}</td>
