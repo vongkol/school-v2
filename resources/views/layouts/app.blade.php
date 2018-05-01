@@ -40,7 +40,6 @@
                 <img src="{{asset('img/flags/UK.png')}}" alt="" width="32">
             </li>
             <li class="nav-item px-3 text-gray-dark">Branch</li>
-
         </ul>
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item dropdown">
@@ -49,11 +48,9 @@
                     <span class="d-md-down-none text-info">{{Auth::user()->name}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-
                     <div class="dropdown-header text-center">
                         <strong>{{$lb_account}}</strong>
                     </div>
-
                     <a class="dropdown-item" href="{{url('/user/profile')}}"><i class="fa fa-user text-primary"></i> {{$lb_profile}}</a>
                     <a class="dropdown-item" href="{{url('/user/reset-password')}}"><i class="fa fa-key text-success"></i> {{$lb_reset_password}}</a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -86,7 +83,6 @@
                             <li class="nav-item">
                                 <a href="{{url('/report')}}" class="nav-link"><i class="fa fa-list text-yellow"></i> {{$lb_student_list}}</a>
                             </li>
-
                         </ul>
                     </li>
                     {{--<li class="nav-item">--}}
@@ -123,7 +119,12 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url('/subject')}}"><i class="fa fa-book"></i> {{$lb_subject}}</a>
-
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{url('/position')}}"><i class="fa fa-clock-o"></i> Position</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{url('/shift')}}"><i class="fa fa-clock-o"></i> Shift</a>
                             </li>
                             <!--
                             <li><a href="{{url('/province')}}" class="nav-link"><i class="fa fa-bookmark"></i> {{$lb_province}}</a></li>
@@ -131,7 +132,6 @@
                             <li><a href="{{url('/commune')}}" class="nav-link"><i class="fa fa-adjust"></i> {{$lb_commune}}</a></li>
                             <li><a href="#" class="nav-link"><i class="fa fa-bars"></i> {{$lb_village}}</a></li>
                             -->
-
                         </ul>
                     </li>
                 </ul>

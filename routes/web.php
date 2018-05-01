@@ -57,6 +57,20 @@ Route::get('/class/edit/{id}', "ClassController@edit");
 Route::post('/class/save', "ClassController@save");
 Route::get('/class/delete/{id}', "ClassController@delete");
 Route::post('/class/update', "ClassController@update");
+// shift
+Route::get('/shift', "ShiftController@index");
+Route::get('/shift/create', "ShiftController@create");
+Route::get('/shift/edit/{id}', "ShiftController@edit");
+Route::post('/shift/save', "ShiftController@save");
+Route::get('/shift/delete/{id}', "ShiftController@delete");
+Route::post('/shift/update', "ShiftController@update");
+// position
+Route::get('/position', "PositionController@index");
+Route::get('/position/create', "PositionController@create");
+Route::get('/position/edit/{id}', "PositionController@edit");
+Route::post('/position/save', "PositionController@save");
+Route::get('/position/delete/{id}', "PositionController@delete");
+Route::post('/position/update', "PositionController@update");
 // school year
 Route::get('/school-year', "SchoolYearController@index");
 Route::get('/school-year/create', "SchoolYearController@create");
