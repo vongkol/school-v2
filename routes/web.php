@@ -71,6 +71,14 @@ Route::get('/position/edit/{id}', "PositionController@edit");
 Route::post('/position/save', "PositionController@save");
 Route::get('/position/delete/{id}', "PositionController@delete");
 Route::post('/position/update', "PositionController@update");
+// staff
+Route::get('/staff', "StaffController@index");
+Route::get('/staff/create', "StaffController@create");
+Route::get('/staff/edit/{id}', "StaffController@edit");
+Route::post('/staff/save', "StaffController@save");
+Route::get('/staff/delete/{id}', "StaffController@delete");
+Route::get('/staff/detail/{id}', "StaffController@detail");
+Route::post('/staff/update', "StaffController@update");
 // school year
 Route::get('/school-year', "SchoolYearController@index");
 Route::get('/school-year/create', "SchoolYearController@create");
@@ -132,6 +140,9 @@ Route::get('/family/delete/{id}', "FamilyController@delete");
 // document
 Route::post('/document/save', "DocumentController@save");
 Route::get('/document/delete/{id}', "DocumentController@delete");
+// staff document
+Route::post('/staff-document/save', "StaffDocumentController@save");
+Route::get('/staff-document/delete/{id}', "StaffDocumentController@delete");
 // health
 Route::post('/health/save', "HealthController@save");
 Route::get('/health/delete/{id}', "HealthController@delete");
