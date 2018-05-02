@@ -64,6 +64,13 @@ Route::get('/shift/edit/{id}', "ShiftController@edit");
 Route::post('/shift/save', "ShiftController@save");
 Route::get('/shift/delete/{id}', "ShiftController@delete");
 Route::post('/shift/update', "ShiftController@update");
+// item category
+Route::get('/item-category', "ItemCategoryController@index");
+Route::get('/item-category/create', "ItemCategoryController@create");
+Route::get('/item-category/edit/{id}', "ItemCategoryController@edit");
+Route::post('/item-category/save', "ItemCategoryController@save");
+Route::get('/item-category/delete/{id}', "ItemCategoryController@delete");
+Route::post('/item-category/update', "ItemCategoryController@update");
 // position
 Route::get('/position', "PositionController@index");
 Route::get('/position/create', "PositionController@create");

@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-bold">
-                    <i class="fa fa-align-justify"></i> Position Shift&nbsp;&nbsp;
+                    <i class="fa fa-align-justify"></i> Edit Position&nbsp;&nbsp;
                     <a href="{{url('/position')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
                 </div>
                 <div class="card-block">

@@ -129,6 +129,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url('/shift')}}"><i class="fa fa-clock-o"></i> Shift</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{url('/item-category')}}"><i class="fa fa-sitemap"></i> Item Category</a>
+                            </li>
                             <!--
                             <li><a href="{{url('/province')}}" class="nav-link"><i class="fa fa-bookmark"></i> {{$lb_province}}</a></li>
                             <li><a href="{{url('/district')}}" class="nav-link"><i class="fa fa-dot-circle-o"></i> {{$lb_district}}</a></li>

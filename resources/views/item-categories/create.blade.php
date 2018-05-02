@@ -6,8 +6,8 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-bold">
-                    <i class="fa fa-align-justify"></i> New Position&nbsp;&nbsp;
-                    <a href="{{url('/position')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
+                    <i class="fa fa-align-justify"></i> New Item Category&nbsp;&nbsp;
+                    <a href="{{url('/item-category')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
                 </div>
                 <div class="card-block">
                     @if(Session::has('sms'))
@@ -31,7 +31,7 @@
                         </div>
                     @endif
 
-                    <form action="{{url('/position/save')}}" class="form-horizontal" method="post">
+                    <form action="{{url('/item-category/save')}}" class="form-horizontal" method="post">
                         {{csrf_field()}}
                         <div class="form-group row">
                             <label for="name" class="control-label col-lg-1 col-sm-2">{{$lb_name}}</label>
