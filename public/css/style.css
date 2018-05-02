@@ -9012,3 +9012,6 @@ hr.transparent {
   .sidebar .nav .nav-item .nav-link, .sidebar .nav .nav-item .navbar .dropdown-toggle, .navbar .sidebar .nav .nav-item .dropdown-toggle {
     padding: 3px 10px;
 }
+.form-control {
+  line-height: 1;
+}

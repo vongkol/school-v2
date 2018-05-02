@@ -79,6 +79,9 @@
                     <li class="nav-item">
                         <a href="{{url('/staff')}}" class="nav-link"><i class="fa fa-user text-info"></i> Staff</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{url('/item')}}" class="nav-link"><i class="fa fa-shopping-basket text-pink"></i> item</a>
+                    </li>
                     <li class="nav-item nav-dropdown">
                         <a href="#" class="nav-link nav-dropdown-toggle">
                             <i class="fa fa-book text-primary"></i> {{$lb_report}}</a>
