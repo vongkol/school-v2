@@ -14,6 +14,7 @@ function edit(evt)
     std.dob = $("#dob").val();
     std.pob = $("#pob").val();
     std.phone = $("#phone").val();
+    std.email = $("#email").val();
     std.address = $("#current_address").val();
     std.photo = $("#preview").attr("src");
     std.branch = $("#branch").val();
@@ -28,6 +29,7 @@ function cancelEdit()
     $("#dob").val(std.dob);
     $("#pob").val(std.pob);
     $("#phone").val(std.phone);
+    $("#email").val(std.email);
     $("#current_address").val(std.address);
     $("#preview").attr('src', std.photo);
     $("button").addClass("hide");
@@ -52,6 +54,7 @@ function save()
             form_data.append("dob", $("#dob").val());
             form_data.append("pob", $("#pob").val());
             form_data.append("phone", $("#phone").val());
+            form_data.append("email", $("#email").val());
             form_data.append("address", $("#current_address").val());
             form_data.append("branch_id", $("#branch").val());
 

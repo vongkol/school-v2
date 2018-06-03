@@ -47,7 +47,9 @@ class BranchController extends Controller
             $sms = "The new branch has been created successfully.";
             $sms1 = "Fail to create the new branch, please check again!";
         }
-        $i = DB::table('branches')->insert($data);
+        $i = DB::table('branches')->insertGetId($data);
+        $time = date("h:i:sa");
+        Right::log(Auth::user()->id,"Add Branch","insert", $i, "branches", $time);
         if ($i)
         {
             $r->session()->flash('sms', $sms);
@@ -66,6 +68,8 @@ class BranchController extends Controller
             return view('permissions.no');
         }
         DB::table('branches')->where('id', $id)->delete();
+        $time = date("h:i:sa");
+        Right::log(Auth::user()->id,"Delete Branch","delete", $id, "branches", $time);
         return redirect('/branch');
     }
     public function edit($id)
@@ -98,6 +102,8 @@ class BranchController extends Controller
             $sms1 = "Fail to to save changes, please check again!";
         }
         $i = DB::table('branches')->where('id', $r->id)->update($data);
+        $time = date("h:i:sa");
+        Right::log(Auth::user()->id,"Update Branch","update", $r->id, "branches", $time);
         if ($i)
         {
             $r->session()->flash('sms', $sms);

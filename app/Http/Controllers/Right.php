@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use DB;
 use Auth;
-
+use PHPMailer\PHPMailer\PHPMailer;
 class Right
 {
     public static function check($permission_name, $action) {
@@ -30,7 +30,7 @@ class Right
         		break;
         }
 	   
-       	return ($q->count() > 0?'1':'0');
+       	return $q->count() > 0;
     }
     public static function branch($id)
     {
@@ -41,5 +41,69 @@ class Right
             array_push($arr, $b->branch_id);
         }
         return $arr;
+    }
+    public static function send_email($send_to, $id)
+    {
+        $a = url('/service/reset/'.$id);
+        $mail = new PHPMailer(true); // notice the \  you have to use root namespace here
+        try {
+            $mail->isSMTP(); // tell to use smtp
+            $mail->CharSet = "utf-8"; // set charset to utf8
+            $mail->SMTPAuth = true;  // use smpt auth
+            $mail->SMTPSecure = "ssl"; // or ssl
+            $mail->Host = "gator3163.hostgator.com";
+            $mail->Port = 465; // most likely something different for you. This is the mailtrap.io port i use for testing.
+            $mail->Username = "service@hrangkor.com";
+            $mail->Password = "service@168";
+            $mail->setFrom("service@hrangkor.com", "HR Angkor Co., Ltd");
+            $mail->Subject = "HR Angkor: Reset Your Password";
+            $mail->MsgHTML("<p>Please click the link below to reset your password.</p><p><a href='{$a}'>{$a}</a></p>");
+            $mail->addAddress($send_to, $send_to);
+            $mail->send();
+        } catch (phpmailerException $e) {
+//            dd($e);
+        } catch (Exception $e) {
+//            dd($e);
+        }
+        return 1;
+    }
+    public static function send_email1($send_to, $id)
+    {
+        $a = url('/service/reset1/'.$id);
+        $mail = new PHPMailer(true); // notice the \  you have to use root namespace here
+        try {
+            $mail->isSMTP(); // tell to use smtp
+            $mail->CharSet = "utf-8"; // set charset to utf8
+            $mail->SMTPAuth = true;  // use smpt auth
+            $mail->SMTPSecure = "ssl"; // or ssl
+            $mail->Host = "gator3163.hostgator.com";
+            $mail->Port = 465; // most likely something different for you. This is the mailtrap.io port i use for testing.
+            $mail->Username = "service@hrangkor.com";
+            $mail->Password = "service@168";
+            $mail->setFrom("service@hrangkor.com", "HR Angkor Co., Ltd");
+            $mail->Subject = "HR Angkor: Reset Your Password";
+            $mail->MsgHTML("<p>Please click the link below to reset your password.</p><p><a href='{$a}'>{$a}</a></p>");
+            $mail->addAddress($send_to, $send_to);
+            $mail->send();
+        } catch (phpmailerException $e) {
+//            dd($e);
+        } catch (Exception $e) {
+//            dd($e);
+        }
+        return 1;
+    }
+    // user log helper function
+    public static function log($user_id, $description, $type, $record_id, $table_action, $time)
+    {
+        $data = array(
+            'user_id' => $user_id,
+            'description' => $description,
+            'action_type' => $type,
+            'record_id' => $record_id,
+            'log_date' => date('Y-m-d'),
+            'table_action' => $table_action,
+            'time' => $time,
+        );
+        DB::table('logs')->insert($data);
     }
 }

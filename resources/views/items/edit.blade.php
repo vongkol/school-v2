@@ -57,7 +57,6 @@
                                    <label for="item_category" class="control-label col-sm-3">Item Category</label>
                                    <div class="col-sm-9">
                                        <select name="item_category" id="item_category" class="form-control">
-                                        <option value="0"></option>
                                            @foreach($item_categories as $item_category)
                                            <option value="{{$item_category->id}}" {{$item->item_category_id==$item_category->id?'selected':''}}>{{$item_category->name}}</option>
                                            @endforeach

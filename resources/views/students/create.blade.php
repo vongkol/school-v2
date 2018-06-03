@@ -26,7 +26,7 @@
                            <div class="col-sm-4">
                                {{csrf_field()}}
                                <div class="form-group row">
-                                   <label for="code" class="control-label col-sm-3">{{$lb_code}}</label>
+                                   <label for="code" class="control-label col-sm-3">{{$lb_code}}​ <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
                                        <input type="text" required autofocus name="code" id="code" class="form-control" value="{{old('code')}}">
                                    </div>
@@ -78,6 +78,12 @@
                                    <label for="phone" class="control-label col-sm-3">{{$lb_phone}}</label>
                                    <div class="col-sm-9">
                                        <input type="text" autofocus name="phone" id="phone" class="form-control" value="{{old('phone')}}">
+                                   </div>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="email" class="control-label col-sm-3">{{$lb_email}}</label>
+                                   <div class="col-sm-9">
+                                       <input type="email" name="email" id="email" class="form-control" value="{{old('email')}}">
                                    </div>
                                </div>
                                 <div class="form-group row">

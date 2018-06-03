@@ -7819,7 +7819,7 @@ base-chart.chart {
           margin-top: 2px; }
         .sidebar .nav .nav-item .nav-link.nav-dropdown-toggle::before, .sidebar .nav .nav-item .navbar .nav-dropdown-toggle.dropdown-toggle::before, .navbar .sidebar .nav .nav-item .nav-dropdown-toggle.dropdown-toggle::before {
           position: absolute;
-          top: 0.96875rem;
+          top: 7px;
           right: 1rem;
           display: block;
           width: 0.875rem;

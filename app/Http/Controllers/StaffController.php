@@ -52,6 +52,8 @@ class StaffController extends Controller
             $sms1 = "Fail to create the new staff, please check again!";
         }
         $i = DB::table('staffs')->insertGetId($data);
+        $time = date("h:i:sa");
+        Right::log(Auth::user()->id,"Add Staff","insert", $i, "staffs", $time);
         if($i)
         {
              // upload photo first
@@ -126,6 +128,8 @@ class StaffController extends Controller
                 $data['photo'] = $file_name;
             }
             $i = DB::table('staffs')->where('id', $r->id)->update($data);
+            $time = date("h:i:sa");
+            Right::log(Auth::user()->id,"Update Staff","update", $r->id, "staffs", $time);
             if($i)
             {
             $r->session()->flash('sms', $sms);
@@ -138,6 +142,8 @@ class StaffController extends Controller
     public function delete($id)
     {
         DB::table('staffs')->where('id', $id)->update(["active"=>0]);
+        $time = date("h:i:sa");
+        Right::log(Auth::user()->id,"Delete Staff","delete", $id, "staffs", $time);
         $page = @$_GET['page'];
         if ($page>0)
         {

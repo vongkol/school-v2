@@ -142,6 +142,13 @@ Route::get('/commune/edit/{id}', "CommuneController@edit");
 Route::get('/commune/delete/{id}', "CommuneController@delete");
 Route::post('/commune/save', "CommuneController@save");
 Route::post('/commune/update', "CommuneController@update");
+//  invoice
+Route::get('/invoice', "InvoiceController@index");
+Route::get('/invoice/create', "InvoiceController@create");
+Route::get('/invoice/edit/{id}', "InvoiceController@edit");
+Route::get('/invoice/delete/{id}', "InvoiceController@delete");
+Route::post('/invoice/save', "InvoiceController@save");
+Route::post('/invoice/update', "InvoiceController@update");
 // village
 Route::get('/village', "VillageController@index");
 Route::get('/village/create', "VillageController@create");
@@ -170,5 +177,10 @@ Route::get('/report', "ReportController@index");
 Route::get('/printing', "PrintingController@index");
 Route::get('/printing/province', "PrintingController@by_province");
 Route::get('/printing/school', "PrintingController@by_school");
+
+
+// user logs
+Route::get('/log', "LogController@index");
+Route::get('/log/delete/{id}', "LogController@delete");
 // test
 Route::get('/test', "TestController@index");

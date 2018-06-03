@@ -8,12 +8,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="School Management System">
+    <meta name="description" content="Registration Management System">
     <meta name="author" content="vdoo.biz">
-    <meta name="keyword" content="School, Student, Student Management System, School Management System">
+    <meta name="keyword" content="School, Student, System, Student Management System, School Management System">
     <link rel="shortcut icon" href="img/favicon.png">
 
-    <title>School Management System</title>
+    <title>Registration Management System</title>
 
     <!-- Icons -->
     <link href="{{asset('css/font-awesome.css')}}" rel="stylesheet">
@@ -80,6 +80,9 @@
                         <a href="{{url('/staff')}}" class="nav-link"><i class="fa fa-user text-info"></i> Staff</a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{url('/invoice')}}" class="nav-link"><i class="fa fa-money text-danger"></i> Invoice</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{url('/item')}}" class="nav-link"><i class="fa fa-shopping-basket text-pink"></i> item</a>
                     </li>
                     <li class="nav-item nav-dropdown">
@@ -103,6 +106,9 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{url('/role')}}" class="nav-link"><i class="fa fa-shield text-info"></i> {{$lb_role}}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{url('/log')}}" class="nav-link"><i class="fa fa-user text-yellow"></i> User Action</a>
                                 </li>
                             </ul>
 

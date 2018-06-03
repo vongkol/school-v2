@@ -82,6 +82,12 @@
                                        <input type="text" name="phone" id="phone" class="form-control" readonly value="{{$student->phone}}">
                                    </div>
                                </div>
+                               <div class="form-group row">
+                                   <label for="email" class="control-label col-sm-3">{{$lb_email}}</label>
+                                   <div class="col-sm-9">
+                                       <input type="email" name="email" id="email" class="form-control" readonly value="{{$student->email}}">
+                                   </div>
+                               </div>
                                 <div class="form-group row">
                                    <label for="current_address" class="control-label col-sm-3">{{$lb_current_address}}</label>
                                    <div class="col-sm-9">
@@ -418,6 +424,12 @@
                                     <input type="text" id="fphone" name="fphone" class="form-control">
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                   <label for="email" class="control-label col-sm-3">{{$lb_email}}</label>
+                                   <div class="col-sm-9">
+                                       <input type="email" name="email" id="email" class="form-control" value="{{$student->email}}">
+                                   </div>
+                               </div>
                             <div class="form-group row">
                                 <label for="fdisable" class="control-label col-sm-4">{{$lb_is_disabled}}</label>
                                 <div class="col-sm-8">

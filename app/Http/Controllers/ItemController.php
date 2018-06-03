@@ -45,6 +45,8 @@ class ItemController extends Controller
             $sms1 = "Fail to create the new item, please check again!";
         }
         $i = DB::table('items')->insertGetId($data);
+        $time = date("h:i:sa");
+        Right::log(Auth::user()->id,"Add Item","insert", $i, "items", $time);
         if($i)
         {
              // upload photo first
@@ -112,6 +114,8 @@ class ItemController extends Controller
                 $data['photo'] = $file_name;
             }
             $i = DB::table('items')->where('id', $r->id)->update($data);
+            $time = date("h:i:sa");
+            Right::log(Auth::user()->id,"Update Items","update", $r->id, "items", $time);
             if($i)
             {
             $r->session()->flash('sms', $sms);
@@ -124,6 +128,8 @@ class ItemController extends Controller
     public function delete($id)
     {
         DB::table('items')->where('id', $id)->update(["active"=>0]);
+        $time = date("h:i:sa");
+        Right::log(Auth::user()->id,"Delete Item","delete", $id, "items", $time);
         $page = @$_GET['page'];
         if ($page>0)
         {

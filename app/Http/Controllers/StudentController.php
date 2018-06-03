@@ -26,6 +26,7 @@ class StudentController extends Controller
                 ->join('branches', 'students.branch_id', '=', 'branches.id')
                 ->select('students.*', 'branches.name as branch_name')
                 ->where('active',1)
+                ->orderBy('id', 'desc')
                 ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
                 ->where(function($fn){
                     $fn->where('students.code', 'like', "%{$_GET['q']}%")
@@ -39,6 +40,7 @@ class StudentController extends Controller
                 ->join('branches', 'students.branch_id', '=', 'branches.id')
                 ->select('students.*', 'branches.name as branch_name')
                 ->where('active',1)
+                ->orderBy('id', 'desc')
                 ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
                 ->paginate(18); 
         }
@@ -75,6 +77,7 @@ class StudentController extends Controller
             'dob' => $r->dob,
             'phone' => $r->phone,
             'address' => $r->current_address,
+            'email' => $r->email,
             'branch_id' => $r->branch
         ];
         $sms1="";
@@ -87,7 +90,9 @@ class StudentController extends Controller
         {
             $sms1 = "Fail to create the new student, please check again!";
         }
+        $time = date("h:i:sa");
         $i = DB::table('students')->insertGetId($data);
+        Right::log(Auth::user()->id,"Add Student","insert", $i, "students",$time);
         if($i)
         {
              // upload photo first
@@ -120,6 +125,7 @@ class StudentController extends Controller
             'pob' => $r->pob,
             'dob' => $r->dob,
             'phone' => $r->phone,
+            'email' => $r->email,
             'address' => $r->address,
             'branch_id' => $r->branch_id
         ];
@@ -132,7 +138,10 @@ class StudentController extends Controller
             $file->move($destinationPath, $file_name);
             $data['photo'] = $file_name;
         }
+
+        $time = date("h:i:sa");
         $i = DB::table('students')->where('id', $r->student_id)->update($data);
+        Right::log(Auth::user()->id,"Update Student","update", $r->student_id, "students", $time);
         if($i)
         {
             return 'ok';
@@ -193,7 +202,9 @@ class StudentController extends Controller
             return view('permissions.no');
         }
         $data = ['active'=>0];
+        $time = date("h:i:sa");
         DB::table('students')->where('id', $id)->update($data);
+        Right::log(Auth::user()->id,"Delete Student","delete", $id, "students", $time);
         return redirect('/student');
         
     }
