@@ -33,6 +33,7 @@
                                 <option value="insert">Insert</option>
                                 <option value="update">Update</option>
                                 <option value="delete">Delete</option>
+                                <option value="login">Login</option>
                             </select>
                         </div>
                         <div class="col-md-2">
@@ -42,6 +43,7 @@
                                 <option value="students">students</option>
                                 <option value="staffs">staffs</option>
                                 <option value="items">items</option>
+                                <option value="users">users</option>
                             </select>
                         </div>
                         <div class="col-md-2">

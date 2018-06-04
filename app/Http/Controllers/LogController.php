@@ -90,7 +90,7 @@ class LogController extends Controller
         $data['total'] = DB::table('logs')
             ->join('users','logs.user_id', 'users.id')
             ->select('logs.*', 'users.name as user_id')
-            ->where('logs.table_action', $_GET['user_id'])
+            ->where('logs.table_action', $_GET['on_table'])
             ->where('logs.active', 1)
             ->count();
         } if ($r->start_date !== null ) {
@@ -259,14 +259,14 @@ class LogController extends Controller
             ->select('logs.*', 'users.name as user_id')
             ->orderBy('logs.id', 'desc')
             ->where('logs.table_action', $_GET['on_table'])
-            ->where('logs.user_id', '>=', $_GET['user_id'])
+            ->where('logs.user_id', $_GET['user_id'])
             ->where('logs.active', 1)
             ->paginate(18);
         $data['total'] = DB::table('logs')
             ->join('users','logs.user_id', 'users.id')
             ->select('logs.*', 'users.name as user_id')
             ->where('logs.table_action', $_GET['on_table'])
-            ->where('logs.user_id', '>=', $_GET['user_id'])
+            ->where('logs.user_id', $_GET['user_id'])
             ->where('logs.active', 1)
             ->count();
         }  if ($r->action !== null && $r->on_table !== null ) {
@@ -275,14 +275,14 @@ class LogController extends Controller
             ->select('logs.*', 'users.name as user_id')
             ->orderBy('logs.id', 'desc')
             ->where('logs.table_action', $_GET['on_table'])
-            ->where('logs.action_type', '>=', $_GET['action'])
+            ->where('logs.action_type', $_GET['action'])
             ->where('logs.active', 1)
             ->paginate(18);
         $data['total'] = DB::table('logs')
             ->join('users','logs.user_id', 'users.id')
             ->select('logs.*', 'users.name as user_id')
             ->where('logs.table_action', $_GET['on_table'])
-            ->where('logs.action_type', '>=', $_GET['action'])
+            ->where('logs.action_type', $_GET['action'])
             ->where('logs.active', 1)
             ->count();
         }  if ($r->action !== null && $r->user_id !== null ) {
@@ -291,17 +291,148 @@ class LogController extends Controller
             ->select('logs.*', 'users.name as user_id')
             ->orderBy('logs.id', 'desc')
             ->where('logs.action_type', $_GET['action'])
-            ->where('logs.user_id', '>=', $_GET['user_id'])
+            ->where('logs.user_id', $_GET['user_id'])
             ->where('logs.active', 1)
             ->paginate(18);
         $data['total'] = DB::table('logs')
             ->join('users','logs.user_id', 'users.id')
             ->select('logs.*', 'users.name as user_id')
             ->where('logs.action_type', $_GET['action'])
+            ->where('logs.user_id', $_GET['user_id'])
+            ->where('logs.active', 1)
+            ->count();
+        } if ($r->action !== null && $r->user_id !== null && $r->start_date !== null) {
+            $data['logs'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->orderBy('logs.id', 'desc')
+            ->where('logs.action_type', $_GET['action'])
+            ->where('logs.user_id', $_GET['user_id'])
+            ->where('logs.log_date', '>=', $_GET['start_date'])
+            ->where('logs.active', 1)
+            ->paginate(18);
+        $data['total'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->where('logs.action_type', $_GET['action'])
+            ->where('logs.user_id', $_GET['user_id'])
+            ->where('logs.log_date', '>=', $_GET['start_date'])
+            ->where('logs.active', 1)
+            ->count();
+        } if ($r->action !== null && $r->user_id !== null && $r->end_date !== null ) {
+            $data['logs'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->orderBy('logs.id', 'desc')
+            ->where('logs.action_type', $_GET['action'])
+            ->where('logs.user_id', $_GET['user_id'])
+            ->where('logs.log_date', '<=', $_GET['end_date'])
+            ->where('logs.active', 1)
+            ->paginate(18);
+        $data['total'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->where('logs.action_type', $_GET['action'])
+            ->where('logs.user_id', $_GET['user_id'])
+            ->where('logs.log_date', '<=', $_GET['end_date'])
+            ->where('logs.active', 1)
+            ->count();
+        }if ($r->action !== null && $r->on_table !== null && $r->end_date !== null ) {
+            $data['logs'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->orderBy('logs.id', 'desc')
+            ->where('logs.action_type', $_GET['action'])
+            ->where('logs.table_action', $_GET['on_table'])
+            ->where('logs.log_date', '<=', $_GET['end_date'])
+            ->where('logs.active', 1)
+            ->paginate(18);
+        $data['total'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->where('logs.action_type', $_GET['action'])
+            ->where('logs.table_action', $_GET['on_table'])
+            ->where('logs.log_date', '<=', $_GET['end_date'])
+            ->where('logs.active', 1)
+            ->count();
+        }if ($r->action !== null && $r->on_table !== null && $r->start_date !== null ) {
+            $data['logs'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->orderBy('logs.id', 'desc')
+            ->where('logs.action_type', $_GET['action'])
+            ->where('logs.table_action', $_GET['on_table'])
+            ->where('logs.log_date', '>=', $_GET['start_date'])
+            ->where('logs.active', 1)
+            ->paginate(18);
+        $data['total'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->where('logs.action_type', $_GET['action'])
+            ->where('logs.table_action', $_GET['on_table'])
+            ->where('logs.log_date', '>=', $_GET['start_date'])
+            ->where('logs.active', 1)
+            ->count();
+        }
+        if ($r->action !== null && $r->on_table !== null && $r->user_id !== null ) {
+            $data['logs'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->orderBy('logs.id', 'desc')
+            ->where('logs.action_type', $_GET['action'])
+            ->where('logs.table_action', $_GET['on_table'])
+            ->where('logs.user_id', $_GET['user_id'])
+            ->where('logs.active', 1)
+            ->paginate(18);
+        $data['total'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->where('logs.action_type', $_GET['action'])
+            ->where('logs.table_action', $_GET['on_table'])
             ->where('logs.user_id', '>=', $_GET['user_id'])
             ->where('logs.active', 1)
             ->count();
-        } 
+        }
+         if ($r->end_date !== null && $r->on_table !== null && $r->start_date !== null ) {
+            $data['logs'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->orderBy('logs.id', 'desc')
+            ->where('logs.log_date','<=', $_GET['end_date'])
+            ->where('logs.table_action', $_GET['on_table'])
+            ->where('logs.log_date', '>=', $_GET['start_date'])
+            ->where('logs.active', 1)
+            ->paginate(18);
+            $data['total'] = DB::table('logs')
+                ->join('users','logs.user_id', 'users.id')
+                ->select('logs.*', 'users.name as user_id')
+                ->where('logs.log_date','<=', $_GET['end_date'])
+                ->where('logs.table_action', $_GET['on_table'])
+                ->where('logs.log_date', '>=', $_GET['start_date'])
+                ->where('logs.active', 1)
+                ->count();
+        }
+        if ($r->action !== null && $r->user_id !== null && $r->end_date !== null && $r->start_date !== null) {
+            $data['logs'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->orderBy('logs.id', 'desc')
+            ->where('logs.action_type', $_GET['action'])
+            ->where('logs.user_id', $_GET['user_id'])
+            ->where('logs.log_date', '<=', $_GET['end_date'])
+            ->where('logs.log_date', '>=', $_GET['start_date'])
+            ->where('logs.active', 1)
+            ->paginate(18);
+        $data['total'] = DB::table('logs')
+            ->join('users','logs.user_id', 'users.id')
+            ->select('logs.*', 'users.name as user_id')
+            ->where('logs.action_type', $_GET['action'])
+            ->where('logs.user_id', $_GET['user_id'])
+            ->where('logs.log_date', '<=', $_GET['end_date'])
+            ->where('logs.log_date', '>=', $_GET['start_date'])
+            ->where('logs.active', 1)
+            ->count();
+        }
           
         $data['users'] = DB::table('users')
             ->orderBy('name')
