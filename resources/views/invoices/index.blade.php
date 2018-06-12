@@ -9,17 +9,26 @@
                     <i class="fa fa-align-justify"></i> Invoice List&nbsp;&nbsp;
                     <a href="{{url('/invoice/create')}}" class="btn btn-link btn-sm">{{$lb_new}}</a>
                 </div>
+                
                 <div class="card-block">
+                    <form action="{{url('/invoice')}}" class="form-inline" method="get">
+                        <div class="form-group">
+                            <label for="name">{{$lb_search}}&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" id="q" name="q" value="{{$query}}" >
+                            <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
+                        </div>
+                    </form>
+                    <br>
                     <table class="tbl">
                         <thead>
                         <tr>
                             <th>{!!$lb_id!!}</th>
+                            <th>Invoice Ref</th>
                             <th>Invoice By</th>
                             <th>Invoice Date</th>
-                            <th>Total Amount</th>
                             <th>Due Date</th>
+                            <th>Total Amount</th>
                             <th>Due Amount</th>
-                            <th>Invoice Ref</th>
                             <th>{{$lb_action}}</th>
                         </tr>
                         </thead>
@@ -33,13 +42,12 @@
                         @foreach($invoices as $invoice)
                             <tr>
                                 <td>{{$i++}}</td>
-                                <td>{{$invoice->invoice_by}}</td>
-                                <td>{{$invoice->invoice_date}}</td>
-                                <td>{{$invoice->total_mount}} </td>
-                                <td>{{$invoice->due_amount}} </td>
-                                <td>{{$invoice->total_mount}} </td>
-                                <td>{{$invoice->due_date}} </td>
                                 <td>{{$invoice->invoice_ref}}</td>
+                                <td>{{$invoice->english_name}}</td>
+                                <td>{{$invoice->invoice_date}}</td>
+                                <td>{{$invoice->due_date}} </td>
+                                <td><span class="text-warning">USD</span> {{$invoice->total_amount}} </td>
+                                <td><span class="text-warning">USD</span> {{$invoice->due_amount}} </td>
                                 <td>
                                     <a href="{{url('/invoice/detail/'.$invoice->id)}}" title="Detail"><i class="fa fa-eye text-info"></i></a>&nbsp;&nbsp
                                     <a href="{{url('/invoice/edit/'.$invoice->id)}}" title="{{$lb_edit}}"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp

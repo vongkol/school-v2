@@ -20,8 +20,10 @@
     <link href="{{asset('css/simple-line-icons.css')}}" rel="stylesheet">
 
     <!-- Main styles for this application -->
+    <link href="{{asset('chosen/chosen.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
     <link href="{{asset('css/custom.css')}}" rel="stylesheet">
+ 
     <script>
         var burl = "{{url('/')}}";
         var asset = "{{asset('img')}}";
@@ -77,10 +79,10 @@
                         <a href="{{url('/student')}}" class="nav-link"><i class="fa fa-users text-yellow"></i> {{$lb_student}}</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{url('/staff')}}" class="nav-link"><i class="fa fa-user text-info"></i> Staff</a>
+                        <a href="{{url('/invoice')}}" class="nav-link"><i class="fa fa-money text-danger"></i> Invoice</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{url('/invoice')}}" class="nav-link"><i class="fa fa-money text-danger"></i> Invoice</a>
+                        <a href="{{url('/staff')}}" class="nav-link"><i class="fa fa-user text-info"></i> Staff</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{url('/item')}}" class="nav-link"><i class="fa fa-shopping-basket text-pink"></i> item</a>

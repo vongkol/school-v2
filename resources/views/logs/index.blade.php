@@ -44,6 +44,7 @@
                                 <option value="staffs">staffs</option>
                                 <option value="items">items</option>
                                 <option value="users">users</option>
+                                <option value="invoices">invoices</option>
                             </select>
                         </div>
                         <div class="col-md-2">

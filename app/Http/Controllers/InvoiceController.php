@@ -9,11 +9,33 @@ class InvoiceController extends Controller
 {
     // index
     public function index()
-    {
-        $data['invoices'] = DB::table('invoices')
-            ->where('invoices.active',1)
-            ->orderBy('invoices.id', 'desc')
-            ->paginate(18);
+    { 
+        $data['query']= "";
+        if(isset($_GET['q']))
+        {
+            $data['query'] = $_GET['q'];
+            $data['invoices'] = DB::table('invoices')
+                ->join('students', 'students.id', 'invoices.invoice_by')
+                ->select('students.*', 'invoices.*')
+                ->where('invoices.active',1)
+                ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+                ->orderBy('invoices.id', 'desc')
+                ->where(function($fn){
+                    $fn->where('invoices.invoice_ref', 'like', "%{$_GET['q']}%")
+                    ->orWhere('invoices.invoice_by', 'like', "%{$_GET['q']}%")
+                    ->orWhere('invoices.invoice_date', 'like', "%{$_GET['q']}%")
+                    ->orWhere('invoices.due_date', 'like', "%{$_GET['q']}%");
+                })
+                ->paginate(18);
+        } else {
+            $data['invoices'] = DB::table('invoices')
+                ->join('students', 'students.id', 'invoices.invoice_by')
+                ->select('invoices.*', 'students.english_name')
+                ->where('invoices.active',1)
+                ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+                ->orderBy('invoices.id', 'desc')
+                ->paginate(18);
+        }
         return view('invoices.index', $data);
     }
     public function create()
@@ -23,77 +45,71 @@ class InvoiceController extends Controller
     public function save(Request $r)
     {
         $data = array(
-            'name' => $r->name,
-            'item_category_id' => $r->item_category,
-            'price' => $r->price,
-            'description' => $r->description,
-            'tax' => $r->tax,
-            'branch_id' => $r->branch,
+            'invoice_date' => $r->invoice_date,
+            'invoice_by' => $r->invoice_by,
+            'total_amount' => $r->total_amount,
+            'due_amount' => $r->due_amount,
+            'due_date' => $r->due_date,
+            'invoice_ref' => $r->invoice_ref,
         );
         $sms ="";
         $sms1="";
         if(Auth::user()->language=='kh')
         {
-            $sms = "Item ថ្មីត្រូវបានបង្កើតដោយជោគជ័យ។";
-            $sms1 = "មិនអាចបង្កើត Item ថ្មីបានទេ សូមពិនិត្យម្តងទៀត!";
+            $sms = "Invoice ថ្មីត្រូវបានបង្កើតដោយជោគជ័យ។";
+            $sms1 = "មិនអាចបង្កើត Invoice ថ្មីបានទេ សូមពិនិត្យម្តងទៀត!";
         }
         else
         {
-            $sms = "The new item has been created successfully.";
-            $sms1 = "Fail to create the new item, please check again!";
+            $sms = "The new invoice has been created successfully.";
+            $sms1 = "Fail to create the new invoice, please check again!";
         }
-        $i = DB::table('items')->insertGetId($data);
+        $i = DB::table('invoices')->insertGetId($data);
         $time = date("h:i:sa");
-        Right::log(Auth::user()->id,"Add Item","insert", $i, "items", $time);
+        Right::log(Auth::user()->id,"Add Invoice","insert", $i, "invoices", $time);
         if($i)
         {
-             // upload photo first
-            if($r->hasFile('photo'))
-            {
-                $file = $r->file('photo');
-                $file_name = $i . "-" .$file->getClientOriginalName();
-                $destinationPath = 'uploads/items/'; // usually in public folder
-                $file->move($destinationPath, $file_name);
-                DB::table('items')->where('id', $i)->update(['photo' => $file_name]);
-            }
             $r->session()->flash('sms', $sms);
-            return redirect('/item/create');
+            return redirect('/invoice/create');
         }
         else{
             $r->session()->flash('sms1', $sms1);
-            return redirect('/item/create');
+            return redirect('/invoice/create');
         }
     }
     public function edit($id)
     {
-        $data['item'] = DB::table('items')->where('id', $id)->first();
-        return view('items.edit', $data);
+        $data['invoice'] = DB::table('invoices')
+            ->where('id', $id)->whereIn('students.branch_id', Right::branch(Auth::user()->id))->first();
+        return view('invoices.edit', $data);
     }
     public function detail($id)
     {
-        $data['item'] = DB::table('items')
-            ->leftJoin('item_categories', 'item_categories.id', '=', 'items.item_category_id')
-            ->join('branches', 'branches.id', '=', 'items.branch_id')
-            ->select('items.*', 'branches.name as branch_id' ,'item_categories.name as item_category')
-            ->where('items.id', $id)->first();
-        return view('items.detail', $data);
+        $data['invoice'] = DB::table('invoices')
+        ->join('students', 'students.id', 'invoices.invoice_by')
+        ->select('invoices.*', 'students.english_name')
+        ->where('invoices.active',1)
+        ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+        ->where('invoices.id', $id)
+        ->first();
+        return view('invoices.detail', $data);
     }
     public function update(Request $r)
     {
         $data = array(
-            'name' => $r->name,
-            'item_category_id' => $r->item_category,
-            'price' => $r->price,
-            'description' => $r->description,
-            'tax' => $r->tax,
-            'branch_id' => $r->branch,
+            'invoice_date' => $r->invoice_date,
+            'invoice_by' => $r->invoice_by,
+            'total_amount' => $r->total_amount,
+            'due_amount' => $r->due_amount,
+            'due_date' => $r->due_date,
+            'invoice_ref' => $r->invoice_ref,
         );
         $sms ="";
         $sms1="";
         if(Auth::user()->language=='kh')
         {
-            $sms = "ពត៌មាន Item ត្រូវបានផ្លាស់ប្តូរដោយជោគជ័យ។";
-            $sms1 = "Item មិនអាចផ្លាស់ប្តូរបានទេ, សូមពិនិត្យម្តងទៀត!";
+            $sms = "ពត៌មាន វិក័យប័ត្រ ត្រូវបានផ្លាស់ប្តូរដោយជោគជ័យ។";
+            $sms1 = "វិក័យប័ត្រ មិនអាចផ្លាស់ប្តូរបានទេ, សូមពិនិត្យម្តងទៀត!";
         }
         else
         {
@@ -101,33 +117,23 @@ class InvoiceController extends Controller
             $sms1 = "Fail to to save changes, please check again!";
         }
        
-   
-             // upload photo first
-            if($r->hasFile('photo'))
-            {
-                $file = $r->file('photo');
-                $file_name = $r->id . "-" .$file->getClientOriginalName();
-                $destinationPath = 'uploads/items/'; // usually in public folder
-                $file->move($destinationPath, $file_name);
-                $data['photo'] = $file_name;
-            }
-            $i = DB::table('items')->where('id', $r->id)->update($data);
+            $i = DB::table('invoices')->where('id', $r->id)->update($data);
             $time = date("h:i:sa");
-            Right::log(Auth::user()->id,"Update Items","update", $r->id, "items", $time);
+            Right::log(Auth::user()->id,"Update Invoice","update", $r->id, "invoices", $time);
             if($i)
             {
-            $r->session()->flash('sms', $sms);
-            return redirect('/item/edit/'.$r->id);
+                $r->session()->flash('sms', $sms);
+                return redirect('/invoice/edit/'.$r->id);
             }else{
                 $r->session()->flash('sms1', $sms1);
-                return redirect('/item/edit/'.$r->id);
+                return redirect('/invoice/edit/'.$r->id);
             }
     }
     public function delete($id)
     {
         DB::table('invoices')->where('id', $id)->update(["active"=>0]);
         $time = date("h:i:sa");
-        Right::log(Auth::user()->id,"Delete Item","delete", $id, "items", $time);
+        Right::log(Auth::user()->id,"Delete Invoice","delete", $id, "invoices", $time);
         $page = @$_GET['page'];
         if ($page>0)
         {

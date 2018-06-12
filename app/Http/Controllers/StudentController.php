@@ -44,7 +44,6 @@ class StudentController extends Controller
                 ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
                 ->paginate(18); 
         }
-      
         return view('students.index', $data);
     }
     public function create()
@@ -190,6 +189,13 @@ class StudentController extends Controller
                                 ->where("registrations.student_id", $id)
                                 ->select("registrations.*", "classes.name as class_name", "school_years.name as year_name")
                                 ->get();
+        $data['invoices'] = DB::table('invoices')
+            ->join('students', 'students.id', 'invoices.invoice_by')
+            ->select('invoices.*', 'students.english_name')
+            ->where('invoices.active',1)
+            ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+            ->where('invoices.invoice_by', $id)
+            ->get();
         return view('students.detail', $data);
     }
     public function delete($id)

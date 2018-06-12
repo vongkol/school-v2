@@ -146,6 +146,7 @@ Route::post('/commune/update', "CommuneController@update");
 Route::get('/invoice', "InvoiceController@index");
 Route::get('/invoice/create', "InvoiceController@create");
 Route::get('/invoice/edit/{id}', "InvoiceController@edit");
+Route::get('/invoice/detail/{id}', "InvoiceController@detail");
 Route::get('/invoice/delete/{id}', "InvoiceController@delete");
 Route::post('/invoice/save', "InvoiceController@save");
 Route::post('/invoice/update', "InvoiceController@update");
