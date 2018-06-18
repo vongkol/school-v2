@@ -24,6 +24,7 @@
                         <tr>
                             <th>{!!$lb_id!!}</th>
                             <th>Invoice Ref</th>
+                            <th>Student Code</th>
                             <th>Invoice By</th>
                             <th>Invoice Date</th>
                             <th>Due Date</th>
@@ -43,6 +44,7 @@
                             <tr>
                                 <td>{{$i++}}</td>
                                 <td>{{$invoice->invoice_ref}}</td>
+                                <td>{{$invoice->code}}</td>
                                 <td>{{$invoice->english_name}}</td>
                                 <td>{{$invoice->invoice_date}}</td>
                                 <td>{{$invoice->due_date}} </td>

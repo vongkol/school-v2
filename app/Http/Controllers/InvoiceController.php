@@ -24,13 +24,14 @@ class InvoiceController extends Controller
                     $fn->where('invoices.invoice_ref', 'like', "%{$_GET['q']}%")
                     ->orWhere('invoices.invoice_by', 'like', "%{$_GET['q']}%")
                     ->orWhere('invoices.invoice_date', 'like', "%{$_GET['q']}%")
+                    ->orWhere('students.code', 'like', "%{$_GET['q']}%")
                     ->orWhere('invoices.due_date', 'like', "%{$_GET['q']}%");
                 })
                 ->paginate(18);
         } else {
             $data['invoices'] = DB::table('invoices')
                 ->join('students', 'students.id', 'invoices.invoice_by')
-                ->select('invoices.*', 'students.english_name')
+                ->select('invoices.*', 'students.english_name', 'students.code')
                 ->where('invoices.active',1)
                 ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
                 ->orderBy('invoices.id', 'desc')
@@ -87,7 +88,7 @@ class InvoiceController extends Controller
     {
         $data['invoice'] = DB::table('invoices')
         ->join('students', 'students.id', 'invoices.invoice_by')
-        ->select('invoices.*', 'students.english_name')
+        ->select('invoices.*', 'students.english_name', 'students.code')
         ->where('invoices.active',1)
         ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
         ->where('invoices.id', $id)

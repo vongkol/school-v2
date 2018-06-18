@@ -47,7 +47,7 @@
                                    <div class="col-sm-9">
                                        <select name="invoice_by" id="invoice_by" class="form-control chosen-select">
                                            @foreach($students as $s)
-                                           <option value="{{$s->id}}">{{$s->english_name}}</option>
+                                           <option value="{{$s->id}}">{{$s->code}} - {{$s->english_name}}</option>
                                            @endforeach
                                        </select>
                                    </div>
