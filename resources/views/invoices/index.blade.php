@@ -28,8 +28,9 @@
                             <th>Invoice By</th>
                             <th>Invoice Date</th>
                             <th>Due Date</th>
-                            <th>Total Amount</th>
-                            <th>Due Amount</th>
+                            <th>Discount (%)</th>
+                            <th>Total Amount ($)</th>
+                            <th>Due Amount ($)</th>
                             <th>{{$lb_action}}</th>
                         </tr>
                         </thead>
@@ -48,8 +49,9 @@
                                 <td>{{$invoice->english_name}}</td>
                                 <td>{{$invoice->invoice_date}}</td>
                                 <td>{{$invoice->due_date}} </td>
-                                <td><span class="text-warning">USD</span> {{$invoice->total_amount}} </td>
-                                <td><span class="text-warning">USD</span> {{$invoice->due_amount}} </td>
+                                <td><span class="text-info">%</span> {{$invoice->discount}}</td>
+                                <td><span class="text-info">USD</span> {{$invoice->total_amount}} </td>
+                                <td><span class="text-info">USD</span> {{$invoice->due_amount}} </td>
                                 <td>
                                     <a href="{{url('/invoice/detail/'.$invoice->id)}}" title="Detail"><i class="fa fa-eye text-info"></i></a>&nbsp;&nbsp
                                     <a href="{{url('/invoice/edit/'.$invoice->id)}}" title="{{$lb_edit}}"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp

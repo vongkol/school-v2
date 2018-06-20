@@ -13,7 +13,7 @@ class RoomController extends Controller
         if(!Right::check('Room', 'l')){
             return view('permissions.no');
         }
-        $data['rooms'] = DB::table('rooms')->get();
+        $data['rooms'] = DB::table('rooms')->orderBy('id', 'desc')->get();
         return view('rooms.index', $data);
     }
     public function create()

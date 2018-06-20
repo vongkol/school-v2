@@ -16,7 +16,7 @@ class InvoiceController extends Controller
             $data['query'] = $_GET['q'];
             $data['invoices'] = DB::table('invoices')
                 ->join('students', 'students.id', 'invoices.invoice_by')
-                ->select('students.*', 'invoices.*')
+                ->select('students.*', 'invoices.*', 'invoices.id as id')
                 ->where('invoices.active',1)
                 ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
                 ->orderBy('invoices.id', 'desc')
@@ -31,7 +31,8 @@ class InvoiceController extends Controller
         } else {
             $data['invoices'] = DB::table('invoices')
                 ->join('students', 'students.id', 'invoices.invoice_by')
-                ->select('invoices.*', 'students.english_name', 'students.code')
+                ->join('invoice_detials', 'invoice_detials.invoice_id', 'invoices.id')
+                ->select('invoices.*', 'invoice_detials.discount', 'students.english_name', 'students.code')
                 ->where('invoices.active',1)
                 ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
                 ->orderBy('invoices.id', 'desc')
@@ -48,8 +49,6 @@ class InvoiceController extends Controller
         $data = array(
             'invoice_date' => $r->invoice_date,
             'invoice_by' => $r->invoice_by,
-            'total_amount' => $r->total_amount,
-            'due_amount' => $r->due_amount,
             'due_date' => $r->due_date,
             'invoice_ref' => $r->invoice_ref,
         );
@@ -66,6 +65,23 @@ class InvoiceController extends Controller
             $sms1 = "Fail to create the new invoice, please check again!";
         }
         $i = DB::table('invoices')->insertGetId($data);
+
+        $data = array(
+            'item_id' =>$r->item,
+            'discount' => $r->discount,
+            'subtotal' => $r->unit_price,
+            'invoice_id' => $i,
+            'qty' => $r->qty,
+        );
+
+        $discount_price = $r->discount * $r->unit_price / 100;
+        $total_amount = $r->unit_price - $discount_price;
+     
+        DB::table('invoices')->where('id', $i)->update(["total_amount"=>$total_amount]);
+
+        $i = DB::table('invoice_detials')->insertGetId($data);
+
+
         $time = date("h:i:sa");
         Right::log(Auth::user()->id,"Add Invoice","insert", $i, "invoices", $time);
         if($i)
@@ -88,11 +104,13 @@ class InvoiceController extends Controller
     {
         $data['invoice'] = DB::table('invoices')
         ->join('students', 'students.id', 'invoices.invoice_by')
-        ->select('invoices.*', 'students.english_name', 'students.code')
+        ->join('invoice_detials', 'invoice_detials.invoice_id', 'invoices.id')
+        ->select('invoices.*', 'students.english_name',  'students.code', 'invoice_detials.*')
         ->where('invoices.active',1)
         ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
         ->where('invoices.id', $id)
         ->first();
+        
         return view('invoices.detail', $data);
     }
     public function update(Request $r)

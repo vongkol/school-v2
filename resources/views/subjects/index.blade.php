@@ -10,10 +10,10 @@
                     <a href="{{url('/subject/create')}}" class="btn btn-link btn-sm">{{$lb_new}}</a>
                 </div>
                 <div class="card-block">
-                    <table class="table table-condensed table-striped table-responsive">
+                    <table class="table tbl table-condensed table-striped table-responsive">
                         <thead>
                         <tr>
-                            <th>{{$lb_id}}</th>
+                            <th>{!!$lb_id!!}</th>
                             <th>{{$lb_name}}</th>
                             <th>{{$lb_action}}</th>
                         </tr>

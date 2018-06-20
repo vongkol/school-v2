@@ -32,32 +32,53 @@
                     </div>
                 @endif
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             {{csrf_field()}}
                             <input type="hidden" value="{{$invoice->id}}" name="id">
-                            <div class="form-group row">
-                                <label for="invoice_ref" class="control-label col-sm-3">Invoice Reference</label> <label for="total_amount" class="control-label col-sm-6">:  {{$invoice->invoice_ref}}</label>
+                            <div class="row">
+                                <label class="control-label col-sm-6">: <h3>{{$invoice->invoice_ref}}</h3></label>
                             </div>
                             <div class="form-group row">
-                                <label for="invoice_ref" class="control-label col-sm-3">Student Code</label> <label for="total_amount" class="control-label col-sm-6">:  {{$invoice->code}}</label>
+                                <label for="invoice_ref" class="control-label col-sm-6">Student Code :  {{$invoice->code}}</label>
+                                <label for="invoice_date" class="control-label col-sm-6">Invoice Date : {{$invoice->invoice_date}}</label>
                             </div>
                             <div class="form-group row">
-                                <label for="invoice_by" class="control-label col-sm-3">Invoice By</label> <label for="total_amount" class="control-label col-sm-6">: {{$invoice->english_name}}</label>
+                            <label for="invoice_by" class="control-label col-sm-6">Invoice By : {{$invoice->english_name}}</label>
+                                
+                                <label for="due_date" class="control-label col-sm-6">Due Date:    {{$invoice->due_date}}</label>
                             </div>
-                            <div class="form-group row">
-                                <label for="invoice_date" class="control-label col-sm-3">Invoice Date</label> <label for="invoice_date" class="control-label col-sm-6">: {{$invoice->invoice_date}}</label>
-                            </div>
-                            <div class="form-group row">
-                            <label for="due_date" class="control-label col-sm-3">Due Date</label> <label for="due_date" class="control-label col-sm-6">:    {{$invoice->due_date}}</label>
-                            </div>
-                            <div class="form-group row">
-                            <label for="total_amount" class="control-label col-sm-3">Total Amount $</label> <label for="total_amount" class="control-label col-sm-6">:  <span class="text-warning">USD</span>   {{$invoice->total_amount}}</label>
-                            </div>
-                            <div class="form-group row">
-                                <label for="due_amount" class="control-label col-sm-3">Due Amount $</label> <label for="due_amount" class="control-label col-sm-6">:  <span class="text-warning">USD</span>   {{$invoice->due_amount}}</label>
-                            </div>
+                           
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header text-bold">
+                                    <i class="fa fa-align-justify"></i> Invoice Lines&nbsp;&nbsp;
+                                    <a href="{{url('/invoice/create')}}" class="btn btn-link btn-sm">{{$lb_new}}</a>
+                                </div>
+                                <div class="card-block">
+                                    <table class="tbl table">
+                                        <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Discount (%)</th>
+                                            <th>Quantity</th>
+                                            <th>Unit Price ($)</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Laravel Couse</td>
+                                                <td>10 </td>
+                                                <td>1</td>
+                                                <td>200</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>

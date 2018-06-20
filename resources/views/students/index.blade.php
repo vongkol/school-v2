@@ -18,7 +18,7 @@
                         </div>
                     </form>
                     <br>
-                    <table class="tbl">
+                    <table class="tbl table">
                         <thead>
                         <tr>
                             <th>{!!$lb_id!!}</th>

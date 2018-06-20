@@ -9015,3 +9015,6 @@ hr.transparent {
 .form-control {
   line-height: 1;
 }
+select.form-control:not([size]):not([multiple]) {
+  height: 42px;
+}
