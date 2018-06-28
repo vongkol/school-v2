@@ -185,3 +185,5 @@ Route::get('/log', "LogController@index");
 Route::get('/log/delete/{id}', "LogController@delete");
 // test
 Route::get('/test', "TestController@index");
+//get item
+Route::get('/getitem/{id}', "InvoiceController@get_item");

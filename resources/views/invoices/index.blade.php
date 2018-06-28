@@ -24,8 +24,8 @@
                         <tr>
                             <th>{!!$lb_id!!}</th>
                             <th>Invoice Ref</th>
-                            <th>Student Code</th>
-                            <th>Invoice By</th>
+                            <th>Code</th>
+                            <th>Customer</th>
                             <th>Invoice Date</th>
                             <th>Due Date</th>
                             <th>Discount (%)</th>

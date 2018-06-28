@@ -46,53 +46,52 @@ class InvoiceController extends Controller
     }
     public function save(Request $r)
     {
-        $data = array(
-            'invoice_date' => $r->invoice_date,
-            'invoice_by' => $r->invoice_by,
-            'due_date' => $r->due_date,
-            'invoice_ref' => $r->invoice_ref,
-        );
-        $sms ="";
-        $sms1="";
-        if(Auth::user()->language=='kh')
+        $invoice = json_encode($r->data);
+        $invoice = json_decode($invoice);
+        $invoices = array();
+        for($i=0;$i<count($inovice);$i++)
         {
-            $sms = "Invoice ថ្មីត្រូវបានបង្កើតដោយជោគជ័យ។";
-            $sms1 = "មិនអាចបង្កើត Invoice ថ្មីបានទេ សូមពិនិត្យម្តងទៀត!";
+                $x = array(
+                    "invoice_date" => $inovice[$i]->invoice_date,
+                    "due_date" => $inovice[$i]->due_date,
+                    "inovice_by" => Auth::user()->id,
+                    "invoice_ref" => $inovice[$i]->invoice_ref,
+                    "customer_id" =>  $inovice[$i]->customer_id,
+                );
+                $invoices[] = $x;
+            
         }
-        else
+        $i = DB::table('inovices')->insertGetId($invoices);
+
+        $inovic_detail = json_encode($r->data);
+        $inovic_detail = json_decode($inovic_detail);
+        $invoice_details = array();
+        for($i=0;$i<count($inovic_detail); $i++)
         {
-            $sms = "The new invoice has been created successfully.";
-            $sms1 = "Fail to create the new invoice, please check again!";
+                $x = array(
+                    'item_id' =>$inovic_detail[$i]->itemid,
+                    'discount' => $inovic_detail[$i]->discount,
+                    'subtotal' => $inovic_detail[$i]->sub_total,
+                    'unit_price' => $inovic_detail[$i]->unit_price,
+                    'qty' => $inovic_detail[$i]->qty,
+                    "invoice_id" => $i,
+                );
+                $invoice_details[] = $x;
+          
+           
         }
-        $i = DB::table('invoices')->insertGetId($data);
 
-        $data = array(
-            'item_id' =>$r->item,
-            'discount' => $r->discount,
-            'subtotal' => $r->unit_price,
-            'invoice_id' => $i,
-            'qty' => $r->qty,
-        );
-
-        $discount_price = $r->discount * $r->unit_price / 100;
-        $total_amount = $r->unit_price - $discount_price;
-     
-        DB::table('invoices')->where('id', $i)->update(["total_amount"=>$total_amount]);
-
-        $i = DB::table('invoice_detials')->insertGetId($data);
-
-
-        $time = date("h:i:sa");
-        Right::log(Auth::user()->id,"Add Invoice","insert", $i, "invoices", $time);
-        if($i)
+        if($i>0)
         {
-            $r->session()->flash('sms', $sms);
-            return redirect('/invoice/create');
+            // insert edu
+            if(count($invoice_detail)>0)
+            {
+                DB::table("nvoice_detials")->insert($invoice_details);
+            }
         }
-        else{
-            $r->session()->flash('sms1', $sms1);
-            return redirect('/invoice/create');
-        }
+
+
+        return $i;
     }
     public function edit($id)
     {
@@ -147,6 +146,12 @@ class InvoiceController extends Controller
                 $r->session()->flash('sms1', $sms1);
                 return redirect('/invoice/edit/'.$r->id);
             }
+    }
+
+    public function get_item($id) {
+        $item  = DB::table('items')->where('id', $id)->first();
+
+        return json_encode($item);
     }
     public function delete($id)
     {
