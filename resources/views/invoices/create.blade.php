@@ -211,14 +211,14 @@
 
     function sinvoice() {
         var data = {
-            master:{
-                customer_id: $("#customer_id").val(),
-                invoice_date: $("#invoice_date").val(),
-                due_date: $("#due_date").val(),
-                invoice_ref: $("#invoice_ref").val()
-            },
-            items: []
-        }
+                master:{
+                    customer_id: $("#customer_id").val(),
+                    invoice_date: $("#invoice_date").val(),
+                    due_date: $("#due_date").val(),
+                    invoice_ref: $("#invoice_ref").val()
+                },
+                items: []
+            }
         var item = $("#body_item tr");
         for(var i=0; i<item.length; i++) 
         {
@@ -232,13 +232,11 @@
                 itemid: itemid,
                 discount: discount,
                 qty: qty,
-                due_amount: due_amount,
                 unit_price: unit_price,
                 sub_total: sub_total
             }
             data.items.push(item_data);
         }
-        console.log(data);
        // send data to server
        $.ajax({
             type: "POST",
@@ -248,11 +246,9 @@
                 return request.setRequestHeader('X-CSRF-Token', $("input[name='_token']").val());
             },
             success: function (sms) {
-                location.href = burl + "/invoice/create";
-            },
-            error: function(){
-                location.href = burl + "/invoice/create";
+               console.log(sms);
             }
+            
         });
     }
 </script>

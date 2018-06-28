@@ -46,51 +46,34 @@ class InvoiceController extends Controller
     }
     public function save(Request $r)
     {
-        $invoice = json_encode($r->data);
-        $invoice = json_decode($invoice);
-        $invoices = array();
-        for($i=0;$i<count($inovice);$i++)
-        {
-                $x = array(
-                    "invoice_date" => $inovice[$i]->invoice_date,
-                    "due_date" => $inovice[$i]->due_date,
-                    "inovice_by" => Auth::user()->id,
-                    "invoice_ref" => $inovice[$i]->invoice_ref,
-                    "customer_id" =>  $inovice[$i]->customer_id,
-                );
-                $invoices[] = $x;
-            
-        }
-        $i = DB::table('inovices')->insertGetId($invoices);
-
-        $inovic_detail = json_encode($r->data);
-        $inovic_detail = json_decode($inovic_detail);
-        $invoice_details = array();
-        for($i=0;$i<count($inovic_detail); $i++)
-        {
-                $x = array(
-                    'item_id' =>$inovic_detail[$i]->itemid,
-                    'discount' => $inovic_detail[$i]->discount,
-                    'subtotal' => $inovic_detail[$i]->sub_total,
-                    'unit_price' => $inovic_detail[$i]->unit_price,
-                    'qty' => $inovic_detail[$i]->qty,
-                    "invoice_id" => $i,
-                );
-                $invoice_details[] = $x;
-          
-           
-        }
-
-        if($i>0)
-        {
-            // insert edu
-            if(count($invoice_detail)>0)
+        $master = json_encode($r->master);
+        $master = json_decode($master);
+        $items = json_encode($r->items);
+        $items = json_decode($items);
+      $data = [
+        'invoice_date' => $master->invoice_date,
+        'due_date' => $master->due_date,
+        'invoice_ref' => $master->invoice_ref,
+        'customer_id' => $master->customer_id,
+        'invoice_by' => Auth::user()->id
+      ];
+      $i = DB::table('invoices')->insertGetId($data);
+      if($i)
+      {
+            foreach($items as $item)
             {
-                DB::table("nvoice_detials")->insert($invoice_details);
+                DB::table('invoice_detials')
+                ->insert(array(
+                    'item_id' => $item->itemid,
+                    'discount' => $item->discount,
+                    'qty' => $item->qty,
+                    'subtotal' => $item->sub_total,
+                    'invoice_id' => $i,
+                    'unit_price' => $item->unit_price
+                ));
             }
-        }
-
-
+      }
+      
         return $i;
     }
     public function edit($id)
