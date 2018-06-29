@@ -82,6 +82,9 @@
                         <a href="{{url('/invoice')}}" class="nav-link"><i class="fa fa-money text-danger"></i> Invoice</a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{url('/student-enroll')}}" class="nav-link"><i class="fa fa-users text-primary"></i> Student Enroll</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{url('/staff')}}" class="nav-link"><i class="fa fa-user text-info"></i> Staff</a>
                     </li>
                     <li class="nav-item">
@@ -131,9 +134,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url('/room')}}"><i class="fa fa-bolt"></i> {{$lb_room}}</a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" href="{{url('/subject')}}"><i class="fa fa-book"></i> {{$lb_subject}}</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url('/position')}}"><i class="fa fa-level-up"></i> Position</a>
                             </li>
@@ -143,12 +146,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url('/item-category')}}"><i class="fa fa-sitemap"></i> Item Category</a>
                             </li>
-                            <!--
-                            <li><a href="{{url('/province')}}" class="nav-link"><i class="fa fa-bookmark"></i> {{$lb_province}}</a></li>
-                            <li><a href="{{url('/district')}}" class="nav-link"><i class="fa fa-dot-circle-o"></i> {{$lb_district}}</a></li>
-                            <li><a href="{{url('/commune')}}" class="nav-link"><i class="fa fa-adjust"></i> {{$lb_commune}}</a></li>
-                            <li><a href="#" class="nav-link"><i class="fa fa-bars"></i> {{$lb_village}}</a></li>
-                            -->
                         </ul>
                     </li>
                 </ul>
@@ -168,7 +165,7 @@
     </div>
     @yield('modal')
     <footer class="app-footer">
-        Copy &copy; {{date('Y')}} by <a href="#">COCD</a>
+        Copy &copy; {{date('Y')}} by <a href="#">Sunrise Institute of Technology</a>
         <span class="float-right">Powered by <a href="http://vdoo.biz" target="_blank">Vdoo</a>
         </span>
     </footer>

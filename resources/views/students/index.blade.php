@@ -14,7 +14,7 @@
                         <div class="form-group">
                             <label for="name">{{$lb_search}}&nbsp;&nbsp;</label>
                             <input type="text" class="form-control" id="q" name="q" value="{{$query}}" >
-                            <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
+                            <button type="submit"  style="padding:12px;" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
                         </div>
                     </form>
                     <br>
@@ -55,8 +55,7 @@
                                     <a href="{{url('/student/detail/'.$st->id)}}">
                                         <i class="fa fa-edit text-success"></i>
                                     </a>&nbsp;&nbsp;
-                                    <a href="{{url('/student/delete/'.$st->id)}}" 
-                                    onclick="return confirm('{{$lb_confirm_delete}}')"><i class="fa fa-remove text-danger"></i></a>
+                                    <a  href="{{url('/student/delete/'.$st->id ."?page=".@$_GET["page"])}}" onclick="return confirm('{{$lb_confirm_delete}}')" title="{{$lb_delete}}"><i class="fa fa-remove text-danger"></i></a>
                                 </td>
                             </tr>
                         @endforeach

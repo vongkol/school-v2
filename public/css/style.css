@@ -9018,3 +9018,7 @@ hr.transparent {
 select.form-control:not([size]):not([multiple]) {
   height: 42px;
 }
+.chosen-container-single .chosen-single {
+    height: 42px;
+    line-height: 33px;
+}

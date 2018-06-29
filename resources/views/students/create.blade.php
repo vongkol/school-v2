@@ -23,7 +23,7 @@
 
                     <form action="{{url('/student/save')}}" class="form-horizontal" method="post" enctype='multipart/form-data'>
                        <div class="row">
-                           <div class="col-sm-4">
+                           <div class="col-sm-6">
                                {{csrf_field()}}
                                <div class="form-group row">
                                    <label for="code" class="control-label col-sm-3">{{$lb_code}}​ <span class="text-danger">*</span></label>
@@ -73,7 +73,7 @@
                                </div>
                            </div>
 
-                           <div class="col-sm-4">
+                           <div class="col-sm-6">
                                <div class="form-group row">
                                    <label for="phone" class="control-label col-sm-3">{{$lb_phone}}</label>
                                    <div class="col-sm-9">

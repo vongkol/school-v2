@@ -23,7 +23,7 @@
                 <div class="card-block">
                     <form action="#" class="form-horizontal" method="post" enctype='multipart/form-data'>
                        <div class="row">
-                           <div class="col-sm-4">
+                           <div class="col-sm-6">
                                {{csrf_field()}}
                                <input type="hidden" value="{{$student->id}}" id="student_id">
                                <div class="form-group row">
@@ -75,7 +75,7 @@
                                </div>
                            </div>
                 
-                           <div class="col-sm-4">
+                           <div class="col-sm-6">
                                <div class="form-group row">
                                    <label for="phone" class="control-label col-sm-3">{{$lb_phone}}</label>
                                    <div class="col-sm-9">
@@ -119,7 +119,7 @@
             <div class="card">
                 <div class="card-header text-bold">
                     <i class="fa fa-align-justify"></i> Invoice List&nbsp;&nbsp;
-                    <a href="{{url('/invoice/create')}}" class="btn btn-link btn-sm">{{$lb_new}}</a>
+                    <a href="{{url('/invoice/create?customer_id='.$student->id)}}" class="btn btn-link btn-sm">{{$lb_new}}</a>
                 </div>
                 
                 <div class="card-block">
@@ -128,11 +128,11 @@
                         <tr>
                             <th>{!!$lb_id!!}</th>
                             <th>Invoice Ref</th>
-                            <th>Invoice By</th>
+                            <th>Student Code</th>
+                            <th>Customer</th>
                             <th>Invoice Date</th>
                             <th>Due Date</th>
                             <th>Total Amount</th>
-                            <th>Due Amount</th>
                             <th>{{$lb_action}}</th>
                         </tr>
                         </thead>
@@ -146,16 +146,15 @@
                         @foreach($invoices as $invoice)
                             <tr>
                                 <td>{{$i++}}</td>
-                                <td>{{$invoice->invoice_ref}}</td>
-                                <td>{{$invoice->english_name}}</td>
+                                <td> <a href="{{url('/invoice/detail/'.$invoice->invoice_id)}}" title="Detail">{{$invoice->invoice_ref}}</a></td>
+                                <td> <a href="{{url('/invoice/detail/'.$invoice->invoice_id)}}" title="Detail"> {{$invoice->code}}</a></td>
+                                <td> <a href="{{url('/invoice/detail/'.$invoice->invoice_id)}}" title="Detail">{{$invoice->english_name}}</a></td>
                                 <td>{{$invoice->invoice_date}}</td>
                                 <td>{{$invoice->due_date}} </td>
                                 <td><span class="text-warning">USD</span> {{$invoice->total_amount}} </td>
-                                <td><span class="text-warning">USD</span> {{$invoice->due_amount}} </td>
                                 <td>
-                                    <a href="{{url('/invoice/detail/'.$invoice->id)}}" title="Detail"><i class="fa fa-eye text-info"></i></a>&nbsp;&nbsp
-                                    <a href="{{url('/invoice/edit/'.$invoice->id)}}" title="{{$lb_edit}}"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp
-                                    <a  href="{{url('/invoice/delete/'.$invoice->id ."?page=".@$_GET["page"])}}" onclick="return confirm('{{$lb_confirm_delete}}')" title="{{$lb_delete}}"><i class="fa fa-remove text-danger"></i></a>
+                                    <a href="{{url('/invoice/detail/'.$invoice->invoice_id)}}" title="Detail"><i class="fa fa-eye text-info"></i></a>&nbsp;&nbsp;
+                                    <a  href="{{url('/invoice/delete/'.$invoice->invoice_id."?page=".@$_GET["page"])}}" onclick="return confirm('{{$lb_confirm_delete}}')" title="{{$lb_delete}}"><i class="fa fa-remove text-danger"></i></a>
                                 </td>
                             </tr>
                         @endforeach

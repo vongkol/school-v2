@@ -35,8 +35,8 @@
                         @foreach($staffs as $staff)
                             <tr>
                                 <td>{{$i++}}</td>
-                                <td>{{$staff->first_name}}</td>
-                                <td>{{$staff->family_name}}</td>
+                                <td><a href="{{url('/staff/detail/'.$staff->id)}}">{{$staff->first_name}}</a></td>
+                                <td><a href="{{url('/staff/detail/'.$staff->id)}}">{{$staff->family_name}}</a></td>
                                 <td>{{$staff->branch_id}}</td>
                                 <td>{{$staff->email}}</td>
                                 <td>{{$staff->phone}}</td>
@@ -44,7 +44,7 @@
                                 <td>{{$staff->position_id}}</td>
                                 <td>{{$staff->salary}}</td>
                                 <td>
-                                    <a href="{{url('/staff/detail/'.$staff->id)}}"  class="btn btn-link btn-sm text-info"><i class="fa fa-eye"></i></a>
+                                    <a href="{{url('/staff/detail/'.$staff->id)}}" title="Detail"  class="btn btn-link btn-sm text-info"><i class="fa fa-eye"></i></a>
                                     <a href="{{url('/staff/edit/'.$staff->id)}}" title="{{$lb_edit}}"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp
                                     <a href="{{url('/staff/delete/'.$staff->id)}}" onclick="return confirm('{{$lb_confirm_delete}}')" title="{{$lb_delete}}"><i class="fa fa-remove text-danger"></i></a>
                                 </td>

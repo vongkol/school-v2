@@ -15,24 +15,24 @@ class InvoiceController extends Controller
         {
             $data['query'] = $_GET['q'];
             $data['invoices'] = DB::table('invoices')
-                ->join('students', 'students.id', 'invoices.invoice_by')
+                ->join('students', 'students.id', 'invoices.customer_id')
                 ->select('students.*', 'invoices.*', 'invoices.id as id')
                 ->where('invoices.active',1)
                 ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
                 ->orderBy('invoices.id', 'desc')
                 ->where(function($fn){
                     $fn->where('invoices.invoice_ref', 'like', "%{$_GET['q']}%")
-                    ->orWhere('invoices.invoice_by', 'like', "%{$_GET['q']}%")
+                    ->orWhere('invoices.customer_id', 'like', "%{$_GET['q']}%")
                     ->orWhere('invoices.invoice_date', 'like', "%{$_GET['q']}%")
                     ->orWhere('students.code', 'like', "%{$_GET['q']}%")
                     ->orWhere('invoices.due_date', 'like', "%{$_GET['q']}%");
                 })
                 ->paginate(18);
         } else {
+            
             $data['invoices'] = DB::table('invoices')
-                ->join('students', 'students.id', 'invoices.invoice_by')
-                ->join('invoice_detials', 'invoice_detials.invoice_id', 'invoices.id')
-                ->select('invoices.*', 'invoice_detials.discount', 'students.english_name', 'students.code')
+                ->join('students', 'students.id', 'invoices.customer_id')
+                ->select('invoices.*', 'students.english_name', 'students.code')
                 ->where('invoices.active',1)
                 ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
                 ->orderBy('invoices.id', 'desc')
@@ -40,9 +40,13 @@ class InvoiceController extends Controller
         }
         return view('invoices.index', $data);
     }
-    public function create()
+    public function create(Request $r)
     {
-        return view('invoices.create');
+        $customer_id = $r->query('customer_id');
+        $data['customer'] = DB::table('students')
+            ->where('id',  $customer_id)
+            ->first();
+        return view('invoices.create', $data);
     }
     public function save(Request $r)
     {
@@ -50,16 +54,23 @@ class InvoiceController extends Controller
         $master = json_decode($master);
         $items = json_encode($r->items);
         $items = json_decode($items);
-      $data = [
-        'invoice_date' => $master->invoice_date,
-        'due_date' => $master->due_date,
-        'invoice_ref' => $master->invoice_ref,
-        'customer_id' => $master->customer_id,
-        'invoice_by' => Auth::user()->id
-      ];
+        $data = [
+            'invoice_date' => $master->invoice_date,
+            'due_date' => $master->due_date,
+            'invoice_ref' => $master->invoice_ref,
+            'customer_id' => $master->customer_id,
+            'invoice_by' => Auth::user()->id,
+            'note' => $master->note,
+        ];
       $i = DB::table('invoices')->insertGetId($data);
+      if($i) {
+        $time = date("h:i:sa");
+        Right::log(Auth::user()->id,"Add Invoice","insert", $i, "invoices", $time);
+    }
       if($i)
       {
+            $total_amount = 0;
+            $total_due_amount = 0;
             foreach($items as $item)
             {
                 DB::table('invoice_detials')
@@ -68,68 +79,36 @@ class InvoiceController extends Controller
                     'discount' => $item->discount,
                     'qty' => $item->qty,
                     'subtotal' => $item->sub_total,
+                    'due_amount' => $item->due_amount,
                     'invoice_id' => $i,
                     'unit_price' => $item->unit_price
                 ));
+                $subtotal = $item->sub_total;
+                $total_amount += $subtotal;
+                $due_amount =  $item->due_amount;
+                $total_due_amount += $due_amount;
             }
+
+            $b = DB::table('invoices')->where('id',$i)->update(['total_amount'=>$total_amount, 'total_due_amount'=>$total_due_amount]);
       }
+      
       
         return $i;
     }
-    public function edit($id)
-    {
-        $data['invoice'] = DB::table('invoices')
-            ->where('id', $id)->whereIn('students.branch_id', Right::branch(Auth::user()->id))->first();
-        return view('invoices.edit', $data);
-    }
+
     public function detail($id)
     {
         $data['invoice'] = DB::table('invoices')
-        ->join('students', 'students.id', 'invoices.invoice_by')
-        ->join('invoice_detials', 'invoice_detials.invoice_id', 'invoices.id')
-        ->select('invoices.*', 'students.english_name',  'students.code', 'invoice_detials.*')
+        ->join('students', 'students.id', 'invoices.customer_id')
+        ->select('invoices.*', 'students.*', 'invoices.id as invoice_id')
         ->where('invoices.active',1)
         ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
         ->where('invoices.id', $id)
         ->first();
-        
+
         return view('invoices.detail', $data);
     }
-    public function update(Request $r)
-    {
-        $data = array(
-            'invoice_date' => $r->invoice_date,
-            'invoice_by' => $r->invoice_by,
-            'total_amount' => $r->total_amount,
-            'due_amount' => $r->due_amount,
-            'due_date' => $r->due_date,
-            'invoice_ref' => $r->invoice_ref,
-        );
-        $sms ="";
-        $sms1="";
-        if(Auth::user()->language=='kh')
-        {
-            $sms = "ពត៌មាន វិក័យប័ត្រ ត្រូវបានផ្លាស់ប្តូរដោយជោគជ័យ។";
-            $sms1 = "វិក័យប័ត្រ មិនអាចផ្លាស់ប្តូរបានទេ, សូមពិនិត្យម្តងទៀត!";
-        }
-        else
-        {
-            $sms = "All changes have been saved successfully.";
-            $sms1 = "Fail to to save changes, please check again!";
-        }
-       
-            $i = DB::table('invoices')->where('id', $r->id)->update($data);
-            $time = date("h:i:sa");
-            Right::log(Auth::user()->id,"Update Invoice","update", $r->id, "invoices", $time);
-            if($i)
-            {
-                $r->session()->flash('sms', $sms);
-                return redirect('/invoice/edit/'.$r->id);
-            }else{
-                $r->session()->flash('sms1', $sms1);
-                return redirect('/invoice/edit/'.$r->id);
-            }
-    }
+   
 
     public function get_item($id) {
         $item  = DB::table('items')->where('id', $id)->first();

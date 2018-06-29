@@ -59,6 +59,18 @@
                                    </div>
                                </div>
                                <div class="form-group row">
+                                   <label for="email" class="control-label col-sm-3">Email <span class="text-danger">*</span></label>
+                                   <div class="col-sm-9">
+                                       <input type="text" required autofocus name="email" id="email" class="form-control" value="{{old('email')}}">
+                                   </div>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="nationality" class="control-label col-sm-3">Nationality <span class="text-danger">*</span></label>
+                                   <div class="col-sm-9">
+                                       <input type="text" name="nationality" required id="nationality" class="form-control" value="{{old('nationality')}}">
+                                   </div>
+                               </div>
+                               <div class="form-group row">
                                    <label for="gender" class="control-label col-sm-3">{{$lb_gender}}</label>
                                    <div class="col-sm-9">
                                        <select name="gender" id="gender" class="form-control">
@@ -73,42 +85,21 @@
                                        <input type="text"  name="dob" id="dob" required class="form-control" value="{{old('dob')}}" placeholder="dd/mm/yyyy">
                                    </div>
                                </div>
-                               <div class="form-group row">
-                                   <label for="pob" class="control-label col-sm-3">{{$lb_pob}}</label>
-                                   <div class="col-sm-9">
-                                       <input type="text" name="pob" id="pob" class="form-control" value="{{old('pob')}}">
-                                   </div>
-                               </div>
+                              
                                <div class="form-group row">
                                    <label for="join_date" class="control-label col-sm-3">Join Date <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
                                    <input type="text"  name="join_date" required id="join_date" class="form-control" value="{{old('join_date')}}" placeholder="dd/mm/yyyy">
                                    </div>
                                </div>
-                               <div class="form-group row">
-                                   <label for="current_address" class="control-label col-sm-3">Current Address</label>
-                                   <div class="col-sm-9">
-                                   <input type="text" name="current_address" id="current_address" class="form-control" value="{{old('current_address')}}">
-                                   </div>
-                               </div>
+                              
                            </div>
                            <div class="col-sm-6">
+                              
                                <div class="form-group row">
-                                   <label for="email" class="control-label col-sm-3">Email <span class="text-danger">*</span></label>
+                                   <label for="phone" class="control-label col-sm-3">Phone <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
-                                       <input type="text" required autofocus name="email" id="email" class="form-control" value="{{old('email')}}">
-                                   </div>
-                               </div>
-                               <div class="form-group row">
-                                   <label for="phone" class="control-label col-sm-3">Phone</label>
-                                   <div class="col-sm-9">
-                                       <input type="text" name="phone" id="phone" class="form-control" value="{{old('phone')}}">
-                                   </div>
-                               </div>
-                               <div class="form-group row">
-                                   <label for="nationality" class="control-label col-sm-3">Nationality <span class="text-danger">*</span></label>
-                                   <div class="col-sm-9">
-                                       <input type="text" name="nationality" required id="nationality" class="form-control" value="{{old('nationality')}}">
+                                       <input type="text" name="phone" id="phone" class="form-control" value="{{old('phone')}}" required>
                                    </div>
                                </div>
                                <?php $positions  = DB::table('positions')->where('active',1)->get();?>
@@ -123,7 +114,19 @@
                                    </div>
                                </div>
                                <div class="form-group row">
-                                   <label for="salary" class="control-label col-sm-3">Salary</label>
+                                   <label for="pob" class="control-label col-sm-3">{{$lb_pob}}</label>
+                                   <div class="col-sm-9">
+                                       <input type="text" name="pob" id="pob" class="form-control" value="{{old('pob')}}">
+                                   </div>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="current_address" class="control-label col-sm-3">Current Address</label>
+                                   <div class="col-sm-9">
+                                   <input type="text" name="current_address" id="current_address" class="form-control" value="{{old('current_address')}}">
+                                   </div>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="salary" class="control-label col-sm-3">Salary ($)</label>
                                    <div class="col-sm-9">
                                        <input type="text"  name="salary" id="salary" class="form-control" value="{{old('salary')}}" placeholder="00.00$">
                                    </div>

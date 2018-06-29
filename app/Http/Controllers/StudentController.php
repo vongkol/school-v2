@@ -190,11 +190,12 @@ class StudentController extends Controller
                                 ->select("registrations.*", "classes.name as class_name", "school_years.name as year_name")
                                 ->get();
         $data['invoices'] = DB::table('invoices')
-            ->join('students', 'students.id', 'invoices.invoice_by')
-            ->select('invoices.*', 'students.english_name')
+            ->join('students', 'students.id', 'invoices.customer_id')
+            ->select('invoices.*', 'students.*' ,'invoices.id as invoice_id')
             ->where('invoices.active',1)
             ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
-            ->where('invoices.invoice_by', $id)
+            ->where('invoices.customer_id', $id)
+            ->orderBy('invoices.id', 'desc')
             ->get();
         return view('students.detail', $data);
     }
@@ -211,6 +212,11 @@ class StudentController extends Controller
         $time = date("h:i:sa");
         DB::table('students')->where('id', $id)->update($data);
         Right::log(Auth::user()->id,"Delete Student","delete", $id, "students", $time);
+        $page = @$_GET['page'];
+        if ($page>0)
+        {
+            return redirect('/student?page='.$page);
+        }
         return redirect('/student');
         
     }

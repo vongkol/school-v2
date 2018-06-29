@@ -56,69 +56,47 @@ else{
                                </div>
                                <input type="hidden" value="{{$staff->id}}" id="staff_id">
                                <div class="form-group row">
-                                   <label for="first_name" class="control-label col-sm-3">First Name <span class="text-danger">*</span></label>
-                                   <div class="col-sm-9">
-                                       <input type="text" disabled name="first_name" id="first_name" class="form-control" value="{{$staff->first_name}}">
-                                   </div>
+                                   <label for="first_name" class="control-label col-sm-3">First Name</label>
+                                   <label class="control-label col-sm-9">: {{$staff->first_name}}</label>
                                </div>
                                <div class="form-group row">
-                                   <label for="family_name" class="control-label col-sm-3">Family Name <span class="text-danger">*</span></label>
-                                   <div class="col-sm-9">
-                                       <input type="text" name="family_name" disabled id="family_name" required class="form-control" value="{{$staff->family_name}}">
-                                   </div>
+                                   <label for="family_name" class="control-label col-sm-3">Family Name</label>
+                                   <label class="control-label col-sm-9">: {{$staff->family_name}}</label>
                                </div>
+                               <div class="form-group row">
+                                   <label for="email" class="control-label col-sm-3">Email</label>
+                                   <label class="control-label col-sm-9">: {{$staff->email}}</label>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="nationality" class="control-label col-sm-3">Nationality</label>
+                                   <label class="control-label col-sm-9">: {{$staff->nationality}}</label>
+                               </div>   
                                <div class="form-group row">
                                    <label for="gender" class="control-label col-sm-3">{{$lb_gender}}</label>
-                                   <div class="col-sm-9">
-                                       <select name="gender" id="gender" disabled class="form-control">
-                                           <option value="Male">{{$lb_male}}</option>
-                                           <option value="Female">{{$lb_female}}</option>
-                                       </select>
-                                   </div>
+                                   <label class="control-label col-sm-9">: {{$staff->gender}}</label>
                                </div>
                                <div class="form-group row">
                                    <label for="dob" class="control-label col-sm-3">{{$lb_dob}}</label>
-                                   <div class="col-sm-9">
-                                       <input type="text"  name="dob" disabled id="dob" class="form-control" value="{{$staff->dob}}" placeholder="dd/mm/yyyy">
-                                   </div>
+                                   <label class="control-label col-sm-9">: {{$staff->dob}}</label>
                                </div>
                                <div class="form-group row">
-                                   <label for="pob" class="control-label col-sm-3">{{$lb_pob}}</label>
-                                   <div class="col-sm-9">
-                                       <input type="text" name="pob" disabled id="pob" class="form-control" value="{{$staff->pob}}">
-                                   </div>
+                                   <label for="join_date" class="control-label col-sm-3">Join Date</label>
+                                   <label class="control-label col-sm-9">: {{$staff->join_date}}</label>
                                </div>
-                               <div class="form-group row">
-                                   <label for="join_date" class="control-label col-sm-3">Join Date <span class="text-danger">*</span></label>
-                                   <div class="col-sm-9">
-                                   <input type="text"  name="join_date" disabled id="join_date" class="form-control" value="{{$staff->join_date}}" placeholder="dd/mm/yyyy">
-                                   </div>
-                               </div>
-                               <div class="form-group row">
-                                   <label for="current_address" class="control-label col-sm-3">Current Address</label>
-                                   <div class="col-sm-9">
-                                   <input type="text" name="current_address"  disabled id="current_address" class="form-control" value="{{$staff->current_address}}">
-                                   </div>
-                               </div>
+                              
                            </div>
                            <div class="col-sm-6">
                                <div class="form-group row">
-                                   <label for="email" class="control-label col-sm-3">Email <span class="text-danger">*</span></label>
-                                   <div class="col-sm-9">
-                                       <input type="text" required autofocus disabled name="email" id="email" class="form-control" value="{{$staff->email}}">
-                                   </div>
-                               </div>
-                               <div class="form-group row">
                                    <label for="phone" class="control-label col-sm-3">Phone</label>
-                                   <div class="col-sm-9">
-                                       <input type="text" name="phone" disabled id="phone" disabled class="form-control" value="{{$staff->phone}}">
-                                   </div>
+                                   <label class="control-label col-sm-9">: {{$staff->phone}}</label>
                                </div>
                                <div class="form-group row">
-                                   <label for="nationality" class="control-label col-sm-3">Nationality <span class="text-danger">*</span></label>
-                                   <div class="col-sm-9">
-                                       <input type="text" name="nationality" disabled id="nationality" required class="form-control" value="{{$staff->nationality}}">
-                                   </div>
+                                   <label for="pob" class="control-label col-sm-3">{{$lb_pob}}</label>
+                                   <label class="control-label col-sm-9">: {{$staff->pob}}</label>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="current_address" class="control-label col-sm-3">Current Address</label>
+                                   <label class="control-label col-sm-9">: {{$staff->current_address}}</label>
                                </div>
                                <?php $positions  = DB::table('positions')->where('active',1)->get();?>
                                <div class="form-group row">
@@ -132,16 +110,11 @@ else{
                                    </div>
                                </div>
                                <div class="form-group row">
-                                   <label for="salary" class="control-label col-sm-3">Salary</label>
-                                   <div class="col-sm-9">
-                                       <input type="text"  name="salary" id="salary" disabled class="form-control" value="{{$staff->salary}}" placeholder="00.00$">
-                                   </div>
+                                   <label for="salary" class="control-label col-sm-3">Salary ($)</label>
+                                   <label class="control-label col-sm-9">: {{$staff->salary}}</label>
                                </div>
                                <div class="form-group row">
-                                   <label for="photo" class="control-label col-sm-3">{{$lb_photo}}</label>
                                    <div class="col-sm-9">
-                                       <input type="file" name="photo" id="photo" class="form-control" disabled onchange="loadFile(event)">
-                                       <br>
                                        <img src="{{asset('staffs/'.$staff->photo)}}" alt="" id="preview" height="100">
                                    </div>
                                </div>

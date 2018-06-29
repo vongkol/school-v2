@@ -40,13 +40,9 @@
     border-right: 1px solid #CCCCCC;
     font-size: 11px;
 }
-.tbl tbody tr:nth-child(even)
-{
-    background: #f4f5f6;
-}
+
 .tbl tbody tr td:last-child{
     border-right: none;
-    color: green;
     font-weight:bold;
 }
 .tbl tbody tr:last-child td{

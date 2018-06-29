@@ -45,8 +45,10 @@ class ItemController extends Controller
             $sms1 = "Fail to create the new item, please check again!";
         }
         $i = DB::table('items')->insertGetId($data);
-        $time = date("h:i:sa");
-        Right::log(Auth::user()->id,"Add Item","insert", $i, "items", $time);
+        if($i) {
+            $time = date("h:i:sa");
+            Right::log(Auth::user()->id,"Add Item","insert", $i, "items", $time);
+        }
         if($i)
         {
              // upload photo first

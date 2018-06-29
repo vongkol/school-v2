@@ -73,7 +73,7 @@
                                <div class="form-group row">
                                    <label for="tax" class="control-label col-sm-3">Tax <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
-                                       <input type="number" step="0.1" name="tax" id="tax" required class="form-control" value="{{old('tax')}}">
+                                       <input type="number" step="0.1" name="tax" value="0" id="tax" required class="form-control" value="{{old('tax')}}">
                                    </div>
                                </div>
                            </div>
