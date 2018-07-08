@@ -312,6 +312,7 @@
                                             <tr>
                                                 <th>{{$lb_register_date}}</th>
                                                 <th>{{$lb_class}}</th>
+                                                <th>Shift</th>
                                                 <th>{{$lb_school_year}}</th>
                                                 <th>{{$lb_start_date}}</th>
                                                 <th>{{$lb_end_date}}</th>
@@ -324,6 +325,7 @@
                                                 <tr id="{{$r->id}}" year-id="{{$r->year_id}}" class-id="{{$r->class_id}}">
                                                     <td>{{$r->registration_date}}</td>
                                                     <td>{{$r->class_name}}</td>
+                                                    <td>{{$r->shift_name}}</td>
                                                     <td>{{$r->year_name}}</td>
                                                     <td>{{$r->start_date}}</td>
                                                     <td>{{$r->end_date}}</td>
@@ -662,6 +664,16 @@
                                         <option value="{{$class->id}}">{{$class->name}}</option>
                                    @endforeach
                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="shift" class="control-label col-sm-3">Shift</label>
+                                <div class="col-sm-9">
+                                    <select name="shift" id="shift" class="form-control">
+                                        @foreach($shifts as $shift)
+                                            <option value="{{$shift->id}}">{{$shift->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">

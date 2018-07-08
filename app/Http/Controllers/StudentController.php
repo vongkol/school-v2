@@ -158,6 +158,9 @@ class StudentController extends Controller
         if(!Right::check('Student', 'l')){
             return view('permissions.no');
         }
+        $data['shifts'] = DB::table('shifts')
+                            ->where('active',1)
+                            ->get();
         $data['branches'] = DB::table('branches')
                             ->whereIn('id', Right::branch(Auth::user()->id))
                             ->orderBy('name')
@@ -185,9 +188,10 @@ class StudentController extends Controller
         $data['registrations'] = DB::table('registrations')
                                 ->join('classes','registrations.class_id', "=", "classes.id")
                                 ->join('school_years', "registrations.year_id", "=", "school_years.id")
+                                ->join('shifts', 'shifts.id', 'registrations.shift_id')
                                 ->where("registrations.active", 1)
                                 ->where("registrations.student_id", $id)
-                                ->select("registrations.*", "classes.name as class_name", "school_years.name as year_name")
+                                ->select("registrations.*", "shifts.*", "shifts.name as shift_name", "classes.name as class_name", "school_years.name as year_name")
                                 ->get();
         $data['invoices'] = DB::table('invoices')
             ->join('students', 'students.id', 'invoices.customer_id')

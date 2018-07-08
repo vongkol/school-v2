@@ -51,6 +51,7 @@
                                 <td>$ {{$invoice->total_amount}}</td>
                                 <td>
                                     <a href="{{url('/invoice/detail/'.$invoice->id)}}" title="Detail"><i class="fa fa-eye text-info"></i></a>&nbsp;&nbsp;
+                                    <a href="{{url('/invoice/edit/'.$invoice->id)}}" title="Detail"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp;
                                     <a  href="{{url('/invoice/delete/'.$invoice->id ."?page=".@$_GET["page"])}}" onclick="return confirm('{{$lb_confirm_delete}}')" title="{{$lb_delete}}"><i class="fa fa-remove text-danger"></i></a>
                                 </td>
                             </tr>

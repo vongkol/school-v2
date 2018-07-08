@@ -179,6 +179,15 @@ Route::get('/printing', "PrintingController@index");
 Route::get('/printing/province', "PrintingController@by_province");
 Route::get('/printing/school', "PrintingController@by_school");
 
+//  invoice
+Route::get('/student-enroll', "StudentEnrollController@index");
+Route::get('/student-enroll/create', "StudentEnrollController@create");
+Route::get('/student-enroll/edit/{id}', "StudentEnrollController@edit");
+Route::get('/student-enroll/detail/{id}', "StudentEnrollController@detail");
+Route::get('/student-enroll/delete/{id}', "StudentEnrollController@delete");
+Route::post('/student-enroll/save', "StudentEnrollController@save");
+Route::post('/student-enroll/update', "StudentEnrollController@update");
+
 
 // user logs
 Route::get('/log', "LogController@index");

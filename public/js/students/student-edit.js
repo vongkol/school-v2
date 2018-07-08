@@ -286,6 +286,8 @@ function saveRegistration()
         id: $("#registration_id").val(),
         registration_date: $("#register_date").val(),
         class_id: $("#class").val(),
+        shift_id: $("#shift").val(),
+        shift: $("#shift option:selected").text(),
         year_id: $("#year").val(),
         start_date: $("#start_date").val(),
         end_date: $("#end_date").val(),
@@ -306,9 +308,10 @@ function saveRegistration()
                 {
                     if (sms > 0) {
                         // bind to table
-                        var tr = "<tr id='" + sms + "' year-id='" + registration.year_id + "' class-id='" + registration.class_id + "'>";
+                        var tr = "<tr id='" + sms + "' year-id='" + registration.year_id + "' class-id='" + registration.class_id + "' shift-id'" + registration.shift_id + "'>";
                         tr += "<td>" + registration.registration_date + "</td>";
                         tr += "<td>" + registration.class + "</td>";
+                        tr += "<td>" + registration.shift + "</td>";
                         tr += "<td>" + registration.year + "</td>";
                         tr += "<td>" + registration.start_date + "</td>";
                         tr += "<td>" + registration.end_date + "</td>";
