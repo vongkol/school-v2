@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header text-bold">
                     <i class="fa fa-align-justify"></i> New Invoice - <span class="text-danger"> {{$customer->english_name}} </span>&nbsp;&nbsp;
-                    <a href="{{url('/invoice')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
+                    <a href="{{url('/student/detail/'.$customer->id)}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
                 </div>
                 <div class="card-block">
                 @if(Session::has('sms'))
@@ -37,7 +37,7 @@
                         <input type="hidden" name="customer_id" id="customer_id" value="{{$customer->id}}">
                            <div class="col-sm-4">
                                <div class="form-group row">
-                                   <label for="invoice_ref" class="control-label col-sm-4">Invoice Referentce</label>
+                                   <label for="invoice_ref" class="control-label col-sm-4">Invoice Referentce {!!$lb_id!!} </label>
                                    <div class="col-sm-8">
                                        <input type="text"  name="invoice_ref" id="invoice_ref" class="form-control" value="{{old('invoice_ref')}}">
                                    </div>

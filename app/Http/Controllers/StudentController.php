@@ -8,6 +8,11 @@ use Auth;
 use Session;
 class StudentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // index load student list
     public function index()
     {
@@ -223,5 +228,33 @@ class StudentController extends Controller
         }
         return redirect('/student');
         
+    }
+
+    public function delete_invoice($id)
+    {
+        $q= DB::table('invoices')
+            ->select('customer_id')
+            ->where('id',$id)
+            ->first();
+        $student_id = $q->customer_id;
+        DB::table('invoices')->where('id', $id)->update(["active"=>0]);
+        $time = date("h:i:sa");
+        Right::log(Auth::user()->id,"Delete Invoice","delete", $id, "invoices", $time);
+    
+        return redirect('/student/detail/'.$student_id);
+    }
+
+    public function detail_invoice($id)
+    {
+        $data['invoice'] = DB::table('invoices')
+            ->join('students', 'students.id', 'invoices.customer_id')
+            ->join('users' ,'invoices.invoice_by', 'users.id')
+            ->select('invoices.*', 'students.*', 'students.id as student_id', 'invoices.id as invoice_id', 'users.name as invoice_by')
+            ->where('invoices.active',1)
+            ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+            ->where('invoices.id', $id)
+            ->first();
+ 
+        return view('students.invoice-detail', $data);
     }
 }

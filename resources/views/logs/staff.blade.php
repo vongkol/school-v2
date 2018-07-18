@@ -15,8 +15,8 @@ else{
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-bold">
-                    <i class="fa fa-align-justify"></i> Detail Staff&nbsp;&nbsp;
-                    <a href="{{url('/staff')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a> | <a href="{{url('/staff/edit/'.$staff->id)}}"  class="btn btn-link btn-sm text-danger"><i class="fa fa-edit"></i> Edit</a>
+                    <i class="fa fa-align-justify"></i>User Action -  Detail Staff&nbsp;&nbsp;
+                    <a href="{{url('/log')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a> 
                 </div>
                 <div class="card-block">
                 @if(Session::has('sms'))
@@ -128,16 +128,11 @@ else{
     <div class="row">
                     <div class="col-sm-12">
 
-                        <ul class="nav nav-tabs" role="tablist">
-                            
-                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Document</a></li>
-                        </ul>
+                        
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="profile">
-                                <p>
-                                    <button type="button" id="btnAddDocument" class="btn btn-sm btn-success" data-toggle="modal" data-target="#docModal">{{$lb_add}}</button>
-                                </p>
+                              
                                 <table class="tbl table-responsive">
                                     <thead>
                                     <tr>
@@ -176,124 +171,4 @@ else{
 <!--/.col-->
     </div>
 
-@endsection
-@section('modal')
-    <!-- Document Modal -->
-    <div class="modal fade" id="docModal" tabindex="-1" role="dialog" aria-labelledby="docModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="docModalTitle">{{$lb_document}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-10">
-                            <div class="form-group row">
-                                <label for="doc_description" class="control-label col-sm-3">{{$lb_description}}<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="doc_description" name="doc_description">
-                                    <input type="hidden" id="doc_id" value="0">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="doc_file_name" class="control-label col-sm-3">{{$lb_file_name}}<span class="text-danger">*</span></label>
-                                <div class="col-sm-9">
-                                    <input type="file" class="form-control" id="doc_file_name" name="doc_file_name">
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <p id="docsms" class="text-danger text-center"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="saveDoc()">{{$lb_save}}</button>
-                    <button type="button" class="btn btn-secondary btn-danger" data-dismiss="modal" onclick="clearDoc()">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- Modal -->
-@endsection
-@section('js')
-<script src="{{asset('js/jquery.inputmask.bundle.min.js')}}"></script>
-    <script>
-        // save document
-    function saveDoc() {
-        var o = confirm('Do you want to save?');
-        if(o)
-        {
-            var file_data = $('#doc_file_name').prop('files')[0];
-            var form_data = new FormData();
-            form_data.append('doc_file_name', file_data);
-            form_data.append('staff_id', $("#staff_id").val());
-            form_data.append("description", $('#doc_description').val());
-            $("#docsms").html("<img src='" + asset + "/ajax-loader.gif" + "'>");
-            $.ajax({
-                type: 'POST',
-                url:burl + '/staff-document/save',
-                data: form_data,
-                type: 'POST',
-                contentType: false,       // The content type used when sending data to the server.
-                cache: false,             // To unable request pages to be cached
-                processData: false,
-                beforeSend: function (request) {
-                    return request.setRequestHeader('X-CSRF-Token', $("input[name='_token']").val());
-                },
-                success:function(sms){
-                    sms = JSON.parse(sms);
-                    var tr = "";
-                    tr +="<tr id='" + sms.id + "'>";
-                    tr +="<td>" + sms.description+ "</td>";
-                    tr += "<td>" + "<a href='" + doc_url + "/" + sms.file_name + "' target='_blank'>" + sms.file_name + "</a>" + "</td>";
-                    tr += "<td>" + "<a href='#' onclick='deleteDoc(this,event)'><i class='fa fa-remove text-danger'></i></a>" + "</td>";
-                    tr +="</tr>";
-                    var counter = $("#docData tr").length;
-                    if(counter>0){
-                        $("#docData tr:last-child").after(tr);
-                    }
-                    else{
-                        $("#docData").html(tr);
-                    }
-                    $("#docsms").html("Your doc has been saved!<br>ឯកសារត្រូវបានរក្សាទុកដោយជោគជ័យ!");
-                    $("#doc_description").val("");
-                    $("#doc_file_name").val("");
-                },
-            });
-
-        }
-    }
-    // delete a document by its id
-    function deleteDoc (obj, evt) {
-        evt.preventDefault();
-    var tr = $(obj).parent().parent();
-    var id = $(tr).attr('id');
-    var con = confirm('You want to delete?');
-    if(con)
-    {
-        $.ajax({
-        type: "GET",
-        url: burl + "/staff-document/delete/" + id,
-        success: function (response) {
-            $(tr).remove();
-        }
-    });
-    }
-    
-    }
-    function clearDoc() {
-    $("#doc_description").val("");
-    $("#doc_file_name").val("");
-    $("#docsms").html("");
-    $("#doc_id").val("0");
-    }
-    </script>
 @endsection

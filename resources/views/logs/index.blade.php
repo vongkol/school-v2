@@ -93,9 +93,10 @@
                                 <td>{{$log->table_action}}</td>
                                 <td>{{$log->description}}</td>
                                
-                                <td>{{$log->record_id}}</td>
+                                <td><a title="Detail" href="{{url('log/detail/'.$log->record_id.'/'.$log->table_action)}}">{{$log->record_id}}</a></td>
                                 <td>{{$log->log_date}} {{$log->time}}</td>
                                 <td>
+                                <a title="Detail" href="{{url('log/detail/'.$log->record_id.'/'.$log->table_action)}}"><i class="fa fa-eye text-info"></i></a>&nbsp;&nbsp;
                                 <a href="{{url('/log/delete/'.$log->id ."?page=".@$_GET["page"])}}" onclick="return confirm('You want to delete?')" title="Delete"><i class="fa fa-remove text-danger"></i></a>
                                 </td>
                             </tr>

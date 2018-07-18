@@ -15,16 +15,12 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-bold">
-                    <i class="fa fa-align-justify"></i> Detail Student&nbsp;&nbsp;
-                    <a href="{{url('/student/create')}}" class="btn btn-link btn-sm">{{$lb_new}}</a>&nbsp;&nbsp;
-                    <a href="{{url('/student')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>&nbsp;&nbsp;
-                    <a href="#" id="btnEdit" onclick="edit(event)" class="text-danger">{{$lb_edit}}</a>
+                    <i class="fa fa-align-justify"></i>User Action - Detail Student&nbsp;&nbsp;
+                    <a href="{{url('/log')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
                 </div>
                 <div class="card-block">
-                    <form action="#" class="form-horizontal" method="post" enctype='multipart/form-data'>
                        <div class="row">
                            <div class="col-sm-6">
-                               {{csrf_field()}}
                                <input type="hidden" value="{{$student->id}}" id="student_id">
                                <div class="form-group row">
                                    <label for="code" class="control-label col-sm-3">{{$lb_code}}</label>
@@ -119,7 +115,6 @@
             <div class="card">
                 <div class="card-header text-bold">
                     <i class="fa fa-align-justify"></i> Invoice List&nbsp;&nbsp;
-                    <a href="{{url('/invoice/create?customer_id='.$student->id)}}" class="btn btn-link btn-sm">{{$lb_new}}</a>
                 </div>
                 
                 <div class="card-block">
@@ -133,7 +128,7 @@
                             <th>Invoice Date</th>
                             <th>Due Date</th>
                             <th>Total Amount</th>
-                            <th>{{$lb_action}}</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -154,7 +149,6 @@
                                 <td><span class="text-warning">USD</span> {{$invoice->total_amount}} </td>
                                 <td>
                                     <a href="{{url('student/invoice-detail/'.$invoice->invoice_id)}}" title="Detail"><i class="fa fa-eye text-info"></i></a>&nbsp;&nbsp;
-                                    <a  href="{{url('/student/delete-invoice/'.$invoice->invoice_id)}}" onclick="return confirm('{{$lb_confirm_delete}}')" title="{{$lb_delete}}"><i class="fa fa-remove text-danger"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -178,9 +172,6 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="home">
-                                       <p>
-                                           <button type="button" id="btnAddFamily" class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModalLong">{{$lb_add}}</button>
-                                       </p>
                                         <table class="tbl table-responsive">
                                             <thead>
                                                  <tr>
@@ -195,7 +186,7 @@
                                                     <th>{{$lb_is_alive}}</th>
                                                     <th>{{$lb_is_disabled}}</th>
                                                     <th>{{$lb_minority}}</th>
-                                                    <th>{{$lb_action}}</th>
+                                                   
                                                 </tr>
                                             </thead>
                                             <tbody id="data">
@@ -212,25 +203,19 @@
                                                     <td>{{$fm->is_alived}}</td>
                                                     <td>{{$fm->is_disabled}}</td>
                                                     <td>{{$fm->is_minority}}</td>
-                                                    <td>
-                                                        <a href="#" onclick="editFamily(this, event)"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp;
-                                                        <a href="#" onclick="removeFamily(this, event)"><i class="fa fa-remove text-danger"></i></a>
-                                                    </td>
+                                                   
                                                 </tr>
                                             @endforeach
                                             </tbody>
                                         </table>
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="profile">
-                                        <p>
-                                            <button type="button" id="btnAddDocument" class="btn btn-sm btn-success" data-toggle="modal" data-target="#docModal">{{$lb_add}}</button>
-                                        </p>
                                         <table class="tbl table-responsive">
                                             <thead>
                                             <tr>
                                                 <th>{{$lb_description}}</th>
                                                 <th>{{$lb_file_name}}</th>
-                                                <th>{{$lb_action}}</th>
+                                             
                                             </tr>
                                             </thead>
                                             <tbody id="docData">
@@ -242,22 +227,14 @@
                                                         {{$doc->file_name}}
                                                         </a>
                                                     </td>
-                                                    <td>
-                                                        <a href="#" onclick="deleteDoc(this,event)">
-                                                            <i class="fa fa-remove text-danger"></i>
-                                                        </a>
-                                                    </td>
+                                                   
                                                 </tr>
                                             @endforeach
                                             </tbody>
                                         </table>
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="health">
-                                        <p>
-                                            <button type="button" id="btnAddHealth" class="btn btn-sm btn-success" 
-                                            data-toggle="modal" data-target="#healthModal">{{$lb_add}}</button>
-                                            <!--<a href="#" class="btn btn-sm btn-info">{{$lb_print}}</a>-->
-                                        </p>
+                                      
                                         <table class="tbl table-responsive">
                                             <thead>
                                             <tr>
@@ -273,7 +250,7 @@
                                                 <th>{{$lb_bottom_tooth}}</th>
                                                 <th>{{$lb_conclusion}}</th>
                                                 <th>{{$lb_other}}</th>
-                                                <th>{{$lb_action}}</th>
+                                               
                                             </tr>
                                             </thead>
                                             <tbody id="healthData">
@@ -291,22 +268,14 @@
                                                     <td>{{$health->bottom_tooth}}</td>
                                                     <td>{{$health->conclusion}}</td>
                                                     <td>{{$health->other}}</td>
-                                                    <td>
-                                                        <a href="#" onclick="editHealth(this, event)"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp;
-                                                        <a href="#" onclick="removeHealth(this,event)">
-                                                            <i class="fa fa-remove text-danger"></i>
-                                                        </a>
-                                                    </td>
+                                                   
                                                 </tr>
                                             @endforeach
                                             </tbody>
                                         </table>
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="registration">
-                                         <p>
-                                            <button type="button" id="btnAddRegistration" class="btn btn-sm btn-success" 
-                                            data-toggle="modal" data-target="#registrationModal">{{$lb_add}}</button>
-                                        </p>
+                                      
                                          <table class="tbl table-responsive">
                                             <thead>
                                             <tr>
@@ -317,7 +286,7 @@
                                                 <th>{{$lb_start_date}}</th>
                                                 <th>{{$lb_end_date}}</th>
                                                
-                                                <th>{{$lb_action}}</th>
+                                             
                                             </tr>
                                             </thead>
                                             <tbody id="rdata">
@@ -329,12 +298,7 @@
                                                     <td>{{$r->year_name}}</td>
                                                     <td>{{$r->start_date}}</td>
                                                     <td>{{$r->end_date}}</td>
-                                                    <td>
-                                                        <!--<a href="#" onclick="editRegistration(this, event)"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp;-->
-                                                        <a href="#" onclick="removeRegistration(this,event)">
-                                                            <i class="fa fa-remove text-danger"></i>
-                                                        </a>
-                                                    </td>
+                                                  
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -625,11 +589,6 @@
                            <p id="hsms" class="text-danger text-center"></p>
                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="saveHealth()">{{$lb_save}}</button>
-                    <button type="button" class="btn btn-secondary btn-danger" data-dismiss="modal" onclick="clearHealth()">{{$lb_close}}</button>
-
                 </div>
             </div>
         </div>

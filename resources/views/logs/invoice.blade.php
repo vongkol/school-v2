@@ -6,8 +6,8 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-bold">
-                    <i class="fa fa-align-justify"></i> Detail Invoice&nbsp;&nbsp;
-                    <a href="{{url('/invoice')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
+                    <i class="fa fa-align-justify"></i>User Action - Detail Invoice&nbsp;&nbsp;
+                    <a href="{{url('/log')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
                     <a href="{{url('invoice/print/'.$invoice->invoice_id)}}" class="float-right">
                         <button>Print Invoice</button>
                     </a>

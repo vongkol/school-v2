@@ -147,9 +147,13 @@ Route::get('/invoice', "InvoiceController@index");
 Route::get('/invoice/create', "InvoiceController@create");
 Route::get('/invoice/edit/{id}', "InvoiceController@edit");
 Route::get('/invoice/detail/{id}', "InvoiceController@detail");
+Route::get('/invoice/print/{id}', "InvoiceController@print");
 Route::get('/invoice/delete/{id}', "InvoiceController@delete");
 Route::post('/invoice/save', "InvoiceController@save");
 Route::post('/invoice/update', "InvoiceController@update");
+Route::get('/student/delete-invoice/{id}', "StudentController@delete_invoice");
+Route::get('/student/invoice-detail/{id}', "StudentController@detail_invoice");
+
 // village
 Route::get('/village', "VillageController@index");
 Route::get('/village/create', "VillageController@create");
@@ -192,6 +196,7 @@ Route::post('/student-enroll/update', "StudentEnrollController@update");
 // user logs
 Route::get('/log', "LogController@index");
 Route::get('/log/delete/{id}', "LogController@delete");
+Route::get('/log/detail/{id}/{table}', "LogController@detail");
 // test
 Route::get('/test', "TestController@index");
 //get item

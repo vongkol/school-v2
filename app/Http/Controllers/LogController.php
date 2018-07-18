@@ -450,4 +450,91 @@ class LogController extends Controller
 
         return redirect('/log');
     }
+    public function detail($id , $table) {
+        if($table == 'invoices') {
+            $data['invoice'] = DB::table('invoices')
+            ->join('students', 'students.id', 'invoices.customer_id')
+            ->join('users' ,'invoices.invoice_by', 'users.id')
+            ->select('invoices.*', 'students.*', 'invoices.id as invoice_id', 'users.name as invoice_by')
+            ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+            ->where('invoices.id', $id)
+            ->first();
+            return view('logs.invoice', $data);
+        }
+      
+        if($table == 'users') {
+            $data['user'] = DB::table('users')
+                ->where('id', $id)
+                ->first();
+            $data['role'] = DB::table('roles')
+                ->where('id', $data['user']->role_id)
+                ->first();
+            return view('logs.user', $data);
+        }
+
+        if($table == 'items') {
+            $data['item'] = DB::table('items')
+                ->leftJoin('item_categories', 'item_categories.id', '=', 'items.item_category_id')
+                ->join('branches', 'branches.id', '=', 'items.branch_id')
+                ->select('items.*', 'branches.name as branch_id' ,'item_categories.name as item_category')
+                ->where('items.id', $id)->first();
+            return view('logs.item', $data);
+        }
+
+        if($table == 'staffs') {
+            $data['staff'] = DB::table('staffs')->where('id', $id)->first();
+            $data['documents'] = DB::table('staff_documents')
+                ->where('active', 1)
+                ->where('staff_id', $id)
+                ->get();
+            return view('logs.staff', $data);
+        }
+
+        if($table == 'students') {
+            $data['shifts'] = DB::table('shifts')
+                        ->where('active',1)
+                        ->get();
+            $data['branches'] = DB::table('branches')
+                        ->whereIn('id', Right::branch(Auth::user()->id))
+                        ->orderBy('name')
+                        ->get();
+            $data['student'] = DB::table('students')
+                        ->where('id', $id)
+                        ->first();
+            $data['families'] = DB::table('families')
+                        ->where('active', 1)
+                        ->where('student_id', $id)
+                        ->get();
+            $data['documents'] = DB::table('documents')
+                        ->where('active', 1)
+                        ->where('student_id', $id)
+                        ->get();
+            $data['healths'] = DB::table('healths')->where('student_id', $id)
+                        ->where('active', 1)
+                        ->get();
+            $data['classes'] = DB::table('classes')
+                        ->orderBy('name')
+                        ->get();
+            $data['years'] = DB::table('school_years')
+                        ->orderBy('name')
+                        ->get();
+            $data['registrations'] = DB::table('registrations')
+                            ->join('classes','registrations.class_id', "=", "classes.id")
+                            ->join('school_years', "registrations.year_id", "=", "school_years.id")
+                            ->join('shifts', 'shifts.id', 'registrations.shift_id')
+                            ->where("registrations.active", 1)
+                            ->where("registrations.student_id", $id)
+                            ->select("registrations.*", "shifts.*", "shifts.name as shift_name", "classes.name as class_name", "school_years.name as year_name")
+                            ->get();
+            $data['invoices'] = DB::table('invoices')
+                ->join('students', 'students.id', 'invoices.customer_id')
+                ->select('invoices.*', 'students.*' ,'invoices.id as invoice_id')
+                ->where('invoices.active',1)
+                ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+                ->where('invoices.customer_id', $id)
+                ->orderBy('invoices.id', 'desc')
+                ->get();
+            return view('logs.student', $data);
+        }
+    }
 }

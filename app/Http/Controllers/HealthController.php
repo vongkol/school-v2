@@ -7,6 +7,11 @@ use DB;
 use Auth;
 class HealthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // get health recored by student id
     public function get($id)
     {

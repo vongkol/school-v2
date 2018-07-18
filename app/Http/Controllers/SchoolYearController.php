@@ -7,6 +7,11 @@ use DB;
 use Auth;
 class SchoolYearController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // index
     public function index()
     {

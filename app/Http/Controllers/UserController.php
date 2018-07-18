@@ -7,6 +7,11 @@ use DB;
 use Auth;
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // function to load profile view
     public  function index()
     {

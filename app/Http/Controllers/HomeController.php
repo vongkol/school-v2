@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 use Auth;
 class HomeController extends Controller
 {
@@ -23,6 +24,18 @@ class HomeController extends Controller
             $time = date("h:i:sa");
             Right::log(Auth::user()->id,"User Login","login", Auth::user()->id, "users", $time);
         }
-        return view('home');
+        $data['students'] = DB::Table('students')
+            ->where('active',1)
+            ->count();
+        $data['staffs'] = DB::Table('staffs')
+            ->where('active', 1)
+            ->count();
+        $data['invoices'] = DB::Table('invoices')
+            ->where('active', 1)
+            ->count();
+        $data['items'] = DB::Table('items')
+            ->where('active', 1)
+            ->count();
+        return view('home', $data);
     }
 }

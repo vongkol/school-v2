@@ -7,6 +7,11 @@ use DB;
 use Auth;
 class RegistrationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // function to delete
     public function delete($id)
     {

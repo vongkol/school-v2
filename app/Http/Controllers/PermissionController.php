@@ -7,6 +7,11 @@ use DB;
 use Auth;
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // index
     public function index($id)
     {

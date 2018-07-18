@@ -8,6 +8,11 @@ use Auth;
 
 class FamilyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // save and update family records
     public function save(Request $r)
     {

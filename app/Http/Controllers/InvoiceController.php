@@ -25,6 +25,7 @@ class InvoiceController extends Controller
                     ->orWhere('invoices.customer_id', 'like', "%{$_GET['q']}%")
                     ->orWhere('invoices.invoice_date', 'like', "%{$_GET['q']}%")
                     ->orWhere('students.code', 'like', "%{$_GET['q']}%")
+                    ->orWhere('students.english_name', 'like', "%{$_GET['q']}%")
                     ->orWhere('invoices.due_date', 'like', "%{$_GET['q']}%");
                 })
                 ->paginate(18);
@@ -99,16 +100,34 @@ class InvoiceController extends Controller
     public function detail($id)
     {
         $data['invoice'] = DB::table('invoices')
-        ->join('students', 'students.id', 'invoices.customer_id')
-        ->select('invoices.*', 'students.*', 'invoices.id as invoice_id')
-        ->where('invoices.active',1)
-        ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
-        ->where('invoices.id', $id)
-        ->first();
+            ->join('students', 'students.id', 'invoices.customer_id')
+            ->join('users' ,'invoices.invoice_by', 'users.id')
+            ->select('invoices.*', 'students.*', 'invoices.id as invoice_id', 'users.name as invoice_by')
+            ->where('invoices.active',1)
+            ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+            ->where('invoices.id', $id)
+            ->first();
 
         return view('invoices.detail', $data);
     }
    
+    public function print($id)
+    {
+        $data['invoice'] = DB::table('invoices')
+            ->join('students', 'students.id', 'invoices.customer_id')
+            ->join('users' ,'invoices.invoice_by', 'users.id')
+            ->select('invoices.*', 'students.*', 'invoices.id as invoice_id', 'users.name as invoice_by')
+            ->where('invoices.active',1)
+            ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+            ->where('invoices.id', $id)
+            ->first();
+
+        $data['branch'] = DB::table('branches')
+            ->where('id', $data['invoice']->branch_id)
+            ->first();
+
+        return view('invoices.print', $data);
+    }
 
     public function get_item($id) {
         $item  = DB::table('items')->where('id', $id)->first();

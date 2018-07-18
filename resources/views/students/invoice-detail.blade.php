@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header text-bold">
                     <i class="fa fa-align-justify"></i> Detail Invoice&nbsp;&nbsp;
-                    <a href="{{url('/invoice')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
+                    <a href="{{url('/student/detail/'.$invoice->student_id)}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
                     <a href="{{url('invoice/print/'.$invoice->invoice_id)}}" class="float-right">
                         <button>Print Invoice</button>
                     </a>
@@ -16,8 +16,9 @@
                 <div class="card-block">
                     <div class="row">
                         <div class="col-sm-12">
+                            {{csrf_field()}}
                             <div class="row">
-                                <label class="control-label col-sm-6"> <h3>Invoice Reference {!!$lb_id!!} : {{$invoice->invoice_ref}}</h3></label>
+                                <label class="control-label col-sm-6"><h3>Invoice Reference {!!$lb_id!!} : {{$invoice->invoice_ref}}</h3></label>
                             </div>
                             <div class="form-group row">
                                 <label for="invoice_ref" class="control-label col-sm-6">Student Code :  {{$invoice->code}}</label>

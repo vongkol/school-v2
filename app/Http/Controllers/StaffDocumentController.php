@@ -8,6 +8,11 @@ use Auth;
 
 class StaffDocumentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // save document
     public function save(Request $r)
     {
