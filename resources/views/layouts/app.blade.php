@@ -85,9 +85,6 @@
                         <a href="{{url('/student-enroll')}}" class="nav-link"><i class="fa fa-users text-primary"></i> Student Enroll</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{url('/staff')}}" class="nav-link"><i class="fa fa-user text-info"></i> Staff</a>
-                    </li>
-                    <li class="nav-item">
                         <a href="{{url('/item')}}" class="nav-link"><i class="fa fa-shopping-basket text-pink"></i> item</a>
                     </li>
                     <li class="nav-item nav-dropdown">
@@ -130,15 +127,6 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url('/school-year')}}"><i class="fa fa-signal"></i> {{$lb_school_year}}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{url('/room')}}"><i class="fa fa-bolt"></i> {{$lb_room}}</a>
-                            </li>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="{{url('/subject')}}"><i class="fa fa-book"></i> {{$lb_subject}}</a>
-                            </li> -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{url('/position')}}"><i class="fa fa-level-up"></i> Position</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url('/shift')}}"><i class="fa fa-clock-o"></i> Shift</a>

@@ -15,6 +15,7 @@
                         <tr>
                             <th>{!!$lb_id!!}</th>
                             <th>{{$lb_name}}</th>
+                            <th>Active</th>
                             <th>{{$lb_action}}</th>
                         </tr>
                         </thead>
@@ -24,8 +25,9 @@
                             <tr>
                                 <td>{{$i++}}</td>
                                 <td>{{$class->name}}</td>
+                                <td><a class="text-danger" href="{{url('/class/close/'.$class->id)}}" onclick="return confirm('You want to close this class?')" title="Close">Close</a></td>
                                 <td>
-                                    <a href="{{url('/class/edit/'.$class->id)}}" title="{{$lb_edit}}"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp
+                                    <a href="{{url('/class/edit/'.$class->id)}}" title="{{$lb_edit}}"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp;
                                     <a href="{{url('/class/delete/'.$class->id)}}" onclick="return confirm('{{$lb_confirm_delete}}')" title="{{$lb_delete}}"><i class="fa fa-remove text-danger"></i></a>
                                 </td>
                             </tr>

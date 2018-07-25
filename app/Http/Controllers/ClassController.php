@@ -18,7 +18,10 @@ class ClassController extends Controller
         if(!Right::check('Class', 'l')){
             return view('permissions.no');
         }
-        $data['classes'] = DB::table('classes')->get();
+        $data['classes'] = DB::table('classes')
+            ->where('active', 1)
+            ->where('status', 1)
+            ->get();
         return view('classes.index', $data);
     }
     public function create()
@@ -105,7 +108,16 @@ class ClassController extends Controller
         if(!Right::check('Class', 'd')){
             return view('permissions.no');
         }
-        DB::table('classes')->where('id', $id)->delete();
+        DB::table('classes')->where('id', $id)->update(["active"=>0]);
+        return redirect('/class');
+    }
+
+    public function close($id)
+    {
+        if(!Right::check('Class', 'd')){
+            return view('permissions.no');
+        }
+        DB::table('classes')->where('id', $id)->update(["status"=>0]);
         return redirect('/class');
     }
 }

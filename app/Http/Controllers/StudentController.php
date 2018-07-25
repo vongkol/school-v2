@@ -186,6 +186,8 @@ class StudentController extends Controller
                             ->get();
         $data['classes'] = DB::table('classes')
                             ->orderBy('name')
+                            ->where('active',1)
+                            ->where('status',1)
                             ->get();
         $data['years'] = DB::table('school_years')
                             ->orderBy('name')
@@ -196,7 +198,7 @@ class StudentController extends Controller
                                 ->join('shifts', 'shifts.id', 'registrations.shift_id')
                                 ->where("registrations.active", 1)
                                 ->where("registrations.student_id", $id)
-                                ->select("registrations.*", "shifts.*", "shifts.name as shift_name", "classes.name as class_name", "school_years.name as year_name")
+                                ->select("registrations.*", "registrations.id as registration_id", "shifts.*", "shifts.name as shift_name", "classes.name as class_name", "school_years.name as year_name")
                                 ->get();
         $data['invoices'] = DB::table('invoices')
             ->join('students', 'students.id', 'invoices.customer_id')

@@ -32,15 +32,15 @@
                                    </div>
                                </div>
                                <div class="form-group row">
-                                   <label for="khmer_name" class="control-label col-sm-3">{{$lb_khmer_name}}</label>
+                                   <label for="khmer_name" class="control-label col-sm-3">{{$lb_khmer_name}} <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
-                                       <input type="text" name="khmer_name" id="khmer_name" class="form-control" value="{{old('khmer_name')}}">
+                                       <input type="text" required name="khmer_name" id="khmer_name" class="form-control" value="{{old('khmer_name')}}">
                                    </div>
                                </div>
                                <div class="form-group row">
-                                   <label for="english_name" class="control-label col-sm-3">{{$lb_english_name}}</label>
+                                   <label for="english_name" class="control-label col-sm-3">{{$lb_english_name}} <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
-                                       <input type="text" name="english_name" id="english_name" class="form-control" value="{{old('english_name')}}">
+                                       <input type="text" required name="english_name" id="english_name" class="form-control" value="{{old('english_name')}}">
                                    </div>
                                </div>
                                <div class="form-group row">
@@ -75,9 +75,9 @@
 
                            <div class="col-sm-6">
                                <div class="form-group row">
-                                   <label for="phone" class="control-label col-sm-3">{{$lb_phone}}</label>
+                                   <label for="phone" class="control-label col-sm-3">{{$lb_phone}} <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
-                                       <input type="text" autofocus name="phone" id="phone" class="form-control" value="{{old('phone')}}">
+                                       <input type="text" required name="phone" id="phone" class="form-control" value="{{old('phone')}}">
                                    </div>
                                </div>
                                <div class="form-group row">

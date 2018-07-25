@@ -33,15 +33,15 @@
                                    </div>
                                </div>
                                <div class="form-group row">
-                                   <label for="khmer_name" class="control-label col-sm-3">{{$lb_khmer_name}}</label>
+                                   <label for="khmer_name" class="control-label col-sm-3">{{$lb_khmer_name}} <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
                                        <input type="text" required readonly name="khmer_name" id="khmer_name" class="form-control" value="{{$student->khmer_name}}">
                                    </div>
                                </div>
                                <div class="form-group row">
-                                   <label for="english_name" class="control-label col-sm-3">{{$lb_english_name}}</label>
+                                   <label for="english_name" class="control-label col-sm-3">{{$lb_english_name}} <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
-                                       <input type="text" name="english_name" id="english_name" readonly class="form-control" value="{{$student->english_name}}">
+                                       <input type="text" required name="english_name" id="english_name" readonly class="form-control" value="{{$student->english_name}}">
                                    </div>
                                </div>
                                <div class="form-group row">
@@ -77,9 +77,9 @@
                 
                            <div class="col-sm-6">
                                <div class="form-group row">
-                                   <label for="phone" class="control-label col-sm-3">{{$lb_phone}}</label>
+                                   <label for="phone" class="control-label col-sm-3">{{$lb_phone}} <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
-                                       <input type="text" name="phone" id="phone" class="form-control" readonly value="{{$student->phone}}">
+                                       <input type="text" name="phone" required id="phone" class="form-control" readonly value="{{$student->phone}}">
                                    </div>
                                </div>
                                <div class="form-group row">
@@ -322,7 +322,7 @@
                                             </thead>
                                             <tbody id="rdata">
                                             @foreach($registrations as $r)
-                                                <tr id="{{$r->id}}" year-id="{{$r->year_id}}" class-id="{{$r->class_id}}">
+                                                <tr id="{{$r->registration_id}}" year-id="{{$r->year_id}}" class-id="{{$r->class_id}}">
                                                     <td>{{$r->registration_date}}</td>
                                                     <td>{{$r->class_name}}</td>
                                                     <td>{{$r->shift_name}}</td>

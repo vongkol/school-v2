@@ -24,18 +24,11 @@ class HomeController extends Controller
             $time = date("h:i:sa");
             Right::log(Auth::user()->id,"User Login","login", Auth::user()->id, "users", $time);
         }
-        $data['students'] = DB::Table('students')
+        $data['classes'] = DB::Table('classes')
             ->where('active',1)
-            ->count();
-        $data['staffs'] = DB::Table('staffs')
-            ->where('active', 1)
-            ->count();
-        $data['invoices'] = DB::Table('invoices')
-            ->where('active', 1)
-            ->count();
-        $data['items'] = DB::Table('items')
-            ->where('active', 1)
-            ->count();
+            ->where('status', 1)
+            ->get();
+        
         return view('home', $data);
     }
 }

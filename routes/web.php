@@ -56,6 +56,7 @@ Route::get('/class/create', "ClassController@create");
 Route::get('/class/edit/{id}', "ClassController@edit");
 Route::post('/class/save', "ClassController@save");
 Route::get('/class/delete/{id}', "ClassController@delete");
+Route::get('/class/close/{id}', "ClassController@close");
 Route::post('/class/update', "ClassController@update");
 // shift
 Route::get('/shift', "ShiftController@index");
@@ -79,21 +80,7 @@ Route::get('/item-category/edit/{id}', "ItemCategoryController@edit");
 Route::post('/item-category/save', "ItemCategoryController@save");
 Route::get('/item-category/delete/{id}', "ItemCategoryController@delete");
 Route::post('/item-category/update', "ItemCategoryController@update");
-// position
-Route::get('/position', "PositionController@index");
-Route::get('/position/create', "PositionController@create");
-Route::get('/position/edit/{id}', "PositionController@edit");
-Route::post('/position/save', "PositionController@save");
-Route::get('/position/delete/{id}', "PositionController@delete");
-Route::post('/position/update', "PositionController@update");
-// staff
-Route::get('/staff', "StaffController@index");
-Route::get('/staff/create', "StaffController@create");
-Route::get('/staff/edit/{id}', "StaffController@edit");
-Route::post('/staff/save', "StaffController@save");
-Route::get('/staff/delete/{id}', "StaffController@delete");
-Route::get('/staff/detail/{id}', "StaffController@detail");
-Route::post('/staff/update', "StaffController@update");
+
 // school year
 Route::get('/school-year', "SchoolYearController@index");
 Route::get('/school-year/create', "SchoolYearController@create");
