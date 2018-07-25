@@ -179,6 +179,10 @@ Route::get('/student-enroll/delete/{id}', "StudentEnrollController@delete");
 Route::post('/student-enroll/save', "StudentEnrollController@save");
 Route::post('/student-enroll/update', "StudentEnrollController@update");
 
+// student by class
+Route::get('/student/class/{id}', "HomeController@student_by_class");
+Route::get('/student/print/class/{id}', "HomeController@print_student");
+
 
 // user logs
 Route::get('/log', "LogController@index");

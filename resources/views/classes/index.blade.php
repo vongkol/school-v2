@@ -24,7 +24,7 @@
                         @foreach($classes as $class)
                             <tr>
                                 <td>{{$i++}}</td>
-                                <td>{{$class->name}}</td>
+                                <td><a href="{{url('/student/class/'.$class->id)}}">{{$class->name}}</a></td>
                                 <td><a class="text-danger" href="{{url('/class/close/'.$class->id)}}" onclick="return confirm('You want to close this class?')" title="Close">Close</a></td>
                                 <td>
                                     <a href="{{url('/class/edit/'.$class->id)}}" title="{{$lb_edit}}"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp;

@@ -41,7 +41,6 @@
                             <select name="on_table" id="on_table" class="form-control text-center">
                                 <option value="">--All--</option>
                                 <option value="students">students</option>
-                                <option value="staffs">staffs</option>
                                 <option value="items">items</option>
                                 <option value="users">users</option>
                                 <option value="invoices">invoices</option>

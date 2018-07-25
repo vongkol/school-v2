@@ -15,8 +15,17 @@ class StudentEnrollController extends Controller
     // index
     public function index()
     { 
-       
-        return view('invoices.index', $data);
+        $data['student_enrolls'] = DB::table('registrations')
+            ->join('students', 'students.id', 'registrations.student_id')
+            ->join('classes','registrations.class_id', "=", "classes.id")
+            ->join('school_years', "registrations.year_id", "=", "school_years.id")
+            ->join('shifts', 'shifts.id', 'registrations.shift_id')
+            ->where("registrations.active", 1)
+            ->where('students.active',1)
+            ->orderBy('registrations.id', 'desc')
+            ->select("students.*","registrations.*", "registrations.id as registration_id", "shifts.*", "shifts.name as shift_name", "classes.name as class_name", "school_years.name as year_name")
+            ->paginate(18);
+        return view('student-enrolls.index', $data);
     }
     public function create(Request $r)
     {

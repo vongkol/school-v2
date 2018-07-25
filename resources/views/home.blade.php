@@ -7,6 +7,7 @@
             ->where('students.active', 1)
             ->where('class_id', $s->id)
             ->where('registrations.active',1)
+            ->where('enroll', 1)
             ->count()
         ;?>
         <div class="col-sm-6 col-lg-3">
@@ -19,7 +20,7 @@
                     <p>{{$s->name}}</p>
                 </div>
                 <div class="chart-wrapper px-3" style="padding: 20px;">
-                     <a href="{{url('/student')}}" class="text-white btn btn-xs btn-info"> View</a>
+                     <a href="{{url('/student/class/'.$s->id)}}" class="text-white btn btn-xs btn-info"> View</a>
                 </div>
             </div>
         </div>
