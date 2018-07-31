@@ -303,9 +303,7 @@ function saveRegistration()
                 return request.setRequestHeader('X-CSRF-Token', $("input[name='_token']").val());
             },
             success: function (sms) {
-                var re_id = $("#registration_id").val();
-                if(re_id<=0)
-                {
+              
                     if (sms > 0) {
                         // bind to table
                         var tr = "<tr id='" + sms + "' year-id='" + registration.year_id + "' class-id='" + registration.class_id + "' shift-id'" + registration.shift_id + "'>";
@@ -333,19 +331,7 @@ function saveRegistration()
                     else{
                         $("#regsms").html("Cannot save your data. Please check again! មិនអាចរក្សាទិន្នន័យ");
                     }
-                }
-                else{
-                    // update part
-                    if(sms)
-                    {
-                        // update data in grid
-                      
-                        $("#fsms").html("Data has been saved! ទិន្នន័យត្រូវបានផ្លាស់ប្តូរដោយជោគជ័យ!")
-                    }
-                    else{
-                        $("#fsms").html("Cannot save changes. Please check again! មិនអាចផ្លាស់ប្តូរទិន្នន័យបានទេ!");
-                    }
-                }
+                
 
             }
         });
@@ -470,26 +456,7 @@ function removeFamily(obj, evt) {
 
 }
 // function to remove health
-function removeHealth(obj, evt)
-{
-    evt.preventDefault();
-    var tr = $(obj).parent().parent();
-    var health_id = $(tr).attr("id");
-    var o = confirm("You want to delete?");
-    if(o)
-    {
-        $.ajax({
-            type: "GET",
-            url: burl + "/health/delete/" + health_id,
-            success: function (sms) {
-                if(sms)
-                {
-                    tr.remove();
-                }
-            }
-        });
-    }
-}
+
 // delete registration
 function removeRegistration(obj, evt)
 {

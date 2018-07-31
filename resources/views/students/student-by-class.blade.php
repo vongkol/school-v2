@@ -31,7 +31,7 @@
                         <form action="{{url('/student/class/'.$class->id)}}" class="form-inline" method="get">
                             <div class="text-right">
                                 <div class="form-group">
-                                        <label for="name">{{$lb_search}}&nbsp;&nbsp;</label>
+                                        <label for="name">{{$lb_search}}​ Shift&nbsp;&nbsp;</label>
                                         <select id="q" name="q" value="{{$query}}">
                                             <option value="">--All--</option>
                                             @foreach($shifts as $shift)

@@ -23,25 +23,6 @@ class RegistrationController extends Controller
     // save registration
     public function save(Request $r)
     {
-        $check_student = DB::table('registrations')
-            ->where('student_id', $r->student_id)
-            ->count();
-        $check_shift = DB::table('registrations')
-            ->where('shift_id', $r->shift_id)
-            ->count();
-        $check_class = DB::table('registrations')
-            ->where('class_id', $r->class_id)
-            ->count();
-        if($check_student>0) {
-            if($check_shift > 0)  {
-                DB::table('registrations')->where('student_id', $r->student_id)->where('shift_id', $r->shift_id)->update(["enroll"=>0]);
-            }
-            if($check_class > 0 ) {
-                DB::table('registrations')->where('student_id', $r->student_id)->where('class_id', $r->class_id)->update(["enroll"=>0]);
-            }
-        }
-
-
         $data = [
             "registration_date" => $r->registration_date,
             'start_date' => $r->start_date,

@@ -139,9 +139,9 @@
     </script>
 @endsection
 @section('js')
-    <script src="{{asset("chosen/chosen.jquery.js")}}"></script>
-    <script src="{{asset("chosen/chosen.proto.js")}}"></script>
-    <script src="{{asset("chosen/docsupport/init.js")}}"></script>
+    <script src="{{asset('chosen/chosen.jquery.js')}}"></script>
+    <script src="{{asset('chosen/chosen.proto.js')}}"></script>
+    <script src="{{asset('chosen/docsupport/init.js')}}"></script>
     <script src="{{asset('datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('js/jquery.inputmask.bundle.min.js')}}"></script>
     <script>

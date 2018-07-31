@@ -2,13 +2,16 @@
 @section('content')
     <div class="row" style="margin-top: 18px">
         @foreach($classes as $s)
-        <?php $students = DB::table('registrations')
-            ->join('students', 'students.id', 'registrations.student_id')
-            ->where('students.active', 1)
-            ->where('class_id', $s->id)
-            ->where('registrations.active',1)
-            ->where('enroll', 1)
-            ->count()
+        <?php 
+            $date = date("y-m-d");
+            
+            $students = DB::table('registrations')
+                ->join('students', 'students.id', 'registrations.student_id')
+                ->where('students.active', 1)
+                ->where('class_id', $s->id)
+                ->whereDate('registrations.end_date' ,'>=' ,$date)
+                ->where('registrations.active',1)
+                ->count()
         ;?>
         <div class="col-sm-6 col-lg-3">
             <div class="card card-inverse card-primary">

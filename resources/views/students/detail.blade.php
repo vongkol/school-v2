@@ -11,6 +11,7 @@
             include(app_path(). "/lang/students/en.student.php");
         }
     ?>
+    <link href="{{asset('css/datepicker.css')}}" rel="stylesheet">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -172,7 +173,6 @@
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">{{$lb_family}}</a></li>
                                     <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">{{$lb_document}}</a></li>
-                                    <li role="presentation"><a href="#health" aria-controls="health" role="tab" data-toggle="tab">{{$lb_health}}</a></li>
                                     <li role="presentation"><a href="#registration" aria-controls="registration" role="tab" data-toggle="tab">Student Enroll</a></li>
                                 </ul>
                                 <!-- Tab panes -->
@@ -251,57 +251,7 @@
                                             @endforeach
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="health">
-                                        <p>
-                                            <button type="button" id="btnAddHealth" class="btn btn-sm btn-success" 
-                                            data-toggle="modal" data-target="#healthModal">{{$lb_add}}</button>
-                                            <!--<a href="#" class="btn btn-sm btn-info">{{$lb_print}}</a>-->
-                                        </p>
-                                        <table class="tbl table-responsive">
-                                            <thead>
-                                            <tr>
-                                                <th>{{$lb_check_time}}</th>
-                                                <th>{{$lb_check_date}}</th>
-                                                <th>{{$lb_weight}}</th>
-                                                <th>{{$lb_height}}</th>
-                                                <th>{{$lb_left_eye}}</th>
-                                                <th>{{$lb_right_eye}}</th>
-                                                <th>{{$lb_left_ear}}</th>
-                                                <th>{{$lb_right_ear}}</th>
-                                                <th>{{$lb_top_tooth}}</th>
-                                                <th>{{$lb_bottom_tooth}}</th>
-                                                <th>{{$lb_conclusion}}</th>
-                                                <th>{{$lb_other}}</th>
-                                                <th>{{$lb_action}}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="healthData">
-                                            @foreach($healths as $health)
-                                                <tr id="{{$health->id}}">
-                                                    <td>{{$health->check_time}}</td>
-                                                    <td>{{$health->check_date}}</td>
-                                                    <td>{{$health->weight}}</td>
-                                                    <td>{{$health->height}}</td>
-                                                    <td>{{$health->left_eye}}</td>
-                                                    <td>{{$health->right_eye}}</td>
-                                                    <td>{{$health->left_ear}}</td>
-                                                    <td>{{$health->right_ear}}</td>
-                                                    <td>{{$health->top_tooth}}</td>
-                                                    <td>{{$health->bottom_tooth}}</td>
-                                                    <td>{{$health->conclusion}}</td>
-                                                    <td>{{$health->other}}</td>
-                                                    <td>
-                                                        <a href="#" onclick="editHealth(this, event)"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp;
-                                                        <a href="#" onclick="removeHealth(this,event)">
-                                                            <i class="fa fa-remove text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    </div> 
                                     <div role="tabpanel" class="tab-pane" id="registration">
                                          <p>
                                             <button type="button" id="btnAddRegistration" class="btn btn-sm btn-success" 
@@ -518,122 +468,7 @@
             </div>
         </div>
     </div>
-    <!-- Health modal -->
-     <div class="modal fade" id="healthModal" tabindex="-1" role="dialog" aria-labelledby="healthModaltitle" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="healthModaltitle">{{$lb_health}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group row">
-                                <label for="hcheck_date" class="control-label col-sm-4">{{$lb_check_date}}<span class="text-danger">*</span></label>
-                                <div class="col-sm-8">
-                                   <input type="text" class="form-control" id="hcheck_date" name="hcheck_date" 
-                                   placeholder="dd/mm/yyyy" required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="hcheck_time" class="control-label col-sm-4">{{$lb_check_time}}<span class="text-danger">*</span></label>
-                                <div class="col-sm-8">
-                                   <select name="hcheck_time" id="hcheck_time" class="form-control">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                   </select>
-                                   
-                                    <input type="hidden" id="health_id" value="0">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="hweight" class="control-label col-sm-4">{{$lb_weight}}</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="hweight" name="hweight" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="hheight" class="control-label col-sm-4">{{$lb_height}}</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="hheight" name="hheight" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="hleft_eye" class="control-label col-sm-4">{{$lb_left_eye}}</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="hleft_eye" name="hleft_eye" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="hright_eye" class="control-label col-sm-4">{{$lb_right_eye}}</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="hright_eye" name="hright_eye" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group row">
-                                <label for="hleft_ear" class="control-label col-sm-4">{{$lb_left_ear}}</label>
-                                <div class="col-sm-8">
-                                   <input type="text" class="form-control" id="hleft_ear" name="hleft_ear">
-                                </div>
-                            </div>
-                             <div class="form-group row">
-                                <label for="hright_ear" class="control-label col-sm-4">{{$lb_right_ear}}</label>
-                                <div class="col-sm-8">
-                                   <input type="text" class="form-control" id="hright_ear" name="hright_ear">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="htop_tooth" class="control-label col-sm-4">{{$lb_top_tooth}}</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="htop_tooth" name="htop_tooth" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="hbottom_tooth" class="control-label col-sm-4">{{$lb_bottom_tooth}}</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="hbottom_tooth" name="hbottom_tooth" class="form-control">
-                                </div>
-                            </div>
-                              <div class="form-group row">
-                                <label for="hother" class="control-label col-sm-4">{{$lb_other}}</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="hother" name="hother" class="form-control">
-                                </div>
-                            </div>
-                              <div class="form-group row">
-                                <label for="hconclusion" class="control-label col-sm-4">{{$lb_conclusion}}</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="hconclusion" name="hconclusion" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                       <div class="col-sm-12">
-                           <p id="hsms" class="text-danger text-center"></p>
-                       </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="saveHealth()">{{$lb_save}}</button>
-                    <button type="button" class="btn btn-secondary btn-danger" data-dismiss="modal" onclick="clearHealth()">{{$lb_close}}</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
+   
     <!-- registration modal -->
      <div class="modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="registrationModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -651,9 +486,9 @@
                                 <label for="register_date" class="control-label col-sm-3">
                                     {{$lb_register_date}}<span class="text-danger">*</span></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="register_date"
-                                     placeholder="dd/mm/yyyy" name="register_date">
-                                    <input type="hidden" id="registration_id" value="0">
+                                    <input type="text" class="form-control datepicker-icon" id="register_date"
+                                     placeholder="yyyy/mm/dd" name="register_date">
+                                    <input type="hidden" id="registration_id " value="0">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -689,15 +524,15 @@
                             <div class="form-group row">
                                 <label for="start_date" class="control-label col-sm-3">{{$lb_start_date}}</label>
                                 <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="start_date" 
-                                   name="start_date" placeholder="dd/mm/yyyy">
+                                  <input type="text" class="form-control  datepicker-icon" id="start_date" 
+                                   name="start_date" placeholder="yyyy/mm/dd">
                                 </div>
                             </div>
                              <div class="form-group row">
                                 <label for="end_date" class="control-label col-sm-3">{{$lb_end_date}}</label>
                                 <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="end_date" 
-                                   name="end_date" placeholder="dd/mm/yyyy">
+                                  <input type="text" class="form-control datepicker-icon" id="end_date" 
+                                   name="end_date" placeholder="yyyy/mm/dd">
                                 </div>
                             </div>
                         </div>
@@ -718,6 +553,7 @@
     </div>
 @endsection
 @section('js')
+<script src="{{asset('datepicker/js/bootstrap-datepicker.min.js')}}"></script>
 <script src="{{asset('js/jquery.inputmask.bundle.min.js')}}"></script>
 <script>
     function loadFile(e){
@@ -726,10 +562,13 @@
     }
     $(document).ready(function(){
         $("#fdob").inputmask("99/99/9999");
-        $("#hcheck_date").inputmask("99/99/9999");
-        $("#register_date").inputmask("99/99/9999");
-        $("#start_date").inputmask("99/99/9999");
-        $("#end_date").inputmask("99/99/9999");
+        $("#start_date, #end_date, #register_date").datepicker({
+            orientation: 'bottom',
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+            toggleActive: true
+        });
     });
 </script>
 <script src="{{asset('js/students/student-edit.js')}}"></script>

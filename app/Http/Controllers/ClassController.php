@@ -20,7 +20,6 @@ class ClassController extends Controller
         }
         $data['classes'] = DB::table('classes')
             ->where('active', 1)
-            ->where('status', 1)
             ->get();
         return view('classes.index', $data);
     }
