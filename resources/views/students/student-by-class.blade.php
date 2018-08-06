@@ -39,7 +39,6 @@
                                             @endforeach
                                         </select>
                                         <button type="submit"  style="padding:3px 10px;"><i class="fa fa-search"></i></button>
-                            
                                 </div>
                             </div>
                         </form>

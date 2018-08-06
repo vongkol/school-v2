@@ -55,6 +55,7 @@ function save()
             form_data.append("pob", $("#pob").val());
             form_data.append("phone", $("#phone").val());
             form_data.append("email", $("#email").val());
+            form_data.append("university", $("#university").val());
             form_data.append("address", $("#current_address").val());
             form_data.append("branch_id", $("#branch").val());
 
@@ -158,127 +159,7 @@ function clearDoc() {
     $("#docsms").html("");
     $("#doc_id").val("0");
 }
-// clear health
-function clearHealth()
-{
-    $("#hcheck_date").val("");
-    $("#hweight").val("");
-    $("#hheight").val("");
-    $("#hleft_eye").val("");
-    $("#hright_eye").val("");
-    $("#hleft_ear").val("");
-    $("#hright_ear").val("");
-    $("#htop_tooth").val("");
-    $("#hbottom_tooth").val("");
-    $("#hother").val("");
-    $("#hconclusion").val("");
-    $("#hsms").html("");
-}
-// clear registration
-function clearRegistration()
-{
-    $("#register_date").val("");
-    $("#start_date").val("");
-    $("#end_date").val("");
-    $("#registration_id").val("0");
-    $("#regsms").html("");
-}
-// save health
-function saveHealth()
-{
-    var health = {
-        id: $("#health_id").val(),
-        check_date: $("#hcheck_date").val(),
-        check_time: $("#hcheck_time").val(),
-        weight: $("#hweight").val(),
-        height: $("#hheight").val(),
-        left_eye: $("#hleft_eye").val(),
-        right_eye: $("#hright_eye").val(),
-        left_ear: $("#hleft_ear").val(),
-        right_ear: $("#hright_ear").val(),
-        top_tooth: $("#htop_tooth").val(),
-        bottom_tooth: $("#hbottom_tooth").val(),
-        other: $("#hother").val(),
-        conclusion: $("#hconclusion").val(),
-        student_id: $("#student_id").val()
-    };
-    $.ajax({
-            type: "POST",
-            url: burl + "/health/save",
-            data: health,
-            beforeSend: function (request) {
-                return request.setRequestHeader('X-CSRF-Token', $("input[name='_token']").val());
-            },
-            success: function (sms) {
-                var h_id = $("#health_id").val();
-                if(h_id<=0)
-                {
-                    // you insert data
-                    if(sms>0)
-                    {
-                        var tr = "<tr id='" + sms + "'>";
-                        tr += "<td>" + health.check_time + "</td>";
-                        tr += "<td>" + health.check_date + "</td>";
-                        tr += "<td>" + health.weight + "</td>";
-                        tr += "<td>" + health.height + "</td>";
-                        tr += "<td>" + health.lef_eye + "</td>";
-                        tr += "<td>" + health.right_eye + "</td>";
-                        tr += "<td>" + health.left_ear + "</td>";
-                        tr += "<td>" + health.right_ear + "</td>";
-                        tr += "<td>" + health.top_tooth + "</td>";
-                        tr += "<td>" + health.bottom_tooth + "</td>";
-                        tr += "<td>" + health.conclusion + "</td>";
-                        tr += "<td>" + health.other + "</td>";
-                        tr += "<td>" + "<a href='#' onclick='editHealth(this, event)'><i class='fa fa-edit text-success'></i></a>&nbsp;&nbsp;<a href='#' onclick='removeHealth(this, event)'><i class='fa fa-remove text-danger'></i></a>" + "</td>";
-                        tr += "<tr>";
-                        $("#hcheck_date").val("");
-                        $("#hweight").val("");
-                        $("#hheight").val("");
-                        $("#hleft_eye").val("");
-                        $("#hright_eye").val("");
-                        $("#hleft_ear").val("");
-                        $("#hright_ear").val("");
-                        $("#htop_tooth").val("");
-                        $("#hbottom_tooth").val("");
-                        $("#hother").val("");
-                        $("#hconclusion").val("");
-                        var counter = $("#healthData tr").length;
-                        if(counter>0)
-                        {
-                            $("#healthData tr:last-child").after(tr);
-                        }
-                        else{
-                            $("#healthData").html(tr);
-                        }
-                        $("#hsms").html("Data has been saved successfully.<br>ទិន្នន័យត្រូវបានរក្សាទុកដោយជោគជ័យ។");
-                    }
-                    else{
-                        $("#hsms").html("Fail to save data. Please check again!<br>មិនអាចរក្សាទិន្នន័យបានទេ។ សូមពិន្យម្តងទៀត!");
-                    }
-                }
-                else{
-                    // you update data
-                    // get updated row
-                    var str = $("tr[id='" + health.id + "']")
-                    var tds = $(str).children("td");
-                    $(tds[0]).html(health.check_time);
-                    $(tds[1]).html(health.check_date);
-                    $(tds[2]).html(health.weight);
-                    $(tds[3]).html(health.height);
-                    $(tds[4]).html(health.left_eye);
-                    $(tds[5]).html(health.right_eye);
-                    $(tds[6]).html(health.left_ear);
-                    $(tds[7]).html(health.right_ear);
-                    $(tds[8]).html(health.top_tooth);
-                    $(tds[9]).html(health.bottom_tooth);
-                    $(tds[10]).html(health.conclusion);
-                    $(tds[11]).html(health.other);
-                    $("#hsms").html("All changes have been saved successfully!<br>ទិន្នន័យត្រូវបានផ្លាស់ប្តូរដោយជោគជ័យ!");
-                }
-            }
-    });
 
-}
 // save registration
 function saveRegistration()
 {

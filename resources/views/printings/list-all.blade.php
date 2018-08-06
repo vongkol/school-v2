@@ -10,7 +10,7 @@
 </head>
 <body>
     <p style="text-align: center;">
-        <img src="{{asset('img/cocd.jpg')}}" alt="Logo" width="130">
+        <img src="{{asset('logo.png')}}" alt="Logo" width="130">
     </p>
     <h3 style="text-align:center" class="kh">បញ្ជីឈ្មោះសិស្សសរុប</h3>
     <table class="tbl1">

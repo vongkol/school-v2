@@ -26,12 +26,6 @@
                            <div class="col-sm-6">
                                {{csrf_field()}}
                                <div class="form-group row">
-                                   <label for="code" class="control-label col-sm-3">{{$lb_code}}​ <span class="text-danger">*</span></label>
-                                   <div class="col-sm-9">
-                                       <input type="text" required autofocus name="code" id="code" class="form-control" value="{{old('code')}}">
-                                   </div>
-                               </div>
-                               <div class="form-group row">
                                    <label for="khmer_name" class="control-label col-sm-3">{{$lb_khmer_name}} <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
                                        <input type="text" required name="khmer_name" id="khmer_name" class="form-control" value="{{old('khmer_name')}}">
@@ -41,6 +35,12 @@
                                    <label for="english_name" class="control-label col-sm-3">{{$lb_english_name}} <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
                                        <input type="text" required name="english_name" id="english_name" class="form-control" value="{{old('english_name')}}">
+                                   </div>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="phone" class="control-label col-sm-3">{{$lb_phone}} <span class="text-danger">*</span></label>
+                                   <div class="col-sm-9">
+                                       <input type="text" required name="phone" id="phone" class="form-control" value="{{old('phone')}}">
                                    </div>
                                </div>
                                <div class="form-group row">
@@ -75,15 +75,15 @@
 
                            <div class="col-sm-6">
                                <div class="form-group row">
-                                   <label for="phone" class="control-label col-sm-3">{{$lb_phone}} <span class="text-danger">*</span></label>
-                                   <div class="col-sm-9">
-                                       <input type="text" required name="phone" id="phone" class="form-control" value="{{old('phone')}}">
-                                   </div>
-                               </div>
-                               <div class="form-group row">
                                    <label for="email" class="control-label col-sm-3">{{$lb_email}}</label>
                                    <div class="col-sm-9">
                                        <input type="email" name="email" id="email" class="form-control" value="{{old('email')}}">
+                                   </div>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="university" class="control-label col-sm-3">University</label>
+                                   <div class="col-sm-9">
+                                       <input type="text" name="university" id="university" class="form-control" value="{{old('university')}}">
                                    </div>
                                </div>
                                 <div class="form-group row">
