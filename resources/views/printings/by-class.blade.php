@@ -54,7 +54,7 @@
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*')
                 ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                // ->orderBy('students.english_name')
+                ->orderBy('registrations.end_date', 'desc')
                 ->orderBy('school_years.name', 'desc')
                 ->get();
             } 
@@ -70,7 +70,7 @@
                 ->where('registrations.class_id', $cla->id)
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                // ->orderBy('students.english_name')
+                ->orderBy('registrations.end_date', 'desc')
                 ->orderBy('school_years.name', 'desc')
                 ->get();
             }   elseif($start_date == null && $end_date !== null &&  $class !== null ) {
@@ -85,7 +85,7 @@
                 ->where('registrations.class_id', $cla->id)
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                // ->orderBy('students.english_name')
+                ->orderBy('registrations.end_date', 'desc')
                 ->orderBy('school_years.name', 'desc')
                 ->get();
             }
@@ -100,7 +100,7 @@
                 ->where('registrations.class_id', $cla->id)
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                // ->orderBy('students.english_name')
+                ->orderBy('registrations.end_date', 'desc')
                 ->orderBy('school_years.name', 'desc')
                 ->get();
             }
@@ -116,7 +116,7 @@
                 ->where('registrations.class_id', $cla->id)
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                // ->orderBy('students.english_name')
+                ->orderBy('registrations.end_date', 'desc')
                 ->orderBy('school_years.name', 'desc')
                 ->get();
             }  
@@ -132,7 +132,7 @@
                 ->where('registrations.class_id', $cla->id)
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                // ->orderBy('students.english_name')
+                ->orderBy('registrations.end_date', 'desc')
                 ->orderBy('school_years.name', 'desc')
                 ->get();
             }  
@@ -148,7 +148,7 @@
                 ->where('registrations.class_id', $cla->id)
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                // ->orderBy('students.name')
+                ->orderBy('registrations.end_date', 'desc')
                 ->orderBy('school_years.name', 'desc')
                 ->get();
             }  else {
@@ -162,7 +162,7 @@
                 ->where('registrations.class_id', $cla->id)
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                // ->orderBy('students.english_name')
+                ->orderBy('registrations.end_date', 'desc')
                 ->orderBy('school_years.name', 'desc')
                 ->get();
             }
