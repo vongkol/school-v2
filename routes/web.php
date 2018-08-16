@@ -167,8 +167,8 @@ Route::post("/registration/save", "RegistrationController@save");
 Route::get('/report', "ReportController@index");
 // printing
 Route::get('/printing', "PrintingController@index");
-Route::get('/printing/province', "PrintingController@by_province");
-Route::get('/printing/school', "PrintingController@by_school");
+Route::get('/printing/receptionist', "PrintingController@by_receptionist");
+Route::get('/printing/class', "PrintingController@by_class");
 
 //  invoice
 Route::get('/student-enroll', "StudentEnrollController@index");

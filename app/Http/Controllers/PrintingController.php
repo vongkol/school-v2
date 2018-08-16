@@ -26,54 +26,39 @@ class PrintingController extends Controller
         $data['female'] = DB::table('students')->where('active',1)->where('gender',"Female")->count();
         return view('printings.list-all', $data);
     }
-    public function by_province(Request $r)
+    public function by_receptionist(Request $r)
     {
-        $pro = $r->province;
-        $data['students'] = DB::table('students')
-                ->join("branches", "students.branch_id", "branches.id")
-            ->where('students.active',1)
-                ->where('branches.address', 'like', "%{$pro}%")
-                ->select('students.*', 'branches.name as bname')
-            ->orderBy('students.english_name')
-            ->get();
-        $data['total'] = DB::table('students')
-                ->join("branches", "students.branch_id", "branches.id")
-               ->where('branches.address', 'like', "%{$pro}%")
-                ->where('students.active', 1)->count();
-        $data['male'] = DB::table('students')
-                 ->join("branches", "students.branch_id", "branches.id")
-               ->where('branches.address', 'like', "%{$pro}%")
-                ->where('students.active',1)->where('students.gender',"Male")->count();
-        $data['female'] = DB::table('students')
-                 ->join("branches", "students.branch_id", "branches.id")
-               ->where('branches.address', 'like', "%{$pro}%")
-                ->where('students.active',1)->where('students.gender',"Female")->count();
-        $data['province'] = $pro;
-        return view('printings.by-province', $data);
+        $data['receptionist'] = $r->receptionist;   
+        $data['start_date'] = $r->start_date;
+        $data['end_date'] = $r->end_date;
+        if($r->receptionist !== null ){
+            $data['recept'] = DB::table('users')
+            ->where('id', $r->receptionist)
+            ->first();
+        } else {
+            $data['recept'] = DB::table('users')
+            ->where('role_id', 2)
+            ->where('id', $r->class)
+            ->first();
+        }
+            
+      
+        return view('printings.by-receptionist', $data);
     }
-    public function by_school(Request $r)
+    public function by_class(Request $r)
     {
-        $bid = $r->school;
-        $branch = DB::table('branches')->where('id', $bid)->first();
-        $data['school'] = $branch->name;
-        $data['students'] = DB::table('students')
-            ->join("branches", "students.branch_id", "branches.id")
-            ->where('students.active',1)
-            ->where('students.branch_id', $bid)
-            ->select('students.*', 'branches.name as bname')
-            ->orderBy('students.english_name')
-            ->get();
-        $data['total'] = DB::table('students')
-            ->where('active', 1)
-            ->where('branch_id', $bid)->count();
-        $data['male'] = DB::table('students')
-            ->where('active', 1)
-            ->where('gender', "Male")
-            ->where('branch_id', $bid)->count();
-        $data['female'] = DB::table('students')
-            ->where('active', 1)
-            ->where('gender', "Female")
-            ->where('branch_id', $bid)->count();
-        return view('printings.by-school', $data);
+        $data['class'] = $r->class;   
+        $data['start_date'] = $r->start_date;
+        $data['end_date'] = $r->end_date;
+        if($r->class !== null ){
+            $data['classes'] = DB::table('classes')
+            ->where('id', $r->class)
+            ->first();
+        } else {
+            $data['classes'] = DB::table('classes')
+                ->where('id', $r->class)
+                ->first();
+        }
+        return view('printings.by-class', $data);
     }
 }

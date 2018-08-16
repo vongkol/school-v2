@@ -166,7 +166,6 @@
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">{{$lb_family}}</a></li>
                                     <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">{{$lb_document}}</a></li>
-                                    <li role="presentation"><a href="#health" aria-controls="health" role="tab" data-toggle="tab">{{$lb_health}}</a></li>
                                     <li role="presentation"><a href="#registration" aria-controls="registration" role="tab" data-toggle="tab">Student Enroll</a></li>
                                 </ul>
                                 <!-- Tab panes -->
@@ -227,47 +226,6 @@
                                                         {{$doc->file_name}}
                                                         </a>
                                                     </td>
-                                                   
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="health">
-                                      
-                                        <table class="tbl table-responsive">
-                                            <thead>
-                                            <tr>
-                                                <th>{{$lb_check_time}}</th>
-                                                <th>{{$lb_check_date}}</th>
-                                                <th>{{$lb_weight}}</th>
-                                                <th>{{$lb_height}}</th>
-                                                <th>{{$lb_left_eye}}</th>
-                                                <th>{{$lb_right_eye}}</th>
-                                                <th>{{$lb_left_ear}}</th>
-                                                <th>{{$lb_right_ear}}</th>
-                                                <th>{{$lb_top_tooth}}</th>
-                                                <th>{{$lb_bottom_tooth}}</th>
-                                                <th>{{$lb_conclusion}}</th>
-                                                <th>{{$lb_other}}</th>
-                                               
-                                            </tr>
-                                            </thead>
-                                            <tbody id="healthData">
-                                            @foreach($healths as $health)
-                                                <tr id="{{$health->id}}">
-                                                    <td>{{$health->check_time}}</td>
-                                                    <td>{{$health->check_date}}</td>
-                                                    <td>{{$health->weight}}</td>
-                                                    <td>{{$health->height}}</td>
-                                                    <td>{{$health->left_eye}}</td>
-                                                    <td>{{$health->right_eye}}</td>
-                                                    <td>{{$health->left_ear}}</td>
-                                                    <td>{{$health->right_ear}}</td>
-                                                    <td>{{$health->top_tooth}}</td>
-                                                    <td>{{$health->bottom_tooth}}</td>
-                                                    <td>{{$health->conclusion}}</td>
-                                                    <td>{{$health->other}}</td>
                                                    
                                                 </tr>
                                             @endforeach

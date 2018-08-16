@@ -509,9 +509,6 @@ class LogController extends Controller
                         ->where('active', 1)
                         ->where('student_id', $id)
                         ->get();
-            $data['healths'] = DB::table('healths')->where('student_id', $id)
-                        ->where('active', 1)
-                        ->get();
             $data['classes'] = DB::table('classes')
                         ->orderBy('name')
                         ->get();

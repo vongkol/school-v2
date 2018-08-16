@@ -16,7 +16,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-bold">
-                    <i class="fa fa-align-justify"></i> Detail Student&nbsp;&nbsp;
+                    <i class="fa fa-align-justify"></i> Detail Student&nbsp;&nbsp;-  {{$lb_code}} {{$student->code}}&nbsp;&nbsp;
                     <a href="{{url('/student/create')}}" class="btn btn-link btn-sm">{{$lb_new}}</a>&nbsp;&nbsp;
                     <a href="{{url('/student')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>&nbsp;&nbsp;
                     <a href="#" id="btnEdit" onclick="edit(event)" class="text-danger">{{$lb_edit}}</a>
@@ -28,12 +28,6 @@
                                {{csrf_field()}}
                                <input type="hidden" value="{{$student->id}}" id="student_id">
                                <div class="form-group row">
-                                   <label for="code" class="control-label col-sm-3">{{$lb_code}}</label>
-                                   <div class="col-sm-9">
-                                       <input type="text" required readonly name="code" id="code" class="form-control" value="{{$student->code}}">
-                                   </div>
-                               </div>
-                               <div class="form-group row">
                                    <label for="khmer_name" class="control-label col-sm-3">{{$lb_khmer_name}} <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
                                        <input type="text" required readonly name="khmer_name" id="khmer_name" class="form-control" value="{{$student->khmer_name}}">
@@ -43,6 +37,12 @@
                                    <label for="english_name" class="control-label col-sm-3">{{$lb_english_name}} <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
                                        <input type="text" required name="english_name" id="english_name" readonly class="form-control" value="{{$student->english_name}}">
+                                   </div>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="phone" class="control-label col-sm-3">{{$lb_phone}} <span class="text-danger">*</span></label>
+                                   <div class="col-sm-9">
+                                       <input type="text" name="phone" required id="phone" class="form-control" readonly value="{{$student->phone}}">
                                    </div>
                                </div>
                                <div class="form-group row">
@@ -78,15 +78,15 @@
                 
                            <div class="col-sm-6">
                                <div class="form-group row">
-                                   <label for="phone" class="control-label col-sm-3">{{$lb_phone}} <span class="text-danger">*</span></label>
-                                   <div class="col-sm-9">
-                                       <input type="text" name="phone" required id="phone" class="form-control" readonly value="{{$student->phone}}">
-                                   </div>
-                               </div>
-                               <div class="form-group row">
                                    <label for="email" class="control-label col-sm-3">{{$lb_email}}</label>
                                    <div class="col-sm-9">
                                        <input type="email" name="email" id="email" class="form-control" readonly value="{{$student->email}}">
+                                   </div>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="university" class="control-label col-sm-3">University</label>
+                                   <div class="col-sm-9">
+                                       <input type="text" name="university" id="university" class="form-control" readonly value="{{$student->university}}">
                                    </div>
                                </div>
                                 <div class="form-group row">
@@ -429,11 +429,11 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                   <label for="email" class="control-label col-sm-3">{{$lb_email}}</label>
-                                   <div class="col-sm-9">
-                                       <input type="email" name="email" id="email" class="form-control" value="{{$student->email}}">
-                                   </div>
-                               </div>
+                                <label for="email" class="control-label col-sm-3">{{$lb_email}}</label>
+                                <div class="col-sm-9">
+                                    <input type="email" name="email" id="email" class="form-control" value="{{$student->email}}">
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="fdisable" class="control-label col-sm-4">{{$lb_is_disabled}}</label>
                                 <div class="col-sm-8">

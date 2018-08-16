@@ -10,20 +10,22 @@
 </head>
 <body>
     <p style="text-align: center;">
-        <img src="{{asset('img/cocd.jpg')}}" alt="Logo" width="130">
+        <img src="{{asset('logo.png')}}" alt="Logo" width="130">
     </p>
-    <h3 style="text-align:center" class="kh">បញ្ជីឈ្មោះសិស្សសរុប</h3>
+    <h3 style="text-align:center" class="kh">List All Student</h3>
     <table class="tbl1">
         <thead>
             <tr>
                 <th>ល.រ</th>
-                <th>លេខកូដ</th>
-                <th>ឈ្មោះខ្មែរ</th>
-                <th>ឈ្មោះអង់គ្លេស</th>
-                <th>ភេទ</th>
-                <th>ថ្ងៃខែឆ្នាំកំណើត</th>
-                <th>អាស័យដ្ឋាន</th>
-                <th>ឈ្មោះសាលា</th>
+                <th>Code</th>
+                <th>Khmer Name</th>
+                <th>English Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Gender</th>
+                <th>Date of Birth</th>
+                <th>Address</th>
+                <th>Branch</th>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +36,8 @@
                 <td>{{$st->code}}</td>
                 <td>{{$st->khmer_name}}</td>
                 <td>{{$st->english_name}}</td>
+                <td>{{$st->email}}</td>
+                <td>{{$st->phone}}</td>
                 <td>{{$st->gender=="Male"?"ប្រុស":"ស្រី"}}</td>
                 <td>{{$st->dob}}</td>
                 <td>{{$st->address}}</td>
@@ -43,7 +47,7 @@
         </tbody>
     </table>
     <h3>
-        សិស្សសរុប៖ {{$total}} នាក់, ស្រី៖ {{$female}} នាក់, ប្រុស៖ {{$male}} នាក់
+        Total Students៖ {{$total}}, Female៖ {{$female}}, Male៖ {{$male}}
     </h3>
 </body>
 </html>

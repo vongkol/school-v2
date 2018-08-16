@@ -19,6 +19,8 @@
                             <th>Gender</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                         </tr>
                         </thead>
                         <div class="row">
@@ -39,7 +41,6 @@
                                             @endforeach
                                         </select>
                                         <button type="submit"  style="padding:3px 10px;"><i class="fa fa-search"></i></button>
-                            
                                 </div>
                             </div>
                         </form>
@@ -55,6 +56,8 @@
                                 <td>{{$s->gender}}</td>
                                 <td>{{$s->email}}</td>
                                 <td>{{$s->phone}}</td>
+                                <td>{{$s->start_date}}</td>
+                                <td>{{$s->end_date}}</td>
                             </tr>
                         @endforeach
                         </tbody>

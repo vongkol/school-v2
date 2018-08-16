@@ -73,7 +73,7 @@ class StudentController extends Controller
             return view('permissions.no');
         }
         $data = [
-            'code' => $r->code,
+            'code' => 1,
             'english_name' => $r->english_name,
             'khmer_name' => $r->khmer_name,
             'gender' => $r->gender,
@@ -82,6 +82,7 @@ class StudentController extends Controller
             'phone' => $r->phone,
             'address' => $r->current_address,
             'email' => $r->email,
+            'university' => $r->university,
             'branch_id' => $r->branch
         ];
         $sms1="";
@@ -96,9 +97,13 @@ class StudentController extends Controller
         }
         $time = date("h:i:sa");
         $i = DB::table('students')->insertGetId($data);
+    
+      
         Right::log(Auth::user()->id,"Add Student","insert", $i, "students",$time);
         if($i)
         {
+            $code = "SR-00$i";
+            DB::table('students')->where('id', $i)->update(['code' => $code ]);
              // upload photo first
             if($r->hasFile('photo'))
             {
@@ -131,6 +136,7 @@ class StudentController extends Controller
             'phone' => $r->phone,
             'email' => $r->email,
             'address' => $r->address,
+            'university' => $r->university,
             'branch_id' => $r->branch_id
         ];
         // upload photo first

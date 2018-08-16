@@ -15,8 +15,8 @@ class ReportController extends Controller
     // load report form for student list
     public function index()
     {
-        $data['provinces'] = DB::table('branches')->distinct()->get(['address']);
-        $data['schools'] = DB::table('branches')->orderBy('name')->get();
+        $data['receptionists'] = DB::table('users')->where('role_id', 2)->get();
+        $data['classes'] = DB::table('classes')->orderBy('name')->get();
         return view("reports.index", $data);
     }
 }
