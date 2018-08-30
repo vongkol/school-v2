@@ -23,7 +23,7 @@
                         @foreach($classes as $class)
                             <tr>
                                 <td>{{$i++}}</td>
-                                <td><a href="{{url('/student/class/'.$class->id)}}">{{$class->name}}</a></td>
+                                <td><a href="{{url('/class/detail/'.$class->id)}}">{{$class->name}}</a></td>
                                 <td>
                                     <a href="{{url('/class/edit/'.$class->id)}}" title="{{$lb_edit}}"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp;
                                     <a href="{{url('/class/delete/'.$class->id)}}" onclick="return confirm('{{$lb_confirm_delete}}')" title="{{$lb_delete}}"><i class="fa fa-remove text-danger"></i></a>

@@ -8,7 +8,14 @@
     <title>Student List</title>
     <link href="{{asset('css/custom.css')}}" rel="stylesheet">
 </head>
+<style media="print">
+    table, tr, td {
+        font-size: 12px;
+    }
+</style>
 <body>
+    <?php $lang = Auth::user()->language=="kh"?'kh.php':'en.php'; ?>
+    <?php include(app_path()."/lang/". $lang); ?>
     <p style="text-align: center;">
         <img src="{{asset('logo.png')}}" alt="Logo" width="130">
     </p>
@@ -16,7 +23,7 @@
     <table class="tbl1">
         <thead>
             <tr>
-                <th>ល.រ</th>
+                <th>{!!$lb_id!!}</th>
                 <th>Code</th>
                 <th>Khmer Name</th>
                 <th>English Name</th>
@@ -24,7 +31,7 @@
                 <th>Phone Number</th>
                 <th>Gender</th>
                 <th>Date of Birth</th>
-                <th>Address</th>
+                <th>University</th>
                 <th>Branch</th>
             </tr>
         </thead>
@@ -40,7 +47,7 @@
                 <td>{{$st->phone}}</td>
                 <td>{{$st->gender=="Male"?"ប្រុស":"ស្រី"}}</td>
                 <td>{{$st->dob}}</td>
-                <td>{{$st->address}}</td>
+                <td>{{$st->university}}</td>
                 <td>{{$st->bname}}</td>
             </tr>
             @endforeach

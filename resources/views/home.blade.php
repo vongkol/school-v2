@@ -8,6 +8,7 @@
             $students = DB::table('registrations')
                 ->join('students', 'students.id', 'registrations.student_id')
                 ->where('students.active', 1)
+                ->whereIn('students.branch_id', $user_brand)
                 ->where('class_id', $s->id)
                 ->whereDate('registrations.end_date' ,'>=' ,$date)
                 ->where('registrations.active',1)

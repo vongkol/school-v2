@@ -184,6 +184,7 @@
                 <th>Phone</th>
                 <th>Gender</th>
                 <th>Branch</th>
+                <th>Study Time</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Year</th>
@@ -203,6 +204,7 @@
                 <td>{{$st->phone}}</td>
                 <td>{{$st->gender=="Male"?"Male":"Female"}}</td>
                 <td>{{$st->bname}}</td>
+                <td>{{$st->study_time}}</td>
                 <td>{{$st->start_date}}</td>
                 <td>{{$st->end_date}}</td>
                 <td>{{$st->name}}</td>

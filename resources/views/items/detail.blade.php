@@ -55,15 +55,15 @@
                                    </div>
                                </div>
                                <div class="form-group row">
-                                   <label for="price" class="control-label col-sm-3">Price <span class="text-danger">*</span></label>
+                                   <label for="price" class="control-label col-sm-3">Price $ <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
-                                   <label class="control-label col-sm-3">{{$item->price}}</label>
+                                   <label class="control-label col-sm-3">{{$item->price}} $</label>
                                    </div>
                                </div>
                                <div class="form-group row">
-                                   <label for="tax" class="control-label col-sm-3">Tax <span class="text-danger">*</span></label>
+                                   <label for="tax" class="control-label col-sm-3">Tax % <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
-                                         <label class="control-label col-sm-3">{{$item->tax}}</label>
+                                         <label class="control-label col-sm-3">{{$item->tax}} %</label>
                                    </div>
                                </div>
                            </div>
@@ -73,7 +73,11 @@
                                    <div class="col-sm-9">
                                        <input type="file" name="photo" disabled id="photo" class="form-control" onchange="loadFile(event)">
                                        <br>
+                                       @if($item->photo !== null)
                                        <img src="{{asset('uploads/items/'.$item->photo)}}" alt="" id="preview" height="150">
+                                        @else
+                                        <img src="{{asset('logo.png')}}" alt="" id="preview" height="150">
+                                        @endif
                                    </div>
                                </div>
                            </div>

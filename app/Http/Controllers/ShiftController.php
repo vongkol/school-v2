@@ -10,15 +10,24 @@ class ShiftController extends Controller
     // index
     public function index()
     {
+        if(!Right::check('Shift', 'l')){
+            return view('permissions.no');
+        }
         $data['shifts'] = DB::table('shifts')->where('active',1)->get();
         return view('shifts.index', $data);
     }
     public function create()
     {
+        if(!Right::check('Shift', 'i')){
+            return view('permissions.no');
+        }
         return view('shifts.create');
     }
     public function save(Request $r)
     {
+        if(!Right::check('Shift', 'i')){
+            return view('permissions.no');
+        }
         $data = array(
             'name' => $r->name
         );
@@ -48,11 +57,17 @@ class ShiftController extends Controller
     }
     public function edit($id)
     {
+        if(!Right::check('Shift', 'u')){
+            return view('permissions.no');
+        }
         $data['shift'] = DB::table('shifts')->where('id', $id)->first();
         return view('shifts.edit', $data);
     }
     public function update(Request $r)
     {
+        if(!Right::check('Shift', 'u')){
+            return view('permissions.no');
+        }
         $data = array(
             'name' => $r->name
         );
@@ -82,6 +97,9 @@ class ShiftController extends Controller
     }
     public function delete($id)
     {
+        if(!Right::check('Shift', 'd')){
+            return view('permissions.no');
+        }
         DB::table('shifts')->where('id', $id)->update(["active"=>0]);
         $page = @$_GET['page'];
         if ($page>0)

@@ -54,6 +54,7 @@ Route::post('/branch/update', "BranchController@update");
 Route::get('/class', "ClassController@index");
 Route::get('/class/create', "ClassController@create");
 Route::get('/class/edit/{id}', "ClassController@edit");
+Route::get('/class/detail/{id}', "ClassController@detail");
 Route::post('/class/save', "ClassController@save");
 Route::get('/class/delete/{id}', "ClassController@delete");
 Route::get('/class/close/{id}', "ClassController@close");
@@ -65,6 +66,15 @@ Route::get('/shift/edit/{id}', "ShiftController@edit");
 Route::post('/shift/save', "ShiftController@save");
 Route::get('/shift/delete/{id}', "ShiftController@delete");
 Route::post('/shift/update', "ShiftController@update");
+
+// open class 
+Route::get('/open-class', "OpenclassController@index");
+Route::get('/open-class/create', "OpenclassController@create");
+Route::get('/open-class/edit/{id}', "OpenclassController@edit");
+Route::post('/open-class/save', "OpenclassController@save");
+Route::get('/open-class/delete/{id}', "OpenclassController@delete");
+Route::post('/open-class/update', "OpenclassController@update");
+
 // item
 Route::get('/item', "ItemController@index");
 Route::get('/item/create', "ItemController@create");
@@ -170,7 +180,7 @@ Route::get('/printing', "PrintingController@index");
 Route::get('/printing/receptionist', "PrintingController@by_receptionist");
 Route::get('/printing/class', "PrintingController@by_class");
 
-//  invoice
+//  Student Enroll
 Route::get('/student-enroll', "StudentEnrollController@index");
 Route::get('/student-enroll/create', "StudentEnrollController@create");
 Route::get('/student-enroll/edit/{id}', "StudentEnrollController@edit");
@@ -178,6 +188,15 @@ Route::get('/student-enroll/detail/{id}', "StudentEnrollController@detail");
 Route::get('/student-enroll/delete/{id}', "StudentEnrollController@delete");
 Route::post('/student-enroll/save', "StudentEnrollController@save");
 Route::post('/student-enroll/update', "StudentEnrollController@update");
+Route::get('/admin/student-enroll/delete/{id}', "StudentEnrollController@delete_student_enroll");
+
+// email
+Route::get('/mail', "MailController@index");
+Route::get('/mail/create', "MailController@create");
+Route::post('/mail/send', "MailController@send");
+Route::get("/mail/get/{id}", "MailController@get_email");
+Route::get("/mail/delete/{id}", "MailController@delete");
+Route::get("/mail/detail/{id}", "MailController@detail");
 
 // student by class
 Route::get('/student/class/{id}', "HomeController@student_by_class");

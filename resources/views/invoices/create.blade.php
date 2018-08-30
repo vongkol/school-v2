@@ -7,7 +7,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-bold">
-                    <i class="fa fa-align-justify"></i> New Invoice - <span class="text-danger"> {{$customer->english_name}} </span>&nbsp;&nbsp;
+                    <i class="fa fa-align-justify"></i> New Invoice - <span class="text-danger">  {{$customer->code}} - {{$customer->english_name}} </span>&nbsp;&nbsp;
                     <a href="{{url('/student/detail/'.$customer->id)}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
                 </div>
                 <div class="card-block">

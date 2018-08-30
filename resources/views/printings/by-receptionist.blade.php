@@ -31,6 +31,7 @@
                 ->whereDate('invoices.invoice_date','>=', $start_date )
                 ->whereDate('invoices.invoice_date','<=', $end_date ) 
                 ->where('invoices.invoice_by', $user->id)
+                ->whereIn('students.branch_id', $user_brand)
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'invoices.*')
                 ->orderBy('students.english_name')
@@ -41,6 +42,7 @@
                 ->join("branches", "students.branch_id", "branches.id")
                 ->join("invoices", "students.id", "invoices.customer_id")
                 ->where("invoices.active",1)
+                ->whereIn('students.branch_id', $user_brand)
                 ->whereDate('invoices.invoice_date','>=', $start_date )
                 ->whereDate('invoices.invoice_date','<=', $end_date ) 
                 ->where('invoices.invoice_by', $user->id)
@@ -54,6 +56,7 @@
                 ->join("branches", "students.branch_id", "branches.id")
                 ->join("invoices", "students.id", "invoices.customer_id")
                 ->where("invoices.active",1)
+                ->whereIn('students.branch_id', $user_brand)
                 ->where('invoices.invoice_by', $user->id)
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'invoices.*')
@@ -65,6 +68,7 @@
                     ->join("invoices", "students.id", "invoices.customer_id")
                     ->where("invoices.active",1)
                     ->where('invoices.invoice_by', $user->id)
+                    ->whereIn('students.branch_id', $user_brand)
                     ->where('students.active',1)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
                     ->orderBy('students.english_name')
@@ -77,6 +81,7 @@
                     ->where("invoices.active",1)
                     ->whereDate('invoices.invoice_date','<=', $end_date ) 
                     ->where('invoices.invoice_by', $user->id)
+                    ->whereIn('students.branch_id', $user_brand)
                     ->where('students.active',1)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
                     ->orderBy('students.english_name')
@@ -90,6 +95,7 @@
                     ->whereDate('invoices.invoice_date','>=', $start_date ) 
                     ->where('invoices.invoice_by', $user->id)
                     ->where('students.active',1)
+                    ->whereIn('students.branch_id', $user_brand)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
                     ->orderBy('students.english_name')
                     ->get();
@@ -101,6 +107,7 @@
                     ->where("invoices.active",1)
                     ->whereDate('invoices.invoice_date','<=', $end_date ) 
                     ->where('invoices.invoice_by', $user->id)
+                    ->whereIn('students.branch_id', $user_brand)
                     ->where('students.active',1)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
                     ->orderBy('students.english_name')
@@ -114,6 +121,7 @@
                     ->whereDate('invoices.invoice_date','>=', $start_date ) 
                     ->where('invoices.invoice_by', $user->id)
                     ->where('students.active',1)
+                    ->whereIn('students.branch_id', $user_brand)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
                     ->orderBy('students.english_name')
                     ->get();
@@ -125,6 +133,7 @@
                     ->where("invoices.active",1)
                     ->whereDate('invoices.invoice_date','>=', $start_date ) 
                     ->where('invoices.invoice_by', $user->id)
+                    ->whereIn('students.branch_id', $user_brand)
                     ->where('students.active',1)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
                     ->orderBy('students.english_name')
@@ -138,6 +147,7 @@
                     ->whereDate('invoices.invoice_date','<=', $end_date ) 
                     ->where('invoices.invoice_by', $user->id)
                     ->where('students.active',1)
+                    ->whereIn('students.branch_id', $user_brand)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
                     ->orderBy('students.english_name')
                     ->get();
@@ -160,7 +170,7 @@
                 <th>Gender</th>
                 <th>Invoice Reference</th>
                 <th>Invoice Date</th>
-                <th>Branch</th>
+                <th>Due Amount</th>
                 <th>Total Amount $</th>
             </tr>
         </thead>
@@ -179,7 +189,7 @@
                 <td>{{$st->gender=="Male"?"Male":"Female"}}</td>
                 <td>{{$st->invoice_ref}}</td>
                 <td>{{$st->invoice_date}}</td>
-                <td>{{$st->bname}}</td>
+                <td>$ {{$st->total_due_amount}}</td>
                 <td>$ {{$st->total_amount}} </td>
                 <?php $total+=$st->total_amount; ?>
             </tr>

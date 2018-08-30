@@ -15,6 +15,30 @@ class StudentEnrollController extends Controller
     // index
     public function index()
     { 
+        if(!Right::check('Student Enroll', 'l')){
+            return view('permissions.no');
+        }
+        $data['query']= "";
+        if(isset($_GET['q']))
+        {
+            $data['query'] = $_GET['q'];
+            $data['student_enrolls'] = DB::table('registrations')
+                ->join('students', 'students.id', 'registrations.student_id')
+                ->join('classes','registrations.class_id', "=", "classes.id")
+                ->join('school_years', "registrations.year_id", "=", "school_years.id")
+                ->join('shifts', 'shifts.id', 'registrations.shift_id')
+                ->where("registrations.active", 1)
+                ->where('students.active',1)
+                ->orderBy('registrations.id', 'desc')
+                ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+                ->where(function($fn){
+                    $fn->where('students.code', 'like', "%{$_GET['q']}%")
+                    ->orWhere('students.english_name', 'like', "%{$_GET['q']}%")
+                    ->orWhere('students.khmer_name', 'like', "%{$_GET['q']}%");
+                })
+                ->select("students.*", "registrations.id as registration_id", "students.id as student_id","registrations.*", "registrations.id as registration_id", "shifts.*", "shifts.name as shift_name", "classes.name as class_name", "school_years.name as year_name")
+                ->paginate(18);
+        } else {
         $data['student_enrolls'] = DB::table('registrations')
             ->join('students', 'students.id', 'registrations.student_id')
             ->join('classes','registrations.class_id', "=", "classes.id")
@@ -23,96 +47,87 @@ class StudentEnrollController extends Controller
             ->where("registrations.active", 1)
             ->where('students.active',1)
             ->orderBy('registrations.id', 'desc')
-            ->select("students.*","registrations.*", "registrations.id as registration_id", "shifts.*", "shifts.name as shift_name", "classes.name as class_name", "school_years.name as year_name")
+            ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+            ->select("students.*", "registrations.id as registration_id","students.id as student_id","registrations.*", "registrations.id as registration_id", "shifts.*", "shifts.name as shift_name", "classes.name as class_name", "school_years.name as year_name")
             ->paginate(18);
+        }
         return view('student-enrolls.index', $data);
     }
     public function create(Request $r)
     {
-        $customer_id = $r->query('customer_id');
-        $data['customer'] = DB::table('students')
-            ->where('id',  $customer_id)
-            ->first();
-        return view('invoices.create', $data);
+        if(!Right::check('Student Enroll', 'i')){
+            return view('permissions.no');
+        }
+        $data['classes'] = DB::table('classes')
+            ->orderBy('name')
+            ->where('active', 1)
+            ->get();
+        $data['shift'] = DB::table('shifts')
+            ->orderBy('id', 'asc')
+            ->where('active', 1)
+            ->get();
+        $data['years'] = DB::table('school_years')
+            ->orderBy('id', 'desc')
+            ->get();
+        $data['students'] = DB::table('students')
+            ->orderBy('create_at', 'desc')
+            ->where('active', 1)
+            ->get();
+        return view('student-enrolls.create', $data);
     }
     public function save(Request $r)
     {
-        $master = json_encode($r->master);
-        $master = json_decode($master);
-        $items = json_encode($r->items);
-        $items = json_decode($items);
         $data = [
-            'invoice_date' => $master->invoice_date,
-            'due_date' => $master->due_date,
-            'invoice_ref' => $master->invoice_ref,
-            'customer_id' => $master->customer_id,
-            'invoice_by' => Auth::user()->id,
-            'note' => $master->note,
+            "registration_date" => $r->registration_date,
+            'start_date' => $r->start_date,
+            'end_date' => $r->end_date,
+            'student_id' => $r->student_id,
+            'class_id' => $r->class_id,
+            'shift_id' => $r->shift_id,
+            'study_time' => $r->study_time,
+            'year_id' => $r->year_id
         ];
-      $i = DB::table('invoices')->insertGetId($data);
-      if($i) {
-        $time = date("h:i:sa");
-        Right::log(Auth::user()->id,"Add Invoice","insert", $i, "invoices", $time);
-    }
-      if($i)
-      {
-            $total_amount = 0;
-            $total_due_amount = 0;
-            foreach($items as $item)
-            {
-                DB::table('invoice_detials')
-                ->insert(array(
-                    'item_id' => $item->itemid,
-                    'discount' => $item->discount,
-                    'qty' => $item->qty,
-                    'subtotal' => $item->sub_total,
-                    'due_amount' => $item->due_amount,
-                    'invoice_id' => $i,
-                    'unit_price' => $item->unit_price
-                ));
-                $subtotal = $item->sub_total;
-                $total_amount += $subtotal;
-                $due_amount =  $item->due_amount;
-                $total_due_amount += $due_amount;
-            }
-
-            $b = DB::table('invoices')->where('id',$i)->update(['total_amount'=>$total_amount, 'total_due_amount'=>$total_due_amount]);
-      }
       
-      
-        return $i;
+        $sms ="";
+        $sms1="";
+        if(Auth::user()->language=='kh')
+        {
+            $sms = "ចុះឈ្មោះសិក្សាថ្នាក់ថ្មីត្រូវបានបង្កើតដោយជោគជ័យ។";
+            $sms1 = "មិនអាចបង្កើតចុះឈ្មោះថ្នាក់សិក្សាថ្មីបានទេ សូមពិនិត្យម្តងទៀត!";
+        }
+        else
+        {
+            $sms = "The enroll new class has been created successfully.";
+            $sms1 = "Fail to create the enroll new class, please check again!";
+        }
+        $i = DB::table('registrations')->insert($data);
+        if ($i)
+        {
+            $r->session()->flash('sms', $sms);
+            return redirect('student-enroll/create');
+        }
+        else
+        {
+            $r->session()->flash('sms1', $sms1);
+            return redirect('student-enroll/create')->withInput();
+        }
     }
 
-    public function detail($id)
+    public function delete_student_enroll($id)
     {
-        $data['invoice'] = DB::table('invoices')
-        ->join('students', 'students.id', 'invoices.customer_id')
-        ->select('invoices.*', 'students.*', 'invoices.id as invoice_id')
-        ->where('invoices.active',1)
-        ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
-        ->where('invoices.id', $id)
-        ->first();
-
-        return view('invoices.detail', $data);
-    }
-   
-
-    public function get_item($id) {
-        $item  = DB::table('items')->where('id', $id)->first();
-
-        return json_encode($item);
-    }
-    public function delete($id)
-    {
-        DB::table('invoices')->where('id', $id)->update(["active"=>0]);
-        $time = date("h:i:sa");
-        Right::log(Auth::user()->id,"Delete Invoice","delete", $id, "invoices", $time);
+        if(!Right::check('Student Enroll', 'd')){
+            return view('permissions.no');
+        }
+        if(Auth::user()==null)
+    	{
+    		return redirect('/login');
+    	}
+        DB::table('registrations')->where('id', $id)->update(['active' => 0]);
         $page = @$_GET['page'];
         if ($page>0)
         {
-            return redirect('/invoice?page='.$page);
+            return redirect('/student-enroll?page='.$page);
         }
-
-        return redirect('/invoice');
+        return redirect('/student-enroll');
     }
 }

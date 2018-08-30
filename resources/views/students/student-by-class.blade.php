@@ -19,6 +19,7 @@
                             <th>Gender</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Study Time</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                         </tr>
@@ -56,6 +57,7 @@
                                 <td>{{$s->gender}}</td>
                                 <td>{{$s->email}}</td>
                                 <td>{{$s->phone}}</td>
+                                <td>{{$s->study_time}}</td>
                                 <td>{{$s->start_date}}</td>
                                 <td>{{$s->end_date}}</td>
                             </tr>

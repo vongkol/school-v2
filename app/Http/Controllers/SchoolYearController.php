@@ -18,7 +18,8 @@ class SchoolYearController extends Controller
         if(!Right::check('School Year', 'l')){
             return view('permissions.no');
         }
-        $data['years'] = DB::table('school_years')->get();
+        $data['years'] = DB::table('school_years')->orderBy('id', 'desc')->get();
+
         return view('years.index', $data);
     }
     // load create form

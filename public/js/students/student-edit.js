@@ -170,6 +170,7 @@ function saveRegistration()
         shift_id: $("#shift").val(),
         shift: $("#shift option:selected").text(),
         year_id: $("#year").val(),
+        study_time: $("#study_time").val(),
         start_date: $("#start_date").val(),
         end_date: $("#end_date").val(),
         student_id: $("#student_id").val(),
@@ -192,6 +193,7 @@ function saveRegistration()
                         tr += "<td>" + registration.class + "</td>";
                         tr += "<td>" + registration.shift + "</td>";
                         tr += "<td>" + registration.year + "</td>";
+                        tr += "<td>" + registration.study_time + "</td>";
                         tr += "<td>" + registration.start_date + "</td>";
                         tr += "<td>" + registration.end_date + "</td>";
                         tr += "<td>" + "<a href='#' onclick='removeRegistration(this, event)'><i class='fa fa-remove text-danger'></i></a>" + "</td>";

@@ -10,6 +10,9 @@ class LogController extends Controller
     // index
     public function index(Request $r)
     {
+        if(!Right::check('User Action', 'l')){
+            return view('permissions.no');
+        }
         $data['logs'] = DB::table('logs')
         ->join('users','logs.user_id', 'users.id')
         ->select('logs.*', 'users.name as user_id')
@@ -441,6 +444,10 @@ class LogController extends Controller
     }
     public function delete($id)
     {
+
+        if(!Right::check('User Action', 'd')){
+            return view('permissions.no');
+        }
         DB::table('logs')->where('id', $id)->update(["active"=>0]);
         $page = @$_GET['page'];
         if ($page>0)
@@ -451,6 +458,10 @@ class LogController extends Controller
         return redirect('/log');
     }
     public function detail($id , $table) {
+
+        if(!Right::check('User Action', 'l')){
+            return view('permissions.no');
+        }
         if($table == 'invoices') {
             $data['invoice'] = DB::table('invoices')
             ->join('students', 'students.id', 'invoices.customer_id')

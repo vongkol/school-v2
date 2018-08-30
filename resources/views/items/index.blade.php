@@ -34,7 +34,11 @@
                                 <td>{{$i++}}</td>
                                 <td>
                                     <a href="{{url('/item/detail/'.$item->id)}}" title="Detail">
-                                        <img src="{{asset('uploads/items/'.$item->photo)}}" width="60" alt="">
+                                        @if($item->photo !== null)
+                                            <img src="{{asset('uploads/items/'.$item->photo)}}" width="50" alt="">
+                                        @else 
+                                            <img src="{{asset('logo.png')}}" width="50" alt="">
+                                        @endif
                                     </a>
                                 </td>
                                 <td>{{$item->name}}</td>

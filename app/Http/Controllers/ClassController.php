@@ -20,6 +20,7 @@ class ClassController extends Controller
         }
         $data['classes'] = DB::table('classes')
             ->where('active', 1)
+            ->orderBy('name')
             ->get();
         return view('classes.index', $data);
     }
@@ -70,6 +71,22 @@ class ClassController extends Controller
         $data['class'] = DB::table('classes')->where('id', $id)->first();
         return view('classes.edit', $data);
     }
+
+    public function detail($id)
+    {
+        if(!Right::check('Class', 'l')){
+            return view('permissions.no');
+        }
+        $data['class'] = DB::table('classes')->where('id', $id)->first();
+
+        $data['open_classes'] = DB::table('open_classes')->where('class_id' , $id)
+            ->where('active', 1)
+            ->orderBy('id', 'desc')
+            ->paginate(18);
+
+        return view('open-classes.detail', $data);
+    }
+
     public function update(Request $r)
     {
         if(!Right::check('Class', 'u')){
@@ -108,15 +125,6 @@ class ClassController extends Controller
             return view('permissions.no');
         }
         DB::table('classes')->where('id', $id)->update(["active"=>0]);
-        return redirect('/class');
-    }
-
-    public function close($id)
-    {
-        if(!Right::check('Class', 'd')){
-            return view('permissions.no');
-        }
-        DB::table('classes')->where('id', $id)->update(["status"=>0]);
         return redirect('/class');
     }
 }

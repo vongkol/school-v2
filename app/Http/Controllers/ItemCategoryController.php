@@ -15,15 +15,24 @@ class ItemCategoryController extends Controller
     // index
     public function index()
     {
+        if(!Right::check('Item Category', 'l')){
+            return view('permissions.no');
+        }
         $data['item_categories'] = DB::table('item_categories')->where('active',1)->paginate(18);
         return view('item-categories.index', $data);
     }
     public function create()
     {
+        if(!Right::check('Item Category', 'i')){
+            return view('permissions.no');
+        }
         return view('item-categories.create');
     }
     public function save(Request $r)
     {
+        if(!Right::check('Item Category', 'i')){
+            return view('permissions.no');
+        }
         $data = array(
             'name' => $r->name
         );
@@ -53,11 +62,17 @@ class ItemCategoryController extends Controller
     }
     public function edit($id)
     {
+        if(!Right::check('Item Category', 'u')){
+            return view('permissions.no');
+        }
         $data['item_category'] = DB::table('item_categories')->where('id', $id)->first();
         return view('item-categories.edit', $data);
     }
     public function update(Request $r)
     {
+        if(!Right::check('Item Category', 'u')){
+            return view('permissions.no');
+        }
         $data = array(
             'name' => $r->name
         );
@@ -87,6 +102,9 @@ class ItemCategoryController extends Controller
     }
     public function delete($id)
     {
+        if(!Right::check('Item Category', 'd')){
+            return view('permissions.no');
+        }
         DB::table('item_categories')->where('id', $id)->update(["active"=>0]);
         $page = @$_GET['page'];
         if ($page>0)

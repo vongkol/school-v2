@@ -64,13 +64,13 @@
                                    </div>
                                </div>
                                <div class="form-group row">
-                                   <label for="price" class="control-label col-sm-3">Price <span class="text-danger">*</span></label>
+                                   <label for="price" class="control-label col-sm-3">Price $ <span class="text-danger">*</span></label>
                                    <div class="col-sm-9">
                                        <input type="number" step="0.1" name="price" id="price" required class="form-control" value="{{$item->price}}">
                                    </div>
                                </div>
                                <div class="form-group row">
-                                   <label for="tax" class="control-label col-sm-3">Tax <span class="text-danger">*</span></label>
+                                   <label for="tax" class="control-label col-sm-3">Tax %</label>
                                    <div class="col-sm-9">
                                        <input type="number" step="0.1" name="tax" id="tax" required class="form-control" value="{{$item->tax}}">
                                    </div>

@@ -30,6 +30,7 @@ class RegistrationController extends Controller
             'student_id' => $r->student_id,
             'class_id' => $r->class_id,
             'shift_id' => $r->shift_id,
+            'study_time' => $r->study_time,
             'year_id' => $r->year_id
         ];
         if($r->id>0)

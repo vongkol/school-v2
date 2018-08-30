@@ -16,7 +16,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-bold">
-                    <i class="fa fa-align-justify"></i> Detail Student&nbsp;&nbsp;-  {{$lb_code}} {{$student->code}}&nbsp;&nbsp;
+                    <i class="fa fa-align-justify"></i> {{$lb_student_detail}}&nbsp;&nbsp;-  {{$lb_code}} {{$student->code}}&nbsp;&nbsp;
                     <a href="{{url('/student/create')}}" class="btn btn-link btn-sm">{{$lb_new}}</a>&nbsp;&nbsp;
                     <a href="{{url('/student')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>&nbsp;&nbsp;
                     <a href="#" id="btnEdit" onclick="edit(event)" class="text-danger">{{$lb_edit}}</a>
@@ -84,7 +84,7 @@
                                    </div>
                                </div>
                                <div class="form-group row">
-                                   <label for="university" class="control-label col-sm-3">University</label>
+                                   <label for="university" class="control-label col-sm-3">{{$lb_university}}</label>
                                    <div class="col-sm-9">
                                        <input type="text" name="university" id="university" class="form-control" readonly value="{{$student->university}}">
                                    </div>
@@ -119,7 +119,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-bold">
-                    <i class="fa fa-align-justify"></i> Invoice List&nbsp;&nbsp;
+                    <i class="fa fa-align-justify"></i> {{$lb_invoice_list}}&nbsp;&nbsp;
                     <a href="{{url('/invoice/create?customer_id='.$student->id)}}" class="btn btn-link btn-sm">{{$lb_new}}</a>
                 </div>
                 
@@ -128,9 +128,9 @@
                         <thead>
                         <tr>
                             <th>{!!$lb_id!!}</th>
-                            <th>Invoice Ref</th>
-                            <th>Student Code</th>
-                            <th>Student</th>
+                            <th>{{$lb_invoice_ref}}</th>
+                            <th>{{$lb_student_code}}</th>
+                            <th>{{$lb_english_name}}</th>
                             <th>Invoice Date</th>
                             <th>Due Date</th>
                             <th>Total Amount</th>
@@ -264,6 +264,7 @@
                                                 <th>{{$lb_class}}</th>
                                                 <th>Shift</th>
                                                 <th>{{$lb_school_year}}</th>
+                                                <th>Study Time</th>
                                                 <th>{{$lb_start_date}}</th>
                                                 <th>{{$lb_end_date}}</th>
                                                
@@ -277,6 +278,7 @@
                                                     <td>{{$r->class_name}}</td>
                                                     <td>{{$r->shift_name}}</td>
                                                     <td>{{$r->year_name}}</td>
+                                                    <td>{{$r->study_time}}</td>
                                                     <td>{{$r->start_date}}</td>
                                                     <td>{{$r->end_date}}</td>
                                                     <td>
@@ -509,6 +511,12 @@
                                             <option value="{{$shift->id}}">{{$shift->name}}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="study_time" class="control-label col-sm-3">Study Time</label>
+                                <div class="col-sm-9">
+                                   <input type="text" class="form-control" name="study_time" id="study_time">
                                 </div>
                             </div>
                             <div class="form-group row">

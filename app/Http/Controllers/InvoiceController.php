@@ -10,6 +10,9 @@ class InvoiceController extends Controller
     // index
     public function index()
     { 
+        if(!Right::check('Invoice', 'l')){
+            return view('permissions.no');
+        }
         $data['query']= "";
         if(isset($_GET['q']))
         {
@@ -43,6 +46,9 @@ class InvoiceController extends Controller
     }
     public function create(Request $r)
     {
+        if(!Right::check('Invoice', 'i')){
+            return view('permissions.no');
+        }
         $customer_id = $r->query('customer_id');
         $data['customer'] = DB::table('students')
             ->where('id',  $customer_id)
@@ -51,6 +57,9 @@ class InvoiceController extends Controller
     }
     public function save(Request $r)
     {
+        if(!Right::check('Invoice', 'i')){
+            return view('permissions.no');
+        }
         $master = json_encode($r->master);
         $master = json_decode($master);
         $items = json_encode($r->items);
@@ -99,6 +108,9 @@ class InvoiceController extends Controller
 
     public function detail($id)
     {
+        if(!Right::check('Invoice', 'l')){
+            return view('permissions.no');
+        }
         $data['invoice'] = DB::table('invoices')
             ->join('students', 'students.id', 'invoices.customer_id')
             ->join('users' ,'invoices.invoice_by', 'users.id')
@@ -113,6 +125,9 @@ class InvoiceController extends Controller
    
     public function print($id)
     {
+        if(!Right::check('Invoice', 'l')){
+            return view('permissions.no');
+        }
         $data['invoice'] = DB::table('invoices')
             ->join('students', 'students.id', 'invoices.customer_id')
             ->join('users' ,'invoices.invoice_by', 'users.id')
@@ -136,6 +151,9 @@ class InvoiceController extends Controller
     }
     public function delete($id)
     {
+        if(!Right::check('Invoice', 'd')){
+            return view('permissions.no');
+        }
         DB::table('invoices')->where('id', $id)->update(["active"=>0]);
         $time = date("h:i:sa");
         Right::log(Auth::user()->id,"Delete Invoice","delete", $id, "invoices", $time);

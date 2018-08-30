@@ -88,8 +88,7 @@ class StudentController extends Controller
         $sms1="";
         if(Auth::user()->language=='kh')
         {
-            $sms1 = "មិនអាចបង្កើតសិស្សថ្មីបានទេ សូមពិនិត្យម្តងទៀត!";
-            
+            $sms1 = "មិនអាចបង្កើតសិស្សថ្មីបានទេ សូមពិនិត្យម្តងទៀត!";   
         }
         else
         {
@@ -127,7 +126,6 @@ class StudentController extends Controller
     		return redirect('/login');
     	}
         $data = [
-            'code' => $r->code,
             'english_name' => $r->english_name,
             'khmer_name' => $r->khmer_name,
             'gender' => $r->gender,
@@ -192,7 +190,7 @@ class StudentController extends Controller
                             ->where('active',1)
                             ->get();
         $data['years'] = DB::table('school_years')
-                            ->orderBy('name')
+                            ->orderBy('id', 'desc')
                             ->get();
         $data['registrations'] = DB::table('registrations')
                                 ->join('classes','registrations.class_id', "=", "classes.id")
@@ -236,6 +234,13 @@ class StudentController extends Controller
 
     public function delete_invoice($id)
     {
+        if(Auth::user()==null)
+    	{
+    		return redirect('/login');
+    	}
+        if(!Right::check('Invoice', 'd')){
+            return view('permissions.no');
+        }
         $q= DB::table('invoices')
             ->select('customer_id')
             ->where('id',$id)
@@ -250,6 +255,13 @@ class StudentController extends Controller
 
     public function detail_invoice($id)
     {
+        if(Auth::user()==null)
+    	{
+    		return redirect('/login');
+        }
+        if(!Right::check('Invoice', 'l')){
+            return view('permissions.no');
+        }
         $data['invoice'] = DB::table('invoices')
             ->join('students', 'students.id', 'invoices.customer_id')
             ->join('users' ,'invoices.invoice_by', 'users.id')

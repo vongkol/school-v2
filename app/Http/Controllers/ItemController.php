@@ -15,6 +15,10 @@ class ItemController extends Controller
     // index
     public function index()
     {
+
+        if(!Right::check('Item', 'l')){
+            return view('permissions.no');
+        }
         $data['items'] = DB::table('items')
             ->join('branches', 'branches.id', '=', 'items.branch_id')
             ->select('items.*', 'branches.name as branch_id')
@@ -25,10 +29,16 @@ class ItemController extends Controller
     }
     public function create()
     {
+        if(!Right::check('Item', 'i')){
+            return view('permissions.no');
+        }
         return view('items.create');
     }
     public function save(Request $r)
     {
+        if(!Right::check('Item', 'i')){
+            return view('permissions.no');
+        }
         $data = array(
             'name' => $r->name,
             'item_category_id' => $r->item_category,
@@ -75,6 +85,9 @@ class ItemController extends Controller
     }
     public function edit($id)
     {
+        if(!Right::check('Item', 'u')){
+            return view('permissions.no');
+        }
         $data['item'] = DB::table('items')->where('id', $id)->first();
         return view('items.edit', $data);
     }
@@ -89,6 +102,9 @@ class ItemController extends Controller
     }
     public function update(Request $r)
     {
+        if(!Right::check('Item', 'u')){
+            return view('permissions.no');
+        }
         $data = array(
             'name' => $r->name,
             'item_category_id' => $r->item_category,
@@ -134,6 +150,9 @@ class ItemController extends Controller
     }
     public function delete($id)
     {
+        if(!Right::check('Item', 'd')){
+            return view('permissions.no');
+        }
         DB::table('items')->where('id', $id)->update(["active"=>0]);
         $time = date("h:i:sa");
         Right::log(Auth::user()->id,"Delete Item","delete", $id, "items", $time);

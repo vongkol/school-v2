@@ -25,6 +25,7 @@ class HomeController extends Controller
             $time = date("h:i:sa");
             Right::log(Auth::user()->id,"User Login","login", Auth::user()->id, "users", $time);
         }
+        $data['user_brand'] = Right::branch(Auth::user()->id);
         $data['classes'] = DB::Table('classes')
             ->where('classes.active',1)
             ->get();
@@ -32,6 +33,7 @@ class HomeController extends Controller
     }
 
     public function student_by_class($id) {
+     
         $data['class'] = DB::table('classes')
             ->where('id', $id)
             ->where('active',1)
@@ -65,6 +67,7 @@ class HomeController extends Controller
                         ->join('classes', 'registrations.class_id', 'classes.id')
                         ->whereDate('registrations.end_date' ,'>=' ,$date)
                         ->select('students.*', 'students.id as student_id', 'registrations.*')
+                        ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
                         ->where('classes.id', $id)
                         ->where('gender', 'Male')
                         ->where('registrations.active', 1)
@@ -79,6 +82,7 @@ class HomeController extends Controller
                         ->join('students', 'registrations.student_id', 'students.id')
                         ->join('classes', 'registrations.class_id', 'classes.id')
                         ->select('students.*', 'students.id as student_id', 'registrations.*')
+                        ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
                         ->where('classes.id', $id)
                         ->whereDate('registrations.end_date' ,'>=' ,$date)
                         ->where('gender', 'Female')
@@ -110,6 +114,7 @@ class HomeController extends Controller
                     ->where('classes.id', $id)
                     ->where('gender', 'Male')
                     ->where('registrations.active', 1)
+                    ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
                     ->whereDate('registrations.end_date' ,'>=' ,$date)
                     ->orderBy('students.english_name')
                     ->where('students.active',1)
@@ -120,6 +125,7 @@ class HomeController extends Controller
                     ->select('students.*', 'students.id as student_id', 'registrations.*')
                     ->where('classes.id', $id)
                     ->where('gender', 'Female')
+                    ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
                     ->where('registrations.active', 1)
                     ->whereDate('registrations.end_date' ,'>=' ,$date)
                     ->orderBy('students.english_name')

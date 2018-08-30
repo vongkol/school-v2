@@ -25,11 +25,10 @@
                             <th>{{$lb_code}}</th>
                             <th>{{$lb_khmer_name}}</th>
                             <th>{{$lb_english_name}}</th>
+                            <th>{{$lb_gender}}</th>
                             <th>{{$lb_email}}</th>
-                            <th>{{$lb_dob}}</th>
-                            <th>{{$lb_address}}</th>
                             <th>{{$lb_phone}}</th>
-                            <th>{{$lb_branch}}</th>
+                            <th>{{$lb_address}}</th>
                             <th>{{$lb_action}}</th>
                         </tr>
                         </thead>
@@ -46,11 +45,10 @@
                                 <td>{{$st->code}}</td>
                                 <td><a href="{{url('/student/detail/'.$st->id)}}">{{$st->khmer_name}}</a></td>
                                 <td><a href="{{url('/student/detail/'.$st->id)}}">{{$st->english_name}}</a></td>
+                                <td>{{$st->gender}}</td>
                                 <td>{{$st->email}}</td>
-                                <td>{{$st->dob}}</td>
-                                <td>{{$st->address}}</td>
                                 <td>{{$st->phone}}</td>
-                                <td>{{$st->branch_name}}</td>
+                                <td>{{$st->address}}</td>
                                 <td>
                                     <a href="{{url('/student/detail/'.$st->id)}}">
                                         <i class="fa fa-edit text-success"></i>

@@ -25,11 +25,11 @@
                            <div class="form-group row">
                            <div class="col-md-2">
                             <label for="">Start Date</label> 
-                            <input type="text"  placeholder="yyyy-mm-dd"  class="form-control datepicker-icon" id="start_date" name="start_date" value="{{old('start_date')}}">
+                            <input type="text"  placeholder="yyyy-mm-dd"  class="form-control datepicker-icon" id="start_date" name="start_date">
                         </div>
                                 <div class="col-md-2">
                                     <label for="">End Date</label> 
-                                    <input type="text" class="form-control datepicker-icon" placeholder="yyyy-mm-dd" id="end_date" name="end_date" value="{{old('end_date')}}">
+                                    <input type="text" class="form-control datepicker-icon" placeholder="yyyy-mm-dd" id="end_date" name="end_date">
                                 </div>
                                 <div class="col-md-2">
                                     <label for="receptionist" class="control-label col-sm-2">Receptionist</label>
@@ -53,14 +53,6 @@
                            <form action="{{url('/printing/class')}}" class="form-horizontal" method="get" target="_blank">
                                <div class="form-group row">
                                <div class="col-md-2">
-                                <label for="">Start Date</label> 
-                                <input type="text"  placeholder="yyyy-mm-dd"  class="form-control datepicker-icon" id="start_date" name="start_date" value="{{old('start_date')}}">
-                            </div>
-                                    <div class="col-md-2">
-                                        <label for="">End Date</label> 
-                                        <input type="text" class="form-control datepicker-icon" placeholder="yyyy-mm-dd" id="end_date" name="end_date" value="{{old('end_date')}}">
-                                    </div>
-                                    <div class="col-md-2">
                                         <label for="class" class="control-label col-sm-2">Class</label>
                                             <select name="class" id="class" class="form-control">
                                                 <option value="">--All--</option>
@@ -69,6 +61,15 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                               <div class="col-md-2">
+                                <label for="">Start Date</label> 
+                                <input type="text"  placeholder="yyyy-mm-dd"  class="form-control datepicker-icon" id="start_date" name="start_date">
+                            </div>
+                                    <div class="col-md-2">
+                                        <label for="">End Date</label> 
+                                        <input type="text" class="form-control datepicker-icon" placeholder="yyyy-mm-dd" id="end_date" name="end_date">
+                                    </div>
+                                    
                                                 
                                         <div class="col-sm-2">
                                         <label class="control-label col-sm-2"><br></label>
@@ -98,5 +99,4 @@
         });
     });
 </script>
-<script src="{{asset('js/students/student-edit.js')}}"></script>
 @endsection

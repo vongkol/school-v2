@@ -38,10 +38,6 @@
             <li class="nav-item">
                 <a class="nav-link navbar-toggler sidebar-toggler" href="#">☰</a>
             </li>
-            <li class="nav-item px-3 text-primary">
-                <img src="{{asset('img/flags/UK.png')}}" alt="" width="32">
-            </li>
-            <li class="nav-item px-3 text-gray-dark">Branch</li>
         </ul>
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item dropdown">
@@ -79,13 +75,16 @@
                         <a href="{{url('/student')}}" class="nav-link"><i class="fa fa-users text-yellow"></i> {{$lb_student}}</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{url('/invoice')}}" class="nav-link"><i class="fa fa-money text-danger"></i> Invoice</a>
+                        <a href="{{url('/invoice')}}" class="nav-link"><i class="fa fa-money text-danger"></i> {{$lb_invoice}}</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{url('/student-enroll')}}" class="nav-link"><i class="fa fa-users text-primary"></i> Student Enroll</a>
+                        <a href="{{url('/student-enroll')}}" class="nav-link"><i class="fa fa-users text-primary"></i> {{$lb_student_enroll}}</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{url('/item')}}" class="nav-link"><i class="fa fa-shopping-basket text-pink"></i> item</a>
+                        <a href="{{url('/item')}}" class="nav-link"><i class="fa fa-shopping-basket text-pink"></i> Item</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{url('/mail')}}" class="nav-link"><i class="fa fa-envelope text-pink"></i> Mail Marketing</a>
                     </li>
                     <li class="nav-item nav-dropdown">
                         <a href="#" class="nav-link nav-dropdown-toggle">
