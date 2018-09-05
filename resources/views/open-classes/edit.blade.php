@@ -44,7 +44,7 @@
                                <div class="form-group row">
                                    <label for="start_date" class="control-label col-sm-4">Start Date <span class="text-danger">*</span></label>
                                    <div class="col-sm-8">
-                                       <input type="text" required placeholder="yyyy-mm-dd" name="start_date" id="end_date" class="form-control datepicker-icon" value="{{$open_class->start_date}}">
+                                       <input type="text" required placeholder="yyyy-mm-dd" name="start_date" id="start_date" class="form-control datepicker-icon" value="{{$open_class->start_date}}">
                                    </div>
                                </div>
                            </div>

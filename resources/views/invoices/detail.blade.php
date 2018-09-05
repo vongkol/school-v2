@@ -31,15 +31,12 @@
                            
                         </div>
                     </div>
-                    <?php 
-
-                        
+                    <?php    
                         $invoice_details = DB::table('invoice_detials')
                             ->join('items', 'invoice_detials.item_id', 'items.id')
                             ->where('invoice_detials.invoice_id', $invoice_id)
                             ->select('invoice_detials.*', 'items.name as item_name')
                             ->get();
-                        var_dump(count($invoice_details));
                     ?>
                     <div class="row">
                         <div class="col-lg-12">
@@ -81,6 +78,7 @@
                                             <b>Total Amount<div id="total" class="text-primary">$ {{$invoice->total_amount}}</div></b>
                                         </td>
                                     </table> 
+                                    
                                     @if(count($histories)>0)
                                     <div class="row">
                                         <div class="col-sm-8">
@@ -107,6 +105,7 @@
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
+                                                
                                         </table>
                                         </div>
                                     </div>   

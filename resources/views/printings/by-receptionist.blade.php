@@ -34,7 +34,7 @@
                 ->whereIn('students.branch_id', $user_brand)
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'invoices.*')
-                ->orderBy('students.english_name')
+                ->orderBy('invoices.invoice_date', 'desc')
                 ->get();
             }
             elseif($start_date !== null && $end_date !== null && $receptionist == null) {
@@ -48,7 +48,7 @@
                 ->where('invoices.invoice_by', $user->id)
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'invoices.*')
-                ->orderBy('students.english_name')
+                ->orderBy('invoices.invoice_date', 'desc')
                 ->get(); 
             } elseif ($start_date == null && $end_date == null && $receptionist == null)
             {
@@ -60,7 +60,7 @@
                 ->where('invoices.invoice_by', $user->id)
                 ->where('students.active',1)
                 ->select('students.*', 'branches.name as bname', 'invoices.*')
-                ->orderBy('students.english_name')
+                ->orderBy('invoices.invoice_date', 'desc')
                 ->get();
             }   elseif($start_date == null && $end_date == null && $receptionist !== null) {
                 $students = DB::table('students')
@@ -71,7 +71,7 @@
                     ->whereIn('students.branch_id', $user_brand)
                     ->where('students.active',1)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
-                    ->orderBy('students.english_name')
+                    ->orderBy('invoices.invoice_date', 'desc')
                     ->get();
             } 
             elseif($start_date == null && $end_date !== null && $receptionist !== null) {
@@ -84,7 +84,7 @@
                     ->whereIn('students.branch_id', $user_brand)
                     ->where('students.active',1)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
-                    ->orderBy('students.english_name')
+                    ->orderBy('invoices.invoice_date', 'desc')
                     ->get();
             } 
             elseif($start_date !== null && $end_date == null && $receptionist !== null) {
@@ -97,7 +97,7 @@
                     ->where('students.active',1)
                     ->whereIn('students.branch_id', $user_brand)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
-                    ->orderBy('students.english_name')
+                    ->orderBy('invoices.invoice_date', 'desc')
                     ->get();
             }
             elseif($start_date == null && $end_date !== null && $receptionist !== null) {
@@ -110,7 +110,7 @@
                     ->whereIn('students.branch_id', $user_brand)
                     ->where('students.active',1)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
-                    ->orderBy('students.english_name')
+                    ->orderBy('invoices.invoice_date', 'desc')
                     ->get();
             } 
             elseif($start_date !== null && $end_date == null && $receptionist !== null) {
@@ -123,7 +123,7 @@
                     ->where('students.active',1)
                     ->whereIn('students.branch_id', $user_brand)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
-                    ->orderBy('students.english_name')
+                    ->orderBy('invoices.invoice_date', 'desc')
                     ->get();
             } 
             elseif($start_date !== null && $end_date == null && $receptionist == null) {
@@ -136,7 +136,7 @@
                     ->whereIn('students.branch_id', $user_brand)
                     ->where('students.active',1)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
-                    ->orderBy('students.english_name')
+                    ->orderBy('invoices.invoice_date', 'desc')
                     ->get();
             } 
             elseif($start_date == null && $end_date !== null && $receptionist == null) {
@@ -149,7 +149,7 @@
                     ->where('students.active',1)
                     ->whereIn('students.branch_id', $user_brand)
                     ->select('students.*', 'branches.name as bname', 'invoices.*')
-                    ->orderBy('students.english_name')
+                    ->orderBy('invoices.invoice_date', 'desc')
                     ->get();
             } 
             $receptionist= DB::table('users')

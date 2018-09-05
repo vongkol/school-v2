@@ -138,8 +138,35 @@
                                 </div>
                                 <div width="100%"><br>
                                     <div align="right">
-                                        <label>invoice by : {{$invoice->invoice_by}}</label>
+                                        <label>invoice by : {{$invoice->invoice_by}} <span style="color:red;">Total Due Amount :{{ $invoice->total_due_amount}} $</span></label>
                                     </div>
+                                    @if(count($histories)>0)
+                                    <div class="row">
+                                        <div class="col-sm-8" style="width:500px; margin-top: -40px;">
+                                            <h5>Payment History</h5>
+                                            <table class="table" >
+                                                <thead>
+                                                    <tr>
+                                                        <th>&numero;</th>
+                                                        <th>Pay Date</th>
+                                                        <th>Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @php($i=1)
+                                                @foreach($histories as $h)
+                                                    <tr>
+                                                        <td>{{$i++}}</td>
+                                                        <td>{{$h->pay_date}}</td>
+                                                        <td>{{$h->amount}} $</td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                        </table>
+                                        </div>
+                                    </div>   
+                                   
+                                    @endif
                                     <div align="left">
                                         <label>Branch : {{$branch->name}} -  {{$branch->address}} </label>
                                     </div>
@@ -213,9 +240,36 @@
                                     </table>
                                 </div>
                                 <div width="100%"><br>
-                                    <div align="right">
-                                        <label>invoice by : {{$invoice->invoice_by}}</label>
+                                <div align="right">
+                                        <label>invoice by : {{$invoice->invoice_by}} <span style="color:red;">Total Due Amount :{{ $invoice->total_due_amount}} $</span></label>
                                     </div>
+                                    @if(count($histories)>0)
+                                    <div class="row">
+                                        <div class="col-sm-8" style="width:500px; margin-top: -40px;">
+                                            <h5>Payment History</h5>
+                                            <table class="table" >
+                                                <thead>
+                                                    <tr>
+                                                        <th>&numero;</th>
+                                                        <th>Pay Date</th>
+                                                        <th>Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @php($i=1)
+                                                @foreach($histories as $h)
+                                                    <tr>
+                                                        <td>{{$i++}}</td>
+                                                        <td>{{$h->pay_date}}</td>
+                                                        <td>{{$h->amount}} $</td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                        </table>
+                                        </div>
+                                    </div>   
+                                   
+                                    @endif
                                     <div align="left">
                                         <label>Branch : {{$branch->name}} -  {{$branch->address}} </label>
                                     </div>

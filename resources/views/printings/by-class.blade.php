@@ -35,13 +35,11 @@
                 ->where("registrations.active",1)
                 ->where("classes.active", 1)
                 ->where("invoices.active",1)
-                ->whereDate('registrations.start_date','>=', $open_classes->start_date )
-                ->whereDate('registrations.end_date','<=',  $open_classes->end_date ) 
                 ->whereDate('invoices.invoice_date','>=', $open_classes->start_date )
                 ->whereDate('invoices.due_date','<=',  $open_classes->end_date ) 
                 ->where('registrations.class_id', $cla->id)
                 ->where('students.active',1)
-                ->select('students.*', 'registrations.*', "invoices.*")
+                ->select('students.*', 'registrations.study_time', "invoices.invoice_date", "invoices.due_date", "invoices.total_due_amount", "invoices.total_amount")
                 ->orderBy('invoices.id', 'desc')
                 ->get();
             }  

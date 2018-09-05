@@ -129,12 +129,12 @@
                                                 <td>{{$d->qty}}</td>
                                                 <td>{{$d->due_amount}}</td>
                                                 <td>{{$d->unit_price}}</td>
-                                                <td>{{$d->unit_price * $d->qty}}</td>
+                                                <td>{{$d->unit_price * $d->qty - $d->due_amount}}</td>
                                                 <td>
                                                     <a href="#" onclick="remove_item(this, event)"><i class="fa fa-remove text-danger"></i></a>
                                                 </td>
                                                 <?php
-                                                    $total += ($d->qty*$d->unit_price);
+                                                    $total += ($d->qty*$d->unit_price- $d->due_amount);
                                                 ?>
                                             </tr>
                                         @endforeach

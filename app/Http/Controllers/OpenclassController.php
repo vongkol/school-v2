@@ -64,7 +64,7 @@ class OpenclassController extends Controller
         }
         $data = array(
             'start_date' => $r->start_date,
-            'end_date' => $r->start_date
+            'end_date' => $r->end_date
         );
         $sms ="";
         $sms1="";

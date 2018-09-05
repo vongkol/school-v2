@@ -145,7 +145,8 @@ class InvoiceController extends Controller
         $data['branch'] = DB::table('branches')
             ->where('id', $data['invoice']->branch_id)
             ->first();
-
+        $data['histories'] = DB::table('payment_histories')->where('invoice_id', $id)->get();
+        $data['invoice_id'] = $id;
         return view('invoices.print', $data);
     }
 
@@ -172,12 +173,12 @@ class InvoiceController extends Controller
     }
 
     public function ajustment($id) {
-        // if(!Right::check('Invoice', 'i')){
-        //     return view('permissions.no');
-        // }
-        // if(!Right::check('Invoice', 'i')){
-        //     return view('permissions.no');
-        // }
+        if(!Right::check('Invoice', 'i')){
+            return view('permissions.no');
+        }
+        if(!Right::check('Invoice', 'i')){
+            return view('permissions.no');
+        }
        
         $data['master'] = DB::table('invoices')->where('id', $id)->first();
         $data['details'] = DB::table('invoice_detials')
@@ -237,6 +238,7 @@ class InvoiceController extends Controller
     {
        
         $inv = DB::table('invoices')->where('id', $r->invoice_id)->first();
+      
         if($r->amount<=$inv->total_due_amount)
         {
             // save payment history
@@ -248,8 +250,10 @@ class InvoiceController extends Controller
             $i = DB::table('payment_histories')->insert($data);
             // calulate due amount in invoices table
             $balance = $inv->total_due_amount - $r->amount;
+            $total = $inv->total_amount + $r->amount;
             DB::table('invoices')->where('id', $r->invoice_id)->update([
-                'total_due_amount' => $balance
+                'total_due_amount' => $balance, 
+                'total_amount' => $total
             ]);
         }
         return 1;
@@ -263,7 +267,8 @@ class InvoiceController extends Controller
         DB::table('payment_histories')->where('id', $hid)->delete();
         // recalculate total_due_amount
         $due = $inv->total_due_amount + $h->amount;
-        DB::table('invoices')->where('id', $id)->update(['total_due_amount'=>$due]);
+        $total = $inv->total_amount - $h->amount;
+        DB::table('invoices')->where('id', $id)->update(['total_due_amount'=>$due,'total_amount' => $total]);
         return redirect('/invoice/detail/'.$id);
     }
 }

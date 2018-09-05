@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header text-bold">
                     <i class="fa fa-align-justify"></i> Detail Invoice&nbsp;&nbsp;
-                    <a class="btn btn-link btn-sm text-success" href="{{url('/invoice/ajustment?customer_id='.$invoice->customer_id.'&'.'invoice_ref='.$invoice->invoice_ref)}}" title="Ajustment">Ajustment</a>&nbsp;&nbsp;|
+                    <a class="btn btn-link btn-sm text-success" href="{{url('/invoice/ajustment/'.$invoice->invoice_id)}}" title="Ajustment">Ajustment</a>&nbsp;&nbsp;|
                     <a href="{{url('/student/detail/'.$invoice->student_id)}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
                     <a href="{{url('invoice/print/'.$invoice->invoice_id)}}" class="float-right">
                         <button>Print Invoice</button>

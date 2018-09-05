@@ -466,7 +466,7 @@ class LogController extends Controller
             $data['invoice'] = DB::table('invoices')
             ->join('students', 'students.id', 'invoices.customer_id')
             ->join('users' ,'invoices.invoice_by', 'users.id')
-            ->select('invoices.*', 'students.*', 'invoices.id as invoice_id', 'users.name as invoice_by')
+            ->select('invoices.*', 'students.*', "invoices.id as invoice_id", 'users.name as invoice_by')
             ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
             ->where('invoices.id', $id)
             ->first();
