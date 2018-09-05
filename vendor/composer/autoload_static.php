@@ -316,7 +316,6 @@ class ComposerStaticInit7307a8f937a323e508a4bc969f6cddf5
         'App\\Http\\Controllers\\ShiftController' => __DIR__ . '/../..' . '/app/Http/Controllers/ShiftController.php',
         'App\\Http\\Controllers\\StudentController' => __DIR__ . '/../..' . '/app/Http/Controllers/StudentController.php',
         'App\\Http\\Controllers\\StudentEnrollController' => __DIR__ . '/../..' . '/app/Http/Controllers/StudentEnrollController.php',
-        'App\\Http\\Controllers\\SubjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubjectController.php',
         'App\\Http\\Controllers\\TestController' => __DIR__ . '/../..' . '/app/Http/Controllers/TestController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',

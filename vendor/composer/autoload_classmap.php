@@ -35,7 +35,6 @@ return array(
     'App\\Http\\Controllers\\ShiftController' => $baseDir . '/app/Http/Controllers/ShiftController.php',
     'App\\Http\\Controllers\\StudentController' => $baseDir . '/app/Http/Controllers/StudentController.php',
     'App\\Http\\Controllers\\StudentEnrollController' => $baseDir . '/app/Http/Controllers/StudentEnrollController.php',
-    'App\\Http\\Controllers\\SubjectController' => $baseDir . '/app/Http/Controllers/SubjectController.php',
     'App\\Http\\Controllers\\TestController' => $baseDir . '/app/Http/Controllers/TestController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
