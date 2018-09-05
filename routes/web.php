@@ -148,9 +148,11 @@ Route::get('/invoice/print/{id}', "InvoiceController@print_invoice");
 Route::get('/invoice/delete/{id}', "InvoiceController@delete");
 Route::post('/invoice/save', "InvoiceController@save");
 Route::post('/invoice/update', "InvoiceController@update");
+Route::post('/payment-history/save', "InvoiceController@save_history");
+Route::get('/payment-history/delete', "InvoiceController@delete_history");
 Route::get('/student/delete-invoice/{id}', "StudentController@delete_invoice");
 Route::get('/student/invoice-detail/{id}', "StudentController@detail_invoice");
-Route::get('/invoice/ajustment', "InvoiceController@ajustment");
+Route::get('/invoice/ajustment/{id}', "InvoiceController@ajustment");
 
 // village
 Route::get('/village', "VillageController@index");

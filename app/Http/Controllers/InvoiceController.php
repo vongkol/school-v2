@@ -118,12 +118,13 @@ class InvoiceController extends Controller
         $data['invoice'] = DB::table('invoices')
             ->join('students', 'students.id', 'invoices.customer_id')
             ->join('users' ,'invoices.invoice_by', 'users.id')
-            ->select('invoices.*', 'students.*', 'invoices.id as invoice_id', 'users.name as invoice_by')
+            ->select('invoices.*', 'students.english_name','students.code', 'invoices.id as invoice_id', 'users.name as invoice_by')
             ->where('invoices.active',1)
             ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
             ->where('invoices.id', $id)
             ->first();
-
+        $data['histories'] = DB::table('payment_histories')->where('invoice_id', $id)->get();
+        $data['invoice_id'] = $id;
         return view('invoices.detail', $data);
     }
    
@@ -170,18 +171,100 @@ class InvoiceController extends Controller
         return redirect('/invoice');
     }
 
-    public function ajustment(Request $r) {
-        if(!Right::check('Invoice', 'i')){
-            return view('permissions.no');
+    public function ajustment($id) {
+        // if(!Right::check('Invoice', 'i')){
+        //     return view('permissions.no');
+        // }
+        // if(!Right::check('Invoice', 'i')){
+        //     return view('permissions.no');
+        // }
+       
+        $data['master'] = DB::table('invoices')->where('id', $id)->first();
+        $data['details'] = DB::table('invoice_detials')
+                            ->join('items', 'invoice_detials.item_id', 'items.id')
+                            ->where('invoice_detials.invoice_id', $id)
+                            ->select('invoice_detials.*', 'items.name')
+                            ->get();
+        $data['customer'] = DB::table('students')->where('id', $data['master']->customer_id)->first();
+        return view('invoices.edit', $data);
+    }
+    public function update(Request $r)
+    {
+        $master = json_encode($r->master);
+        $master = json_decode($master);
+        $items = json_encode($r->items);
+        $items = json_decode($items);
+        $data = [
+            'invoice_date' => $master->invoice_date,
+            'due_date' => $master->due_date,
+            'invoice_by' => Auth::user()->id,
+            'note' => $master->note,
+        ];
+        $i = DB::table('invoices')->where('id', $master->id)->update($data);
+        $time = date("h:i:sa");
+        Right::log(Auth::user()->id,"update Invoice","update", $master->id, "invoices", $time);
+        //delete item detail before insert new
+        DB::table('invoice_detials')->where('invoice_id', $master->id)->delete();
+        $total_amount = 0;
+        $total_due_amount = 0;
+        foreach($items as $item)
+        {
+            DB::table('invoice_detials')
+                ->insert(array(
+                'item_id' => $item->itemid,
+                'discount' => $item->discount,
+                'qty' => $item->qty,
+                'subtotal' => $item->sub_total,
+                'due_amount' => $item->due_amount,
+                'invoice_id' => $master->id,
+                'unit_price' => $item->unit_price
+            ));
+            $subtotal = $item->sub_total;
+            $total_amount += $subtotal;
+            $due_amount =  $item->due_amount;
+            $total_due_amount += $item->due_amount;
+           
         }
-        if(!Right::check('Invoice', 'i')){
-            return view('permissions.no');
+        $his = DB::table('payment_histories')->where('invoice_id',$master->id)->sum('amount');
+        $total_due_amount -=$his;
+        $b = DB::table('invoices')->where('id',$master->id)->update([
+            'total_amount'=>$total_amount, 
+            'total_due_amount'=>$total_due_amount
+            ]);
+        return 1;
+    }
+    public function save_history(Request $r)
+    {
+       
+        $inv = DB::table('invoices')->where('id', $r->invoice_id)->first();
+        if($r->amount<=$inv->total_due_amount)
+        {
+            // save payment history
+            $data = array(
+                'invoice_id' => $r->invoice_id,
+                'pay_date' => $r->payment_date,
+                'amount' => $r->amount
+            );
+            $i = DB::table('payment_histories')->insert($data);
+            // calulate due amount in invoices table
+            $balance = $inv->total_due_amount - $r->amount;
+            DB::table('invoices')->where('id', $r->invoice_id)->update([
+                'total_due_amount' => $balance
+            ]);
         }
-        $customer_id = $r->query('customer_id');
-        $data['invoice_ref'] = $r->query('invoice_ref');
-        $data['customer'] = DB::table('students')
-            ->where('id',  $customer_id)
-            ->first();
-        return view('invoices.ajustment', $data);
+        return 1;
+    }
+    public function delete_history(Request $r)
+    {
+        $hid = $r->hid;
+        $id = $r->id;
+        $h = DB::table('payment_histories')->where('id', $hid)->first();
+        $inv = DB::table('invoices')->where('id', $id)->first();
+        DB::table('payment_histories')->where('id', $hid)->delete();
+        // recalculate total_due_amount
+        $due = $inv->total_due_amount + $h->amount;
+        DB::table('invoices')->where('id', $id)->update(['total_due_amount'=>$due]);
+        return redirect('/invoice/detail/'.$id);
     }
 }
+

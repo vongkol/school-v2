@@ -7,7 +7,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-bold">
-                    <i class="fa fa-align-justify"></i> New Invoice - <span class="text-danger">  {{$customer->code}} - {{$customer->english_name}} </span>&nbsp;&nbsp;
+                    <i class="fa fa-align-justify"></i> Edit Invoice - <span class="text-danger">  {{$customer->code}} - {{$customer->english_name}} </span>&nbsp;&nbsp;
                     <a href="{{url('/student/detail/'.$customer->id)}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
                 </div>
                 <div class="card-block">
@@ -31,9 +31,10 @@
                         </div>
                     </div>
                 @endif
-                    <form action="{{url('/invoice/save')}}" class="form-horizontal" method="post" enctype='multipart/form-data'>
+                    <form action="{{url('/invoice/update')}}" class="form-horizontal" method="post" enctype='multipart/form-data'>
                     {{csrf_field()}}
-                    <input type="hidden" name="id" value="{{$master->id}}">
+                    <input type="hidden" name="id" id="id" value="{{$master->id}}">
+                    <input type="hidden" id="customer_id" name="customer_id" value="{{$master->customer_id}}">
                     <div class="row">
                         <input type="hidden" name="customer_id" id="customer_id" value="{{$customer->id}}">
                            <div class="col-sm-4">
@@ -41,7 +42,7 @@
                                    <label for="invoice_ref" class="control-label col-sm-4">Invoice Referentce {!!$lb_id!!} </label>
                                    <div class="col-sm-8">
                                        <input type="text"  name="invoice_ref" id="invoice_ref" class="form-control"
-                                        readonly value="{{$master->invoice_ref}}">
+                                        value="{{$master->invoice_ref}}" readonly>
                                    </div>
                                </div>
                            </div>
@@ -49,8 +50,8 @@
                                <div class="form-group row">
                                    <label for="invoice_date" class="control-label col-sm-4">Invoice Date <span class="text-danger">*</span></label>
                                    <div class="col-sm-8">
-                                       <input type="text" required placeholder="yyyy-mm-dd" name="invoice_date" id="invoice_date"
-                                        class="form-control datepicker-icon" value="{{old('invoice_date')}}">
+                                       <input type="text" required placeholder="yyyy-mm-dd" name="invoice_date" 
+                                       id="invoice_date" class="form-control datepicker-icon" value="{{$master->invoice_date}}">
                                    </div>
                                </div>
                            </div>
@@ -58,8 +59,8 @@
                                <div class="form-group row">
                                    <label for="due_date" class="control-label col-sm-4">Due Date <span class="text-danger">*</span></label>
                                    <div class="col-sm-8">
-                                       <input type="text" required placeholder="yyyy-mm-dd" name="due_date" id="due_date" 
-                                       class="form-control datepicker-icon" value="{{old('due_date')}}">
+                                       <input type="text" required placeholder="yyyy-mm-dd" name="due_date" 
+                                       id="due_date" class="form-control datepicker-icon" value="{{$master->due_date}}">
                                    </div>
                                </div>
                            </div>
@@ -120,12 +121,28 @@
                                         </tr>
                                     </thead>
                                     <tbody id="body_item">
-                                        
+                                    <?php $total=0;?>
+                                        @foreach($details as $d)
+                                            <tr row-index="{{$d->item_id}}">
+                                                <td>{{$d->name}}</td>
+                                                <td>{{$d->discount}}</td>
+                                                <td>{{$d->qty}}</td>
+                                                <td>{{$d->due_amount}}</td>
+                                                <td>{{$d->unit_price}}</td>
+                                                <td>{{$d->unit_price * $d->qty}}</td>
+                                                <td>
+                                                    <a href="#" onclick="remove_item(this, event)"><i class="fa fa-remove text-danger"></i></a>
+                                                </td>
+                                                <?php
+                                                    $total += ($d->qty*$d->unit_price);
+                                                ?>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                                 <table class="table text-right">
                                     <td><input type="text" name="note" id="note" class="form-control" placeholder="Note..."></td>
-                                    <td><b>Total Amount<div id="total" class="text-primary">$ 0</div></b></td>
+                                    <td><b>Total Amount<div id="total" class="text-primary">$ {{$total}}</div></b></td>
                                 </table>
                                 
                         </div>
@@ -216,6 +233,7 @@
     function sinvoice() {
         var data = {
                 master:{
+                    id: $("#id").val(),
                     customer_id: $("#customer_id").val(),
                     invoice_date: $("#invoice_date").val(),
                     due_date: $("#due_date").val(),
@@ -248,14 +266,15 @@
        
        $.ajax({
             type: "POST",
-            url: burl +"/invoice/save",
+            url: burl +"/invoice/update",
             data: data,
             beforeSend: function (request) {
                 return request.setRequestHeader('X-CSRF-Token', $("input[name='_token']").val());
             },
             success: function (sms) {
                 alert('The new invoice has been created successfully.');
-                location.href = burl + "/invoice/create?customer_id=" + c_id;
+                location.href = burl + "/invoice/ajustment/" + $("#id").val();
+                // console.log(sms);
                
             },
             error: function(){

@@ -466,7 +466,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="saveFamily()">{{$lb_save}}</button>
-                    <button type="button" class="btn btn-secondary btn-danger" data-dismiss="modal" onclick="clearCancel()">{{$lb_close}}</button>
+                    <button type="button" class="btn btn-secondary btn-danger" data-dismiss="modal"
+                     onclick="clearCancel()">{{$lb_close}}</button>
 
                 </div>
             </div>
