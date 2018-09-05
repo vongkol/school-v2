@@ -28,7 +28,7 @@
                             <th>{{$lb_gender}}</th>
                             <th>{{$lb_email}}</th>
                             <th>{{$lb_phone}}</th>
-                            <th>{{$lb_address}}</th>
+                            <th>{{$lb_university}}</th>
                             <th>{{$lb_action}}</th>
                         </tr>
                         </thead>
@@ -48,7 +48,7 @@
                                 <td>{{$st->gender}}</td>
                                 <td>{{$st->email}}</td>
                                 <td>{{$st->phone}}</td>
-                                <td>{{$st->address}}</td>
+                                <td>{{$st->university}}</td>
                                 <td>
                                     <a href="{{url('/student/detail/'.$st->id)}}">
                                         <i class="fa fa-edit text-success"></i>
