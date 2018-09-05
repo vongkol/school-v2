@@ -56,7 +56,8 @@ class PrintingController extends Controller
     public function by_class(Request $r)
     {
         $data['class'] = $r->class;   
-        $data['start_date'] = $r->start_date;
+        $open_class_id = $r->date;
+        $data['open_classes'] = DB::table('open_classes')->where('id', $open_class_id)->first();
         $data['end_date'] = $r->end_date;
         if($r->class !== null ){
             $data['classes'] = DB::table('classes')

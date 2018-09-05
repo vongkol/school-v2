@@ -2,9 +2,7 @@
 <?php include(app_path()."/lang/". $lang); ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -128,10 +126,10 @@
                                 <a class="nav-link" href="{{url('/school-year')}}"><i class="fa fa-signal"></i> {{$lb_school_year}}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{url('/shift')}}"><i class="fa fa-clock-o"></i> Shift</a>
+                                <a class="nav-link" href="{{url('/shift')}}"><i class="fa fa-clock-o"></i> {{$lb_shift}}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{url('/item-category')}}"><i class="fa fa-sitemap"></i> Item Category</a>
+                                <a class="nav-link" href="{{url('/item-category')}}"><i class="fa fa-sitemap"></i>{{$lb_item_category}}</a>
                             </li>
                         </ul>
                     </li>

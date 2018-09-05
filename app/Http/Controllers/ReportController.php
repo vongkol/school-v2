@@ -17,6 +17,7 @@ class ReportController extends Controller
     {
         $data['receptionists'] = DB::table('users')->where('role_id', 2)->get();
         $data['classes'] = DB::table('classes')->orderBy('name')->get();
+        $data['open_classes'] = DB::table('open_classes')->orderBy('id', 'desc')->where('active', 1)->get();
         return view("reports.index", $data);
     }
 }

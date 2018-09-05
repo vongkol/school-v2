@@ -34,10 +34,14 @@
                                 <div class="col-md-2">
                                     <label for="receptionist" class="control-label col-sm-2">Receptionist</label>
                                         <select name="receptionist" id="receptionist" class="form-control">
+                                        @if(Auth::user()->role_id == 2)
+                                                <option value="{{Auth::user()->id}}">{{Auth::user()->name}}</option>
+                                        @else 
                                             <option value="">--All--</option>
                                             @foreach($receptionists as $r)
                                                 <option value="{{$r->id}}">{{$r->name}}</option>
                                             @endforeach
+                                        @endif
                                         </select>
                                     </div>
                                             
@@ -55,22 +59,19 @@
                                <div class="col-md-2">
                                         <label for="class" class="control-label col-sm-2">Class</label>
                                             <select name="class" id="class" class="form-control">
-                                                <option value="">--All--</option>
                                                 @foreach($classes as $class)
                                                     <option value="{{$class->id}}">{{$class->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                               <div class="col-md-2">
-                                <label for="">Start Date</label> 
-                                <input type="text"  placeholder="yyyy-mm-dd"  class="form-control datepicker-icon" id="start_date" name="start_date">
-                            </div>
-                                    <div class="col-md-2">
-                                        <label for="">End Date</label> 
-                                        <input type="text" class="form-control datepicker-icon" placeholder="yyyy-mm-dd" id="end_date" name="end_date">
-                                    </div>
-                                    
-                                                
+                                        <div class="col-md-4">
+                                        <label for="class" class="control-label col-sm-12">Start Date - End Date</label>
+                                            <select name="date" id="date" class="form-control">
+                                                @foreach($open_classes as $op)
+                                                    <option value="{{$op->id}}">{{$op->start_date}} - {{$op->end_date}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                         <div class="col-sm-2">
                                         <label class="control-label col-sm-2"><br></label>
                                             <button class="btn btn-primary" type="submit">Generate Report</button>
@@ -87,8 +88,9 @@
 @section('js')
 <script src="{{asset('datepicker/js/bootstrap-datepicker.min.js')}}"></script>
 <script src="{{asset('js/jquery.inputmask.bundle.min.js')}}"></script>
-<script>
+<script src="{{asset('js/select-class-date.js')}}"></script>
 
+<script>
     $(document).ready(function(){
         $("#start_date, #end_date").datepicker({
             orientation: 'bottom',

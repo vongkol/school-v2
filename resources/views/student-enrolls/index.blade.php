@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-bold">
-                    <i class="fa fa-align-justify"></i> Student Enroll List&nbsp;&nbsp;
+                    <i class="fa fa-align-justify"></i> {{$lb_student_enroll_list}}&nbsp;&nbsp;
                     <a href="{{url('/student-enroll/create')}}" class="btn btn-link btn-sm">{{$lb_new}}</a>
                 </div>
                 <div class="card-block">
@@ -22,16 +22,14 @@
                 <thead>
                 <tr>
                     <th>{!!$lb_id!!}</th>
-                    <th>Student Code</th>
-                    <th>English Name</th>
-                    <th>Khmer Name</th>
-                    <th>Enroll Date</th>
+                    <th>{{$lb_student_code}}</th>
+                    <th>{{$lb_student_english_name}}</th>
+                    <th>{{$lb_student_khmer_name}}</th>
+                    <th>{{$lb_enroll_date}}</th>
                     <th>{{$lb_class}}</th>
-                    <th>Shift</th>
-                    <th>{{$lb_school_year}}</th>
-                    <th>Study Time</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th>{{$lb_study_time}}</th>
+                    <th>{{$lb_start_date}}</th>
+                    <th>{{$lb_end_date}}</th>
                    
                     <th>{{$lb_action}}</th>
                 </tr>
@@ -51,8 +49,6 @@
                             <td><a href="{{url('/student/detail/'.$r->student_id)}}">{{$r->khmer_name}}</a></td>
                             <td>{{$r->registration_date}}</td>
                             <td>{{$r->class_name}}</td>
-                            <td>{{$r->shift_name}}</td>
-                            <td>{{$r->year_name}}</td>
                             <td>{{$r->study_time}}</td>
                             <td>{{$r->start_date}}</td>
                             <td>{{$r->end_date}}</td>

@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header text-bold">
                     <i class="fa fa-align-justify"></i> Detail Class&nbsp;&nbsp;
-                    <a href="{{url('/class')}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
+                    <a href="{{url('/class/detail/'.$class->id)}}" class="btn btn-link btn-sm">{{$lb_back_to_list}}</a>
                 </div>
                 <div class="card-block">
                     @if(Session::has('sms'))

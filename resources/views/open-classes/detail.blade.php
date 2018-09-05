@@ -34,7 +34,6 @@
                     <div class="form-group row">
                         <div class="col-md-6"><h2>{{$class->name}}</h2></div>
                     </div>
-
                     <form action="{{url('/open-class/save')}}" onsubmit="return confirm('You want to open new class?')"
                           class="form-horizontal" method="post">
                           <input type="hidden" name="id" value="{{$class->id}}">
@@ -97,8 +96,8 @@
                         @foreach($open_classes as $o)
                             <tr>
                                 <td>{{$i++}}</td>
-                                <td>{{$o->start_date}}</td>
-                                <td>{{$o->end_date}}</td>
+                                <td><a href="{{url('/student/history?start_date='.$o->start_date.'&end_date='.$o->end_date.'&class_id='.$o->class_id)}}">{{$o->start_date}}</a></td>
+                                <td><a href="{{url('/student/history?start_date='.$o->start_date.'&end_date='.$o->end_date.'&class_id='.$o->class_id)}}">{{$o->end_date}}</a></td>
                                 <td>
                                     <a href="{{url('/open-class/edit/'.$o->id)}}" title="{{$lb_edit}}"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp
                                     <a  href="{{url('/open-class/delete/'.$o->id ."?page=".@$_GET["page"])}}" onclick="return confirm('{{$lb_confirm_delete}}')" title="{{$lb_delete}}"><i class="fa fa-remove text-danger"></i></a>

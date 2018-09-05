@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-bold">
-                    <i class="fa fa-align-justify"></i> Invoice List&nbsp;&nbsp;
+                    <i class="fa fa-align-justify"></i> {{$lb_invoice_list}}&nbsp;&nbsp;
                 </div>
                 
                 <div class="card-block">
@@ -22,13 +22,13 @@
                         <thead>
                         <tr>
                             <th>{!!$lb_id!!}</th>
-                            <th>Invoice Ref</th>
-                            <th>Student Code</th>
-                            <th>Student</th>
-                            <th>Invoice Date</th>
-                            <th>Due Date</th>
-                            <th>Total Due Amount ($)</th>
-                            <th>Total Amount ($)</th>
+                            <th>{{$lb_invoice_ref}}</th>
+                            <th>{{$lb_student_code}}</th>
+                            <th>{{$lb_student_english_name}}</th>
+                            <th>{{$lb_invoice_date}}</th>
+                            <th>{{$lb_due_date}}</th>
+                            <th>{{$lb_total_due_amount}} ($)</th>
+                            <th>{{$lb_total_amount}} ($)</th>
                             <th>{{$lb_action}}</th>
                         </tr>
                         </thead>
@@ -51,7 +51,7 @@
                                 <td>$ {{$invoice->total_amount}}</td>
                                 <td>
                                     <a href="{{url('/invoice/detail/'.$invoice->id)}}" title="Detail"><i class="fa fa-eye text-info"></i></a>&nbsp;&nbsp;
-                                    <a href="{{url('/invoice/edit/'.$invoice->id)}}" title="Detail"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp;
+                                    <a href="{{url('/invoice/ajustment?customer_id='.$invoice->customer_id.'&'.'invoice_ref='.$invoice->invoice_ref)}}" title="Ajustment"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp;
                                     <a  href="{{url('/invoice/delete/'.$invoice->id ."?page=".@$_GET["page"])}}" onclick="return confirm('{{$lb_confirm_delete}}')" title="{{$lb_delete}}"><i class="fa fa-remove text-danger"></i></a>
                                 </td>
                             </tr>

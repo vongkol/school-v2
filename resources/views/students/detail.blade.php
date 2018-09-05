@@ -131,9 +131,10 @@
                             <th>{{$lb_invoice_ref}}</th>
                             <th>{{$lb_student_code}}</th>
                             <th>{{$lb_english_name}}</th>
-                            <th>Invoice Date</th>
-                            <th>Due Date</th>
-                            <th>Total Amount</th>
+                            <th>{{$lb_invoice_date}}</th>
+                            <th>{{$lb_due_date}}</th>
+                            <th>{{$lb_total_due_amount}}</th>
+                            <th>{{$lb_total_amount}}</th>
                             <th>{{$lb_action}}</th>
                         </tr>
                         </thead>
@@ -152,9 +153,11 @@
                                 <td> <a href="{{url('student/invoice-detail/'.$invoice->invoice_id)}}" title="Detail">{{$invoice->english_name}}</a></td>
                                 <td>{{$invoice->invoice_date}}</td>
                                 <td>{{$invoice->due_date}} </td>
-                                <td><span class="text-warning">USD</span> {{$invoice->total_amount}} </td>
+                                <td><span class="text-danger">${{$invoice->total_due_amount}}</span></td>
+                                <td><span class="text-success">${{$invoice->total_amount}}</span> </td>
                                 <td>
                                     <a href="{{url('student/invoice-detail/'.$invoice->invoice_id)}}" title="Detail"><i class="fa fa-eye text-info"></i></a>&nbsp;&nbsp;
+                                    <a href="{{url('/invoice/ajustment?customer_id='.$invoice->customer_id.'&'.'invoice_ref='.$invoice->invoice_ref)}}" title="Ajustment"><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp;
                                     <a  href="{{url('/student/delete-invoice/'.$invoice->invoice_id)}}" onclick="return confirm('{{$lb_confirm_delete}}')" title="{{$lb_delete}}"><i class="fa fa-remove text-danger"></i></a>
                                 </td>
                             </tr>
@@ -173,7 +176,7 @@
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">{{$lb_family}}</a></li>
                                     <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">{{$lb_document}}</a></li>
-                                    <li role="presentation"><a href="#registration" aria-controls="registration" role="tab" data-toggle="tab">Student Enroll</a></li>
+                                    <li role="presentation"><a href="#registration" aria-controls="registration" role="tab" data-toggle="tab">{{$lb_registration}}</a></li>
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content">
@@ -262,12 +265,11 @@
                                             <tr>
                                                 <th>{{$lb_register_date}}</th>
                                                 <th>{{$lb_class}}</th>
-                                                <th>Shift</th>
+                                                <th>{{$lb_shift}}</th>
                                                 <th>{{$lb_school_year}}</th>
-                                                <th>Study Time</th>
+                                                <th>{{$lb_study_time}}</th>
                                                 <th>{{$lb_start_date}}</th>
                                                 <th>{{$lb_end_date}}</th>
-                                               
                                                 <th>{{$lb_action}}</th>
                                             </tr>
                                             </thead>
@@ -504,7 +506,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="shift" class="control-label col-sm-3">Shift</label>
+                                <label for="shift" class="control-label col-sm-3">{{$lb_shift}}</label>
                                 <div class="col-sm-9">
                                     <select name="shift" id="shift" class="form-control">
                                         @foreach($shifts as $shift)
@@ -514,7 +516,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="study_time" class="control-label col-sm-3">Study Time</label>
+                                <label for="study_time" class="control-label col-sm-3">{{$lb_study_time}}</label>
                                 <div class="col-sm-9">
                                    <input type="text" class="form-control" name="study_time" id="study_time">
                                 </div>

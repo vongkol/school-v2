@@ -144,12 +144,13 @@ Route::get('/invoice', "InvoiceController@index");
 Route::get('/invoice/create', "InvoiceController@create");
 Route::get('/invoice/edit/{id}', "InvoiceController@edit");
 Route::get('/invoice/detail/{id}', "InvoiceController@detail");
-Route::get('/invoice/print/{id}', "InvoiceController@print");
+Route::get('/invoice/print/{id}', "InvoiceController@print_invoice");
 Route::get('/invoice/delete/{id}', "InvoiceController@delete");
 Route::post('/invoice/save', "InvoiceController@save");
 Route::post('/invoice/update', "InvoiceController@update");
 Route::get('/student/delete-invoice/{id}', "StudentController@delete_invoice");
 Route::get('/student/invoice-detail/{id}', "StudentController@detail_invoice");
+Route::get('/invoice/ajustment', "InvoiceController@ajustment");
 
 // village
 Route::get('/village', "VillageController@index");
@@ -201,6 +202,8 @@ Route::get("/mail/detail/{id}", "MailController@detail");
 // student by class
 Route::get('/student/class/{id}', "HomeController@student_by_class");
 Route::get('/student/print/class/{id}', "HomeController@print_student");
+Route::get('/student/history', "ClassController@get_student_in_class");
+Route::get('/student/year', "SchoolYearController@get_student_year");
 
 
 // user logs
@@ -211,3 +214,4 @@ Route::get('/log/detail/{id}/{table}', "LogController@detail");
 Route::get('/test', "TestController@index");
 //get item
 Route::get('/getitem/{id}', "InvoiceController@get_item");
+Route::get('/class/getclassdate/{id}', "ClassController@get_class");

@@ -127,4 +127,62 @@ class ClassController extends Controller
         DB::table('classes')->where('id', $id)->update(["active"=>0]);
         return redirect('/class');
     }
+
+    public function get_class($id) {
+
+        $date = DB::table('open_classes')->where('class_id', $id)
+            ->orderBy('id', 'desc')
+            ->where('active', 1)
+            ->get();
+        return $date;
+    }
+
+    public function get_student_in_class(Request $r) {
+            $data['class'] = DB::table('classes')
+                ->where('id', $r->class_id)
+                ->first();
+            $data['students'] = DB::table('registrations')
+                ->join('students', 'registrations.student_id', 'students.id')
+                ->join('classes', 'registrations.class_id', 'classes.id')
+                ->select('students.*', 'students.id as student_id', 'registrations.*')
+                ->where('students.active', 1)
+                ->whereDate('registrations.start_date' ,'>=' ,$r->start_date)
+                ->whereDate('registrations.end_date' ,'<=' ,$r->end_date)
+                ->where('registrations.active',1)
+                ->where('classes.id', $r->class_id)
+                ->where('registrations.active', 1)
+                ->orderBy('students.english_name')
+                ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+                ->where('students.active',1)
+                ->get();
+            $data['total_student_male'] = DB::table('registrations')
+                ->join('students', 'registrations.student_id', 'students.id')
+                ->join('classes', 'registrations.class_id', 'classes.id')
+                ->select('students.*', 'students.id as student_id', 'registrations.*')
+                ->where('classes.id', $r->class_id)
+                ->where('gender', 'Male')
+                ->where('registrations.active', 1)
+                ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+                ->where('students.active', 1)
+                ->whereDate('registrations.start_date' ,'>=' ,$r->start_date)
+                ->whereDate('registrations.end_date' ,'<=' ,$r->end_date)
+                ->orderBy('students.english_name')
+                ->where('students.active',1)
+                ->count();
+            $data['total_student_female'] = DB::table('registrations')
+                ->join('students', 'registrations.student_id', 'students.id')
+                ->join('classes', 'registrations.class_id', 'classes.id')
+                ->select('students.*', 'students.id as student_id', 'registrations.*')
+                ->where('classes.id', $r->class_id)
+                ->where('gender', 'Female')
+                ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+                ->where('registrations.active', 1)
+                ->where('students.active', 1)
+                ->whereDate('registrations.start_date' ,'>=' ,$r->start_date)
+                ->whereDate('registrations.end_date' ,'<=' ,$r->end_date)
+                ->orderBy('students.english_name')
+                ->where('students.active',1)
+                ->count();
+        return view('students.student-in-class', $data);
+    }
 }

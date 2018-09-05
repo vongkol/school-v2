@@ -74,7 +74,7 @@ class MailController extends Controller
                 $mail->Port = 465; // most likely something different for you. This is the mailtrap.io port i use for testing.
                 $mail->Username = "marketing@hrangkor.com";
                 $mail->Password = "Khmer@123";
-                $mail->setFrom("info@sunriseinformatics.com", "Sunrise Institute for Technology");
+                $mail->setFrom("info@sunriseinformatics.tech", "Sunrise Institute for Technology");
                 $mail->Subject = "Sunrise Institute for Technology : ". $r->subject;
                 $mail->MsgHTML($r->description);
                 $mail->addAddress($r->list[$i]);
@@ -103,10 +103,12 @@ class MailController extends Controller
     {
         if ($id==0)
         {
-            return DB::table("employees")->where("active",1)->orderBy("email")->get();
+            return DB::table("students")->where("active",1)->orderBy("email")->whereIn('students.branch_id', Right::branch(Auth::user()->id))->get();
         }
         else{
-            return DB::table("employers")->where("active",1)->orderBy("email")->get();
+            return DB::table("students")->where("active",1)->orderBy("email")
+            ->whereIn('students.branch_id', Right::branch(Auth::user()->id))
+            ->get();
         }
 
     }

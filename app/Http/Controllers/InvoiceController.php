@@ -123,7 +123,7 @@ class InvoiceController extends Controller
         return view('invoices.detail', $data);
     }
    
-    public function print($id)
+    public function print_invoice($id)
     {
         if(!Right::check('Invoice', 'l')){
             return view('permissions.no');
@@ -164,5 +164,20 @@ class InvoiceController extends Controller
         }
 
         return redirect('/invoice');
+    }
+
+    public function ajustment(Request $r) {
+        if(!Right::check('Invoice', 'i')){
+            return view('permissions.no');
+        }
+        if(!Right::check('Invoice', 'i')){
+            return view('permissions.no');
+        }
+        $customer_id = $r->query('customer_id');
+        $data['invoice_ref'] = $r->query('invoice_ref');
+        $data['customer'] = DB::table('students')
+            ->where('id',  $customer_id)
+            ->first();
+        return view('invoices.ajustment', $data);
     }
 }

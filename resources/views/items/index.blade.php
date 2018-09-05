@@ -14,11 +14,11 @@
                         <thead>
                         <tr>
                             <th>{!!$lb_id!!}</th>
-                            <th>Photo</th>
+                            <th>{{$lb_photo}}</th>
                             <th>{{$lb_name}}</th>
-                            <th>Branch</th>
-                            <th>Tax</th>
-                            <th>Price</th>
+                            <th>{{$lb_branch}}</th>
+                            <th>{{$lb_tax}}</th>
+                            <th>{{$lb_price}}</th>
                             <th>{{$lb_action}}</th>
                         </tr>
                         </thead>

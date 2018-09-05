@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<?php $lang = Auth::user()->language=="kh"?'kh.php':'en.php'; ?>
+    <?php include(app_path()."/lang/". $lang); ?>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -23,150 +25,26 @@
         @endif
         @foreach($classes as $cla)
         <?php 
-            if($start_date !== null && $end_date !== null &&  $class == null ) {
+            if($open_classes->start_date !== null && $open_classes->end_date !== null &&  $class !== null ) {
                 $students = DB::table('students')
                 ->join("branches", "students.branch_id", "branches.id")
                 ->join("registrations", "students.id", "registrations.student_id")
+                ->join("invoices", "students.id", "invoices.customer_id")
+                ->join("invoice_detials", "invoices.id", "invoice_detials.invoice_id")
                 ->join("classes", "classes.id", "registrations.class_id")
-                ->join("school_years", "school_years.id", "registrations.year_id")
                 ->where("registrations.active",1)
                 ->where("classes.active", 1)
-                ->whereDate('registrations.start_date','>=', $start_date )
-                ->whereDate('registrations.end_date','<=', $end_date ) 
+                ->where("invoices.active",1)
+                ->whereDate('registrations.start_date','>=', $open_classes->start_date )
+                ->whereDate('registrations.end_date','<=',  $open_classes->end_date ) 
+                ->whereDate('invoices.invoice_date','>=', $open_classes->start_date )
+                ->whereDate('invoices.due_date','<=',  $open_classes->end_date ) 
                 ->where('registrations.class_id', $cla->id)
                 ->where('students.active',1)
-                ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                // ->orderBy('students.english_name')
-                ->orderBy('school_years.name', 'desc')
-                ->get();
-            }
-            elseif($start_date !== null && $end_date !== null &&  $class !== null ) {
-                $students = DB::table('students')
-                ->join("branches", "students.branch_id", "branches.id")
-                ->join("registrations", "students.id", "registrations.student_id")
-                ->join("classes", "classes.id", "registrations.class_id")
-                ->join("school_years", "school_years.id", "registrations.year_id")
-                ->where("registrations.active",1)
-                ->where("classes.active", 1)
-                ->whereDate('registrations.start_date','>=', $start_date )
-                ->whereDate('registrations.end_date','<=', $end_date ) 
-                ->where('registrations.class_id', $cla->id)
-                ->where('students.active',1)
-                ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*')
-                ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                ->orderBy('registrations.end_date', 'desc')
-                ->orderBy('school_years.name', 'desc')
-                ->get();
-            } 
-            elseif($start_date !== null && $end_date == null &&  $class !== null ) {
-                $students = DB::table('students')
-                ->join("branches", "students.branch_id", "branches.id")
-                ->join("registrations", "students.id", "registrations.student_id")
-                ->join("classes", "classes.id", "registrations.class_id")
-                ->join("school_years", "school_years.id", "registrations.year_id")
-                ->where("registrations.active",1)
-                ->where("classes.active", 1)
-                ->whereDate('registrations.start_date','>=', $start_date )
-                ->where('registrations.class_id', $cla->id)
-                ->where('students.active',1)
-                ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                ->orderBy('registrations.end_date', 'desc')
-                ->orderBy('school_years.name', 'desc')
-                ->get();
-            }   elseif($start_date == null && $end_date !== null &&  $class !== null ) {
-                $students = DB::table('students')
-                ->join("branches", "students.branch_id", "branches.id")
-                ->join("registrations", "students.id", "registrations.student_id")
-                ->join("classes", "classes.id", "registrations.class_id")
-                ->join("school_years", "school_years.id", "registrations.year_id")
-                ->where("registrations.active",1)
-                ->where("classes.active", 1)
-                ->whereDate('registrations.end_date','<=', $end_date )
-                ->where('registrations.class_id', $cla->id)
-                ->where('students.active',1)
-                ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                ->orderBy('registrations.end_date', 'desc')
-                ->orderBy('school_years.name', 'desc')
-                ->get();
-            }
-            elseif($start_date == null && $end_date == null &&  $class !== null ) {
-                $students = DB::table('students')
-                ->join("branches", "students.branch_id", "branches.id")
-                ->join("registrations", "students.id", "registrations.student_id")
-                ->join("classes", "classes.id", "registrations.class_id")
-                ->join("school_years", "school_years.id", "registrations.year_id")
-                ->where("registrations.active",1)
-                ->where("classes.active", 1)
-                ->where('registrations.class_id', $cla->id)
-                ->where('students.active',1)
-                ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                ->orderBy('registrations.end_date', 'desc')
-                ->orderBy('school_years.name', 'desc')
-                ->get();
-            }
-            elseif($start_date !== null && $end_date == null &&  $class == null ) {
-                $students = DB::table('students')
-                ->join("branches", "students.branch_id", "branches.id")
-                ->join("registrations", "students.id", "registrations.student_id")
-                ->join("classes", "classes.id", "registrations.class_id")
-                ->join("school_years", "school_years.id", "registrations.year_id")
-                ->where("registrations.active",1)
-                ->where("classes.active", 1)
-                ->whereDate('registrations.start_date','>=', $start_date )
-                ->where('registrations.class_id', $cla->id)
-                ->where('students.active',1)
-                ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                ->orderBy('registrations.end_date', 'desc')
-                ->orderBy('school_years.name', 'desc')
+                ->select('students.*', 'registrations.*', "invoices.*")
+                ->orderBy('invoices.id', 'desc')
                 ->get();
             }  
-            elseif($start_date !== null && $end_date == null &&  $class !== null ) {
-                $students = DB::table('students')
-                ->join("branches", "students.branch_id", "branches.id")
-                ->join("registrations", "students.id", "registrations.student_id")
-                ->join("classes", "classes.id", "registrations.class_id")
-                ->join("school_years", "school_years.id", "registrations.year_id")
-                ->where("registrations.active",1)
-                ->where("classes.active", 1)
-                ->whereDate('registrations.start_date','>=', $start_date )
-                ->where('registrations.class_id', $cla->id)
-                ->where('students.active',1)
-                ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                ->orderBy('registrations.end_date', 'desc')
-                ->orderBy('school_years.name', 'desc')
-                ->get();
-            }  
-            elseif($start_date == null && $end_date !== null &&  $class == null ) {
-                $students = DB::table('students')
-                ->join("branches", "students.branch_id", "branches.id")
-                ->join("registrations", "students.id", "registrations.student_id")
-                ->join("classes", "classes.id", "registrations.class_id")
-                ->join("school_years", "school_years.id", "registrations.year_id")
-                ->where("registrations.active",1)
-                ->where("classes.active", 1)
-                ->whereDate('registrations.end_date','<=', $end_date )
-                ->where('registrations.class_id', $cla->id)
-                ->where('students.active',1)
-                ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                ->orderBy('registrations.end_date', 'desc')
-                ->orderBy('school_years.name', 'desc')
-                ->get();
-            }  else {
-                $students = DB::table('students')
-                ->join("branches", "students.branch_id", "branches.id")
-                ->join("registrations", "students.id", "registrations.student_id")
-                ->join("classes", "classes.id", "registrations.class_id")
-                ->join("school_years", "school_years.id", "registrations.year_id")
-                ->where("registrations.active",1)
-                ->where("classes.active", 1)
-                ->where('registrations.class_id', $cla->id)
-                ->where('students.active',1)
-                ->select('students.*', 'branches.name as bname', 'classes.*', 'registrations.*', "school_years.*")
-                ->orderBy('registrations.end_date', 'desc')
-                ->orderBy('school_years.name', 'desc')
-                ->get();
-            }
-            
             $classes= DB::table('classes')
                 ->where('id', $cla->id)
                 ->first();
@@ -176,18 +54,18 @@
     <span style="color:red;">{{$cla->name}}</span>
         <thead>
             <tr>
-                <th>ល.រ</th>
+                <th>{!!$lb_id!!}</th>
                 <th>Code</th>
                 <th>Khmer Name</th>
                 <th>English Name</th>
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Gender</th>
-                <th>Branch</th>
                 <th>Study Time</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Year</th>
+                <th>Invoice Date</th>
+                <th>Due Date</th>
+                <th>Due Amount</th>
+                <th>Total Amount</th>
             </tr>
         </thead>
         <tbody>
@@ -203,16 +81,21 @@
                 <td>{{$st->email}}</td>
                 <td>{{$st->phone}}</td>
                 <td>{{$st->gender=="Male"?"Male":"Female"}}</td>
-                <td>{{$st->bname}}</td>
                 <td>{{$st->study_time}}</td>
-                <td>{{$st->start_date}}</td>
-                <td>{{$st->end_date}}</td>
-                <td>{{$st->name}}</td>
+                <td>{{$st->invoice_date}}</td>
+                <td>{{$st->due_date}}</td>
+                <td><span style="color: red;">$ {{$st->total_due_amount}}</span></td>
+                <td><span style="color: green;">$ {{$st->total_amount}}</span></td>
+                <?php $total+=$st->total_amount; ?>
             </tr>
             @endforeach
         </tbody>
     </table>
     <br>
+    <p style="float: right;"><b>Total Amount: $ {{$total}}</b></p><br>
+        <?php $grant_total += $total; ?>
     @endforeach
+    <hr style="width: 100%"> 
+    <p  style="position: absolute;right: 10px; color: blue;"><b>Grand Total: $ {{$grant_total}}</b></p>
 </body>
 </html>
